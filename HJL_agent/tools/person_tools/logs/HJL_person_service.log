@@ -1,0 +1,72 @@
+2026-07-28 10:42:04,715 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-07-28 10:42:04,716 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-07-28 10:42:04,877 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-06-28', '2026-06-29', '2026-06-30', '2026-07-01', '2026-07-02', '2026-07-03', '2026-07-04', '2026-07-05', '2026-07-06', '2026-07-07', '2026-07-08', '2026-07-09', '2026-07-10', '2026-07-11', '2026-07-12', '2026-07-13', '2026-07-14', '2026-07-15', '2026-07-16', '2026-07-17', '2026-07-18', '2026-07-19', '2026-07-20', '2026-07-21', '2026-07-22', '2026-07-23', '2026-07-24', '2026-07-25', '2026-07-26', '2026-07-27', '2026-07-28']
+2026-07-28 10:42:04,897 - MinePersonnelService - INFO - query_todayornow_personlist called with params: person_name_filters=None, department_filters=None,worktype_filters=None, duty_filters=None, area_filters=None, station_filters=Nonenumeric_filters=None, statistics_filter=None, today_or_now False
+2026-07-28 10:42:04,897 - MinePersonnelService - INFO - step 0: 参数适配 - 处理姓名/部门/工种/职位/区域/站点/时间等条件
+2026-07-28 10:42:04,897 - MinePersonnelService - INFO - step 1: 检查和处理时间参数
+2026-07-28 10:42:04,897 - MinePersonnelService - INFO - step 2: 处理 numeric_filters 和 statistics_filter
+2026-07-28 10:42:04,897 - MinePersonnelService - INFO - step 3: 调用 get_person_infos_daytype_with_cache 下发筛选请求 参数: person_name_filters=None, department_filters=None, worktype_filters=None, duty_filters=None, area_filters=None, station_filters=None, start_date=2026-07-28 00:00:00, end_time=2026-07-28 10:42:04, numeric_filters=None,today_or_now = False , statistics_filter=None
+2026-07-28 10:42:04,897 - MinePersonnelService - INFO - 添加numeric_filters {'当日是否已出井': ({'op': '==', 'value': '井下'},)} 成功
+2026-07-28 10:42:05,978 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-06-28
+2026-07-28 10:42:06,667 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-06-29
+2026-07-28 10:42:07,317 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-06-30
+2026-07-28 10:42:07,955 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-01
+2026-07-28 10:42:08,589 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-02
+2026-07-28 10:42:09,234 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-03
+2026-07-28 10:42:09,860 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-04
+2026-07-28 10:42:10,492 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-05
+2026-07-28 10:42:11,135 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-06
+2026-07-28 10:42:11,792 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-07
+2026-07-28 10:42:12,413 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-08
+2026-07-28 10:42:13,048 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-09
+2026-07-28 10:42:13,700 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-10
+2026-07-28 10:42:28,550 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-07-28 10:42:36,207 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-07-28']
+2026-07-28 10:45:28,204 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-07-28 10:45:28,204 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-07-28 10:45:28,224 - MinePersonnelService - INFO - query_todayornow_personlist called with params: person_name_filters=None, department_filters=None,worktype_filters=None, duty_filters=None, area_filters=None, station_filters=Nonenumeric_filters=None, statistics_filter=None, today_or_now False
+2026-07-28 10:45:28,224 - MinePersonnelService - INFO - step 0: 参数适配 - 处理姓名/部门/工种/职位/区域/站点/时间等条件
+2026-07-28 10:45:28,224 - MinePersonnelService - INFO - step 1: 检查和处理时间参数
+2026-07-28 10:45:28,224 - MinePersonnelService - INFO - step 2: 处理 numeric_filters 和 statistics_filter
+2026-07-28 10:45:28,224 - MinePersonnelService - INFO - step 3: 调用 get_person_infos_daytype_with_cache 下发筛选请求 参数: person_name_filters=None, department_filters=None, worktype_filters=None, duty_filters=None, area_filters=None, station_filters=None, start_date=2026-07-28 00:00:00, end_time=2026-07-28 10:45:28, numeric_filters=None,today_or_now = False , statistics_filter=None
+2026-07-28 10:45:28,224 - MinePersonnelService - INFO - 添加numeric_filters {'当日是否已出井': ({'op': '==', 'value': '井下'},)} 成功
+2026-07-28 10:45:28,224 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-07-28 10:45:28,226 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-06-28', '2026-06-29', '2026-06-30', '2026-07-01', '2026-07-02', '2026-07-03', '2026-07-04', '2026-07-05', '2026-07-06', '2026-07-07', '2026-07-08', '2026-07-09', '2026-07-10', '2026-07-11', '2026-07-12', '2026-07-13', '2026-07-14', '2026-07-15', '2026-07-16', '2026-07-17', '2026-07-18', '2026-07-19', '2026-07-20', '2026-07-21', '2026-07-22', '2026-07-23', '2026-07-24', '2026-07-25', '2026-07-26', '2026-07-27', '2026-07-28']
+2026-07-28 10:45:28,227 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-07-28']
+2026-07-28 10:45:28,802 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-06-28
+2026-07-28 10:45:29,096 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-07-28 10:45:29,115 - MinePersonnelService - INFO - step 4: 检查查询结果有效性
+2026-07-28 10:45:29,115 - MinePersonnelService - INFO - step 5: 序列化查询到的数据
+2026-07-28 10:45:29,116 - MinePersonnelService - INFO - step 5: 已经序列化查询结果, 序列化长度: 119421
+2026-07-28 10:45:29,116 - MinePersonnelService - INFO - step 6: 判断是否需要进行统计项过滤
+2026-07-28 10:45:29,116 - MinePersonnelService - INFO - step 6: statistics_filter_passed=False
+2026-07-28 10:45:29,116 - MinePersonnelService - INFO - step 7: json_full超过30k，对每日数据做第一次筛选压缩
+2026-07-28 10:45:29,116 - MinePersonnelService - INFO - step 7: 进行person_filter筛选 key=2026-07-28
+2026-07-28 10:45:29,162 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人']
+2026-07-28 10:45:29,163 - MinePersonnelService - INFO - step 7: 首轮压缩后json长度: 7829
+2026-07-28 10:45:29,163 - MinePersonnelService - INFO - step 7: 压缩人员 records, 当前json长度: len_json_full=7829
+2026-07-28 10:45:29,163 - MinePersonnelService - INFO - step 8: 函数执行完成, 返回json_full
+2026-07-28 10:46:56,623 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-07-28 10:46:56,624 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-07-28 10:46:56,645 - MinePersonnelService - INFO - query_todayornow_personlist called with params: person_name_filters=None, department_filters=None,worktype_filters=None, duty_filters=None, area_filters=None, station_filters=Nonenumeric_filters=None, statistics_filter=None, today_or_now False
+2026-07-28 10:46:56,645 - MinePersonnelService - INFO - step 0: 参数适配 - 处理姓名/部门/工种/职位/区域/站点/时间等条件
+2026-07-28 10:46:56,645 - MinePersonnelService - INFO - step 1: 检查和处理时间参数
+2026-07-28 10:46:56,645 - MinePersonnelService - INFO - step 2: 处理 numeric_filters 和 statistics_filter
+2026-07-28 10:46:56,645 - MinePersonnelService - INFO - step 3: 调用 get_person_infos_daytype_with_cache 下发筛选请求 参数: person_name_filters=None, department_filters=None, worktype_filters=None, duty_filters=None, area_filters=None, station_filters=None, start_date=2026-07-28 00:00:00, end_time=2026-07-28 10:46:56, numeric_filters=None,today_or_now = False , statistics_filter=None
+2026-07-28 10:46:56,645 - MinePersonnelService - INFO - 添加numeric_filters {'当日是否已出井': ({'op': '==', 'value': '井下'},), '轨迹结束时间': ({'op': 'between', 'value': ['2026-07-28 10:36:56', '2026-07-28 10:47:56']},)} 成功
+2026-07-28 10:46:56,645 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-07-28 10:46:56,647 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-06-28', '2026-06-29', '2026-06-30', '2026-07-01', '2026-07-02', '2026-07-03', '2026-07-04', '2026-07-05', '2026-07-06', '2026-07-07', '2026-07-08', '2026-07-09', '2026-07-10', '2026-07-11', '2026-07-12', '2026-07-13', '2026-07-14', '2026-07-15', '2026-07-16', '2026-07-17', '2026-07-18', '2026-07-19', '2026-07-20', '2026-07-21', '2026-07-22', '2026-07-23', '2026-07-24', '2026-07-25', '2026-07-26', '2026-07-27', '2026-07-28']
+2026-07-28 10:46:56,650 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-07-28']
+2026-07-28 10:46:57,557 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-06-28
+2026-07-28 10:46:57,645 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-07-28 10:46:57,654 - MinePersonnelService - INFO - step 4: 检查查询结果有效性
+2026-07-28 10:46:57,654 - MinePersonnelService - INFO - step 5: 序列化查询到的数据
+2026-07-28 10:46:57,655 - MinePersonnelService - INFO - step 5: 已经序列化查询结果, 序列化长度: 40470
+2026-07-28 10:46:57,655 - MinePersonnelService - INFO - step 6: 判断是否需要进行统计项过滤
+2026-07-28 10:46:57,655 - MinePersonnelService - INFO - step 6: statistics_filter_passed=False
+2026-07-28 10:46:57,655 - MinePersonnelService - INFO - step 7: json_full超过30k，对每日数据做第一次筛选压缩
+2026-07-28 10:46:57,655 - MinePersonnelService - INFO - step 7: 进行person_filter筛选 key=2026-07-28
+2026-07-28 10:46:57,671 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人']
+2026-07-28 10:46:57,672 - MinePersonnelService - INFO - step 7: 首轮压缩后json长度: 4833
+2026-07-28 10:46:57,672 - MinePersonnelService - INFO - step 7: 压缩人员 records, 当前json长度: len_json_full=4833
+2026-07-28 10:46:57,672 - MinePersonnelService - INFO - step 8: 函数执行完成, 返回json_full

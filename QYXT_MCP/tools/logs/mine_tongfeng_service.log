@@ -1,0 +1,12 @@
+2026-06-03 10:15:23,919 - MineTongfengService - INFO - Successfully connected to ClickHouse.
+2026-06-03 10:15:24,022 - MineTongfengService - INFO - query_fan_system_records called: choose=all, start_time=None, end_time=None, subgroup_filters=None, value_filters=None
+2026-06-04 09:41:23,912 - MineTongfengService - INFO - Successfully connected to ClickHouse.
+2026-06-04 09:41:23,927 - MineTongfengService - INFO - query_fan_system_records called: choose=all, start_time=2026-05-20 00:00:00, end_time=2026-06-12 23:59:59, subgroup_filters=None, value_filters=None
+2026-06-04 09:41:39,467 - MineTongfengService - INFO - query_fengji_records 正常返回，use_serializer=False, 返回json长度=2
+2026-06-04 09:44:52,614 - MineTongfengService - INFO - Successfully connected to ClickHouse.
+2026-06-04 09:44:52,627 - MineTongfengService - INFO - query_fan_system_records called: choose=all, start_time=2026-05-20 00:00:00, end_time=2026-06-12 23:59:59, subgroup_filters=None, value_filters=None
+2026-06-04 09:49:40,142 - MineTongfengService - INFO - Successfully connected to ClickHouse.
+2026-06-04 09:49:40,156 - MineTongfengService - INFO - query_fan_system_records called: choose=all, start_time=2026-05-20 00:00:00, end_time=2026-06-12 23:59:59, subgroup_filters=None, value_filters=None
+2026-06-04 09:49:40,757 - MineTongfengService - INFO - query_fengji_records 正常返回，use_serializer=True, 返回json长度=74514
+2026-06-04 09:49:40,771 - MineTongfengService - INFO - query_power_energy_records called: start_time=2026-04-04 00:00:00, end_time=2026-05-09 23:59:59
+2026-06-04 09:49:41,133 - MineTongfengService - INFO - query_power_energy_records 返回 JSON 长度为: 13362

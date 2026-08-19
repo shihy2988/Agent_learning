@@ -1,0 +1,255 @@
+fan_system:
+  一号风机系统:
+    报警:
+      TF_YH_1_TING_JI_BAO_JING: 一号风机 1 号设备停机报警信号
+      TF_YH_2_TING_JI_BAO_JING: 一号风机 2 号设备停机报警信号
+      TF_YHFJ_YAN_WU: 一号风机区域检测到烟雾报警信号
+    控制指令:
+      TF_YHFJ_SHUI_PING_FENG_MEN_GUAN_FA: 一号风机水平风门执行关闭阀门操作
+      TF_YHFJ_SHUI_PING_FENG_MEN_KAI_FA: 一号风机水平风门执行打开阀门操作
+      TF_YHFJ_SHUI_PING_FENG_MEN_TING_ZHI: 一号风机水平风门执行停止动作操作
+      TF_YHFJ_YI_JIAN_QI_DONG: 一号风机执行一键启动操作指令
+      TF_YHFJ_YI_JIAN_TING_ZHI: 一号风机执行一键停止操作指令
+    状态:
+      TF_LIANG_TAI_FENG_JI_DU_WEI_YUN_XING: 一号、二号两台风机均处于未运行状态
+      TF_YHFJ_ZHUN_BEI_JIU_XU: 一号风机系统具备启动运行条件，准备就绪
+      TF_YHFJ_SUO_YOU_SHE_BEI_CHU_YU_YUAN_CHENG_ZHUANG_TAI: 一号风机所属全部设备均处于远程控制状态
+      TF_YHFJ_YI_JIAN_QI_DONG_ZHONG: 一号风机处于一键启动过程运行状态
+      TF_YHFJ_YI_JIAN_TING_ZHI_ZHONG: 一号风机处于一键停止过程运行状态
+    切换过程:
+      TF_YH_QIE_EH_ZHUN_BEI_JIU_XU: 一号风机切换至二号风机运行准备就绪状态
+      TF_YH_QIE_HUAN_EH_QI_DONG: 一号风机切换至二号风机启动操作指令
+      TF_YH_QIE_HUAN_EH_YUN_XING_ZHONG: 一号风机切换至二号风机处于切换运行过程
+    数值:
+      TF_YH_1_JI_CHUI_ZHI_ZHEN_DONG_SHI_JI_ZHI: 一号风机 1 级设备垂直振动实时监测数值
+      TF_YH_1_JI_DIAN_LIU_A_SHI_JI_ZHI: 一号风机 1 级设备 A 相电流实时监测数值
+      TF_YH_1_JI_DIAN_YA_A_SHI_JI_ZHI: 一号风机 1 级设备 A 相电压实时监测数值
+      TF_YH_1_JI_DING_ZI_WEN_DU_A_SHI_JI_ZHI: 一号风机 1 级设备 A 相定子温度实时监测数值
+      TF_YH_1_JI_DING_ZI_WEN_DU_B_SHI_JI_ZHI: 一号风机 1 级设备 B 相定子温度实时监测数值
+      TF_YH_1_JI_DING_ZI_WEN_DU_C_SHI_JI_ZHI: 一号风机 1 级设备 C 相定子温度实时监测数值
+      TF_YH_1_JI_GONG_LV_SHI_JI_ZHI: 一号风机 1 级设备有功功率实时监测数值
+      TF_YH_1_JI_HOU_ZHOU_WEN_DU_SHI_JI_ZHI: 一号风机 1 级设备后轴温度实时监测数值
+      TF_YH_1_JI_QIAN_ZHOU_WEN_DU_SHI_JI_ZHI: 一号风机 1 级设备前轴温度实时监测数值
+      TF_YH_1_JI_SHUI_PING_ZHEN_DONG_SHI_JI_ZHI: 一号风机 1 级设备水平振动实时监测数值
+      TF_YH_2_JI_CHUI_ZHI_ZHEN_DONG_SHI_JI_ZHI: 一号风机 2 级设备垂直振动实时监测数值
+      TF_YH_2_JI_DIAN_LIU_A_SHI_JI_ZHI: 一号风机 2 级设备 A 相电流实时监测数值
+      TF_YH_2_JI_DIAN_YA_A_SHI_JI_ZHI: 一号风机 2 级设备 A 相电压实时监测数值
+      TF_YH_2_JI_DING_ZI_WEN_DU_A_SHI_JI_ZHI: 一号风机 2 级设备 A 相定子温度实时监测数值
+      TF_YH_2_JI_DING_ZI_WEN_DU_B_SHI_JI_ZHI: 一号风机 2 级设备 B 相定子温度实时监测数值
+      TF_YH_2_JI_DING_ZI_WEN_DU_C_SHI_JI_ZHI: 一号风机 2 级设备 C 相定子温度实时监测数值
+      TF_YH_2_JI_GONG_LV_SHI_JI_ZHI: 一号风机 2 级设备有功功率实时监测数值
+      TF_YH_2_JI_HOU_ZHOU_WEN_DU_SHI_JI_ZHI: 一号风机 2 级设备后轴温度实时监测数值
+      TF_YH_2_JI_QIAN_ZHOU_WEN_DU_SHI_JI_ZHI: 一号风机 2 级设备前轴温度实时监测数值
+      TF_YH_2_JI_SHUI_PING_ZHEN_DONG_SHI_JI_ZHI: 一号风机 2 级设备水平振动实时监测数值
+      TF_YHFJ_DONG_YA_SHI_JI_ZHI: 一号风机动压实时监测数值
+      TF_YHFJ_FENG_LIANG_SHI_JI_ZHI: 一号风机风量实时监测数值
+      TF_YHFJ_FENG_SU_SHI_JI_ZHI: 一号风机风速实时监测数值
+      TF_YHFJ_JING_YA_SHI_JI_ZHI: 一号风机静压实时监测数值
+      TF_YHFJ_QUAN_YA_SHI_JI_ZHI: 一号风机全压实时监测数值
+      TF_YHFJ_YUN_XING_XIAO_LV: 一号风机实际运行效率计算数值
+    时间戳:
+      TF_TIMESTAMP: 系统时间戳
+  变频器系统:
+    控制指令:
+      TF_YHBPQ_FAN_ZHUAN_QI_DONG: 一号变频器执行反转启动控制指令
+      TF_YHBPQ_QI_DONG: 一号变频器执行启动运行控制指令
+      TF_YHBPQ_TING_ZHI: 一号变频器执行停止运行控制指令
+      TF_EHBPQ_FAN_ZHUAN_QI_DONG: 二号变频器执行反转启动控制指令
+      TF_EHBPQ_QI_DONG: 二号变频器执行启动运行控制指令
+      TF_EHBPQ_TING_ZHI: 二号变频器执行停止运行控制指令
+      TF_SH_BIAN_PIN_QI_FAN_ZHUAN_QI_DONG: 三号变频器执行反转启动控制指令
+      TF_SH_HAO_BIAN_PIN_QI_QI_DONG: 三号变频器执行启动运行控制指令
+      TF_SH_HAO_BIAN_PIN_QI_TING_ZHI: 三号变频器执行停止运行控制指令
+      TF_SI_HAO_BIAN_PIN_QI_FAN_ZHUAN_QI_DONG: 四号变频器执行反转启动控制指令
+      TF_SI_HAO_BIAN_PIN_QI_QI_DONG: 四号变频器执行启动运行控制指令
+      TF_SI_HAO_BIAN_PIN_QI_TING_ZHI: 四号变频器执行停止运行控制指令
+    信号:
+      TF_YHBPQ_FAN_ZHUAN_XIN_HAO: 一号变频器处于反转运行状态反馈信号
+      TF_YHBPQ_GU_ZHANG_XIN_HAO: 一号变频器检测到故障状态反馈信号
+      TF_YHBPQ_YUAN_CHENG_XIN_HAO: 一号变频器处于远程控制模式状态信号
+      TF_YHBPQ_YUN_XING_XIN_HAO: 一号变频器处于正常运行状态反馈信号
+      TF_YHBPQ_ZHENG_ZHUAN_XIN_HAO: 一号变频器处于正转运行状态反馈信号
+      TF_EHBPQ_FAN_ZHUAN_XIN_HAO: 二号变频器处于反转运行状态反馈信号
+      TF_EHBPQ_GU_ZHANG_XIN_HAO: 二号变频器检测到故障状态反馈信号
+      TF_EHBPQ_YUAN_CHENG_XIN_HAO: 二号变频器处于远程控制模式状态信号
+      TF_EHBPQ_YUN_XING_XIN_HAO: 二号变频器处于正常运行状态反馈信号
+      TF_EHBPQ_ZHENG_ZHUAN_XIN_HAO: 二号变频器处于正转运行状态反馈信号
+      TF_SH_HAO_BIAN_PIN_QI_FAN_ZHUAN_XIN_HAO: 三号变频器处于反转运行状态反馈信号
+      TF_SH_HAO_BIAN_PIN_QI_GU_ZHANG_XIN_HAO: 三号变频器检测到故障状态反馈信号
+      TF_SH_HAO_BIAN_PIN_QI_YUAN_CHENG_XIN_HAO: 三号变频器处于远程控制模式状态信号
+      TF_SH_HAO_BIAN_PIN_QI_YUN_XING_XIN_HAO: 三号变频器处于正常运行状态反馈信号
+      TF_SH_HAO_BIAN_PIN_QI_ZHENG_ZHUAN_XIN_HAO: 三号变频器处于正转运行状态反馈信号
+      TF_SI_HAO_BIAN_PIN_QI_FAN_ZHUAN_XIN_HAO: 四号变频器处于反转运行状态反馈信号
+      TF_SI_HAO_BIAN_PIN_QI_GU_ZHANG_XIN_HAO: 四号变频器检测到故障状态反馈信号
+      TF_SI_HAO_BIAN_PIN_QI_YUAN_CHENG_XIN_HAO: 四号变频器处于远程控制模式状态信号
+      TF_SI_HAO_BIAN_PIN_QI_YUN_XING_XIN_HAO: 四号变频器处于正常运行状态反馈信号
+      TF_SI_HAO_BIAN_PIN_QI_ZHENG_ZHUAN_XIN_HAO: 四号变频器处于正转运行状态反馈信号
+    数值:
+      TF_YHBPQ_PIN_LV_FAN_KUI: 一号变频器输出运行频率实时反馈数值
+      TF_YHBPQ_PIN_LV_GEI_DING: 一号变频器运行频率设定给定数值
+      TF_EHBPQ_PIN_LV_FAN_KUI: 二号变频器输出运行频率实时反馈数值
+      TF_EHBPQ_PIN_LV_GEI_DING: 二号变频器运行频率设定给定数值
+      TF_SH_HAO_BIAN_PIN_QI_PIN_LV_FAN_KUI: 三号变频器输出运行频率实时反馈数值
+      TF_SH_HAO_BIAN_PIN_QI_PIN_LV_GEI_DING: 三号变频器运行频率设定给定数值
+      TF_SI_HAO_BIAN_PIN_QI_PIN_LV_FAN_KUI: 四号变频器输出运行频率实时反馈数值
+      TF_SI_HAO_BIAN_PIN_QI_PIN_LV_GEI_DING: 四号变频器运行频率设定给定数值
+    
+    时间戳:
+      TF_TIMESTAMP: 系统时间戳
+  高压柜系统:
+    信号:
+      TF_YH_GAO_YA_CHU_XIAN_GUI_HE_ZHA_XIN_HAO: 一号高压出线柜断路器处于合闸状态反馈信号
+      TF_YH_GAO_YA_CHU_XIAN_GUI_YUAN_CHENG_XIN_HAO: 一号高压出线柜处于远程控制模式状态信号
+      TF_EH_GAO_YA_CHU_XIAN_GUI_HE_ZHA_XIN_HAO: 二号高压出线柜断路器处于合闸状态反馈信号
+      TF_EH_GAO_YA_CHU_XIAN_GUI_YUAN_CHENG_XIN_HAO: 二号高压出线柜处于远程控制模式状态信号
+    控制指令:
+      TF_YH_GAO_YA_GUI_FEN_ZHA: 一号高压柜执行分闸操作控制指令
+      TF_YH_GAO_YA_GUI_HE_ZHA: 一号高压柜执行合闸操作控制指令
+      TF_EH_GAO_YA_GUI_FEN_ZHA: 二号高压柜执行分闸操作控制指令
+      TF_EH_GAO_YA_GUI_HE_ZHA: 二号高压柜执行合闸操作控制指令
+  阀门系统:
+    信号:
+      TF_YHDF_GUAN_DAO_WEI_XIN_HAO: 一号蝶阀完全关闭到位状态反馈信号
+      TF_YHDF_KAI_DAO_WEI_XIN_HAO: 一号蝶阀完全打开到位状态反馈信号
+      TF_YHDF_YUAN_CHENG_XIN_HAO: 一号蝶阀处于远程控制模式状态信号
+      TF_YHDF_ZHENG_ZAI_GUAN_XIN_HAO: 一号蝶阀正在执行关闭动作过程反馈信号
+      TF_YHDF_ZHENG_ZAI_KAI_XIN_HAO: 一号蝶阀正在执行打开动作过程反馈信号
+      TF_EHDF_GUAN_DAO_WEI_XIN_HAO: 二号蝶阀完全关闭到位状态反馈信号
+      TF_EHDF_KAI_DAO_WEI_XIN_HAO: 二号蝶阀完全打开到位状态反馈信号
+      TF_EHDF_YUAN_CHENG_XIN_HAO: 二号蝶阀处于远程控制模式状态信号
+      TF_EHDF_ZHENG_ZAI_GUAN_XIN_HAO: 二号蝶阀正在执行关闭动作过程反馈信号
+      TF_EHDF_ZHENG_ZAI_KAI_XIN_HAO: 二号蝶阀正在执行打开动作过程反馈信号
+    控制指令:
+      TF_YHDF_GUAN_FA: 一号蝶阀执行关闭阀门操作
+      TF_YHDF_KAI_FA: 一号蝶阀执行打开阀门操作
+      TF_YHDF_TING_ZHI: 一号蝶阀执行停止动作操作
+      TF_EHDF_GUAN_FA: 二号蝶阀执行关闭阀门操作
+      TF_EHDF_KAI_FA: 二号蝶阀执行打开阀门操作
+      TF_EHDF_TING_ZHI: 二号蝶阀执行停止动作操作
+    时间戳:
+      TF_TIMESTAMP: 系统时间戳
+  进线柜系统:
+    控制指令:
+      TF_YH_JIN_XIAN_GUI_FEN_ZHA: 一号进线柜执行分闸操作控制指令
+      TF_YH_JIN_XIAN_GUI_HE_ZHA: 一号进线柜执行合闸操作控制指令
+      TF_EH_JIN_XIAN_GUI_FEN_ZHA: 二号进线柜执行分闸操作控制指令
+      TF_EH_JIN_XIAN_GUI_HE_ZHA: 二号进线柜执行合闸操作控制指令
+      TF_ZUO_YOU_JIN_XIAN_GUI_DU_WEI_HE_ZHA_BAO_JING: 左、右两路进线柜均未合闸故障报警信号
+    信号:
+      TF_YH_JIN_XIAN_GUI_HE_ZHA_XIN_HAO: 一号进线柜断路器处于合闸状态反馈信号
+      TF_YH_JIN_XIAN_GUI_YUAN_CHENG_XIN_HAO: 一号进线柜处于远程控制模式状态信号
+      TF_EH_JIN_XIAN_GUI_HE_ZHA_XIN_HAO: 二号进线柜断路器处于合闸状态反馈信号
+      TF_EH_JIN_XIAN_GUI_YUAN_CHENG_XIN_HAO: 二号进线柜处于远程控制模式状态信号
+    时间戳:
+      TF_TIMESTAMP: 系统时间戳
+  风门系统:
+    信号:
+      TF_YHSPFM_GUAN_DAO_WEI_XIN_HAO: 一号水平风门完全关闭到位状态反馈信号
+      TF_YHSPFM_KAI_DAO_WEI_XIN_HAO: 一号水平风门完全打开到位状态反馈信号
+      TF_YHSPFM_YUAN_CHENG_XIN_HAO: 一号水平风门处于远程控制模式状态信号
+      TF_YHSPFM_ZHENG_ZAI_GUAN: 一号水平风门正在执行关闭动作过程反馈信号
+      TF_YHSPFM_ZHENG_ZAI_KAI: 一号水平风门正在执行打开动作过程反馈信号
+      TF_EHSPFM_GUAN_DAO_WEI_XIN_HAO: 二号水平风门完全关闭到位状态反馈信号
+      TF_EHSPFM_KAI_DAO_WEI_XIN_HAO: 二号水平风门完全打开到位状态反馈信号
+      TF_EHSPFM_YUAN_CHENG_XIN_HAO: 二号水平风门处于远程控制模式状态信号
+      TF_EHSPFM_ZHENG_ZAI_GUAN: 二号水平风门正在执行关闭动作过程反馈信号
+      TF_EHSPFM_ZHENG_ZAI_KAI: 二号水平风门正在执行打开动作过程反馈信号
+    时间戳:
+      TF_TIMESTAMP: 系统时间戳
+  二号风机系统:
+    报警:
+      TF_EH_1_TING_JI_BAO_JING: 二号风机 1 号设备停机报警信号
+      TF_EH_2_TING_JI_BAO_JING: 二号风机 2 号设备停机报警信号
+      TF_EHFJ_YAN_WU: 二号风机区域检测到烟雾报警信号
+    控制指令:
+      TF_EHFJ_SHUI_PING_FENG_MEN_GUAN_FA: 二号风机水平风门执行关闭阀门操作
+      TF_EHFJ_SHUI_PING_FENG_MEN_KAI_FA: 二号风机水平风门执行打开阀门操作
+      TF_EHFJ_SHUI_PING_FENG_MEN_TING_ZHI: 二号风机水平风门执行停止动作操作
+      TF_EHFJ_YI_JIAN_QI_DONG: 二号风机执行一键启动操作指令
+      TF_EHFJ_YI_JIAN_TING_ZHI: 二号风机执行一键停止操作指令
+    状态:
+      TF_LIANG_TAI_FENG_JI_DU_WEI_YUN_XING: 一号、二号两台风机均处于未运行状态
+      TF_EHFJ_ZHUN_BEI_JIU_XU: 二号风机系统具备启动运行条件，准备就绪
+      TF_EHFJ_SUO_YOU_SHE_BEI_CHU_YU_YUAN_CHENG_ZHUANG_TAI: 二号风机所属全部设备均处于远程控制状态
+      TF_EHFJ_YI_JIAN_QI_DONG_ZHONG: 二号风机处于一键启动过程运行状态
+      TF_EHFJ_YI_JIAN_TING_ZHI_ZHONG: 二号风机处于一键停止过程运行状态
+    切换过程:
+      TF_EH_QIE_1_HAO_ZHUN_BEI_JIU_XU: 二号风机切换至一号风机运行准备就绪状态
+      TF_EH_QIE_HUAN_1_HAO_QI_DONG: 二号风机切换至一号风机启动操作指令
+      TF_EH_QIE_HUAN_1_HAO_YUN_XING_ZHONG: 二号风机切换至一号风机处于切换运行过程
+    数值:
+      TF_EH_1_JI_CHUI_ZHI_ZHEN_DONG_SHI_JI_ZHI: 二号风机 1 级设备垂直振动实时监测数值
+      TF_EH_1_JI_DIAN_LIU_A_SHI_JI_ZHI: 二号风机 1 级设备 A 相电流实时监测数值
+      TF_EH_1_JI_DIAN_YA_A_SHI_JI_ZHI: 二号风机 1 级设备 A 相电压实时监测数值
+      TF_EH_1_JI_DING_ZI_WEN_DU_A_SHI_JI_ZHI: 二号风机 1 级设备 A 相定子温度实时监测数值
+      TF_EH_1_JI_DING_ZI_WEN_DU_B_SHI_JI_ZHI: 二号风机 1 级设备 B 相定子温度实时监测数值
+      TF_EH_1_JI_DING_ZI_WEN_DU_C_SHI_JI_ZHI: 二号风机 1 级设备 C 相定子温度实时监测数值
+      TF_EH_1_JI_GONG_LV_SHI_JI_ZHI: 二号风机 1 级设备有功功率实时监测数值
+      TF_EH_1_JI_HOU_ZHOU_WEN_DU_SHI_JI_ZHI: 二号风机 1 级设备后轴温度实时监测数值
+      TF_EH_1_JI_QIAN_ZHOU_WEN_DU_SHI_JI_ZHI: 二号风机 1 级设备前轴温度实时监测数值
+      TF_EH_1_JI_SHUI_PING_ZHEN_DONG_SHI_JI_ZHI: 二号风机 1 级设备水平振动实时监测数值
+      TF_EH_2_JI_CHUI_ZHI_ZHEN_DONG_SHI_JI_ZHI: 二号风机 2 级设备垂直振动实时监测数值
+      TF_EH_2_JI_DIAN_LIU_A_SHI_JI_ZHI: 二号风机 2 级设备 A 相电流实时监测数值
+      TF_EH_2_JI_DIAN_YA_A_SHI_JI_ZHI: 二号风机 2 级设备 A 相电压实时监测数值
+      TF_EH_2_JI_DING_ZI_WEN_DU_A_SHI_JI_ZHI: 二号风机 2 级设备 A 相定子温度实时监测数值
+      TF_EH_2_JI_DING_ZI_WEN_DU_B_SHI_JI_ZHI: 二号风机 2 级设备 B 相定子温度实时监测数值
+      TF_EH_2_JI_DING_ZI_WEN_DU_C_SHI_JI_ZHI: 二号风机 2 级设备 C 相定子温度实时监测数值
+      TF_EH_2_JI_GONG_LV_SHI_JI_ZHI: 二号风机 2 级设备有功功率实时监测数值
+      TF_EH_2_JI_HOU_ZHOU_WEN_DU_SHI_JI_ZHI: 二号风机 2 级设备后轴温度实时监测数值
+      TF_EH_2_JI_QIAN_ZHOU_WEN_DU_SHI_JI_ZHI: 二号风机 2 级设备前轴温度实时监测数值
+      TF_EH_2_JI_SHUI_PING_ZHEN_DONG_SHI_JI_ZHI: 二号风机 2 级设备水平振动实时监测数值
+      TF_EHFJ_DONG_YA_SHI_JI_ZHI: 二号风机动压实时监测数值
+      TF_EHFJ_FENG_LIANG_SHI_JI_ZHI: 二号风机风量实时监测数值
+      TF_EHFJ_FENG_SU_SHI_JI_ZHI: 二号风机风速实时监测数值
+      TF_EHFJ_JING_YA_SHI_JI_ZHI: 二号风机静压实时监测数值
+      TF_EHFJ_QUAN_YA_SHI_JI_ZHI: 二号风机全压实时监测数值
+      TF_EHFJ_YUN_XING_XIAO_LV: 二号风机实际运行效率计算数值
+    时间戳:
+      TF_TIMESTAMP: 系统时间戳
+  母联柜系统:
+    控制指令:
+      TF_MU_LIAN_GUI_FEN_ZHA: 母联柜执行分闸操作控制指令
+      TF_MU_LIAN_GUI_HE_ZHA: 母联柜执行合闸操作控制指令
+    信号:
+      TF_MU_LIAN_GUI_HE_ZHA_XIN_HAO: 母联柜断路器处于合闸状态反馈信号
+      TF_MU_LIAN_GUI_YUAN_CHENG_XIN_HAO: 母联柜处于远程控制模式状态信号
+    时间戳:
+      TF_TIMESTAMP: 系统时间戳
+      
+  系统级:
+    报警:
+      TF_BAO_JING_KAI_GUAN: 系统报警总开关控制信号
+      TF_BAO_JING_SHU_CHU_ZHI_HMI: 系统报警信息输出至人机交互界面信号
+    信号:
+      TF_CHENG_XU_ZHI_XING_ZHONG: 系统控制程序正在执行过程状态信号
+    状态:
+      TF_TEST: 系统测试模式标识位
+      TF_GONG_LV_YIN_SHU: 系统功率因数补偿与计算参数
+    控制指令:
+      TF_YI_JIAN_FU_WEI: 系统故障及状态执行一键复位操作指令
+      TF_CHU_SHI_HUA: 系统参数及状态初始化执行指令
+    切换过程:
+      TF_ZI_DONG_SHOU_DONG_QIE_HUAN: 系统控制模式自动与手动方式切换操作
+
+    时间戳:
+      TF_TIMESTAMP: 系统时间戳
+
+  设备级:
+    报警:
+      TF_DIAN_LIU_BAO_JING_ZHI_SHE_DING: 设备电流超限报警阈值设定数值
+      TF_DING_ZI_WEN_DU_BAO_JING_ZHI_SHE_DING: 电机定子温度超限报警阈值设定数值
+      TF_ZHEN_DONG_BAO_JING_ZHI_SHE_DING: 设备振动超限报警阈值设定数值
+      TF_ZHOU_CHENG_WEN_DU_BAO_JING_ZHI_SHE_DING: 轴承温度超限报警阈值设定数值
+    数值:
+      TF_DIAN_LIU_BIAN_BI: 电流信号互感器变比参数设定数值
+      TF_DIAN_YA_BIAN_BI: 电压信号互感器变比参数设定数值
+      TF_FENG_TONG_JIE_MIAN_JI: 风机风筒横截面积参数设定数值
+    时间戳:
+      TF_TIMESTAMP: 系统时间戳
+  
+  功率能耗:
+    数值:
+      TF_YH_1_JI_GONG_LV_SHI_JI_ZHI: 一号风机 1 级设备有功功率实时监测数值
+      TF_YH_2_JI_GONG_LV_SHI_JI_ZHI: 一号风机 2 级设备有功功率实时监测数值
+      TF_EH_1_JI_GONG_LV_SHI_JI_ZHI: 二号风机 1 级设备有功功率实时监测数值
+      TF_EH_2_JI_GONG_LV_SHI_JI_ZHI: 二号风机 2 级设备有功功率实时监测数值

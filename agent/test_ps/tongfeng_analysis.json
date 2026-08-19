@@ -1,0 +1,163 @@
+{
+  "一号风机系统": {
+    "切换过程": {
+      "TF_YH_QIE_EH_ZHUN_BEI_JIU_XU": {
+        "desc": "一号风机切换至二号风机运行准备就绪状态",
+        "analysis": {
+          "type": "bool",
+          "current": "True",
+          "changes": [
+            {
+              "change_time": "2026-05-03 08:16:56",
+              "from": "False",
+              "to": "True",
+              "duration_sec": 2.72
+            }
+          ],
+          "stable_periods": [
+            {
+              "value": "False",
+              "start_time": "2026-05-01 00:00:01",
+              "end_time": "2026-05-03 08:16:53",
+              "duration": 202612.044
+            },
+            {
+              "value": "True",
+              "start_time": "2026-05-03 08:16:56",
+              "end_time": "2026-05-07 23:59:58",
+              "duration": 402182.382
+            }
+          ],
+          "total_changes": 1
+        }
+      },
+      "TF_YH_QIE_HUAN_EH_QI_DONG": {
+        "desc": "一号风机切换至二号风机启动操作指令",
+        "analysis": {
+          "type": "bool",
+          "current": "False",
+          "changes": "无变化",
+          "stable_periods": [
+            {
+              "value": "False",
+              "start_time": "2026-05-01 00:00:01",
+              "end_time": "2026-05-07 23:59:58",
+              "duration": 604797.146
+            }
+          ],
+          "total_changes": 0
+        }
+      },
+      "TF_YH_QIE_HUAN_EH_YUN_XING_ZHONG": {
+        "desc": "一号风机切换至二号风机处于切换运行过程",
+        "analysis": {
+          "type": "bool",
+          "current": "False",
+          "changes": "无变化",
+          "stable_periods": [
+            {
+              "value": "False",
+              "start_time": "2026-05-01 00:00:01",
+              "end_time": "2026-05-07 23:59:58",
+              "duration": 604797.146
+            }
+          ],
+          "total_changes": 0
+        }
+      }
+    }
+  },
+  "二号风机系统": {
+    "切换过程": {
+      "TF_EH_QIE_1_HAO_ZHUN_BEI_JIU_XU": {
+        "desc": "二号风机切换至一号风机运行准备就绪状态",
+        "analysis": {
+          "type": "bool",
+          "current": "False",
+          "changes": [
+            {
+              "change_time": "2026-05-03 08:13:48",
+              "from": "True",
+              "to": "False",
+              "duration_sec": 2.39
+            }
+          ],
+          "stable_periods": [
+            {
+              "value": "True",
+              "start_time": "2026-05-01 00:00:01",
+              "end_time": "2026-05-03 08:13:45",
+              "duration": 202424.396
+            },
+            {
+              "value": "False",
+              "start_time": "2026-05-03 08:13:48",
+              "end_time": "2026-05-07 23:59:58",
+              "duration": 402370.36
+            }
+          ],
+          "total_changes": 1
+        }
+      },
+      "TF_EH_QIE_HUAN_1_HAO_QI_DONG": {
+        "desc": "二号风机切换至一号风机启动操作指令",
+        "analysis": {
+          "type": "bool",
+          "current": "False",
+          "changes": "无变化",
+          "stable_periods": [
+            {
+              "value": "False",
+              "start_time": "2026-05-01 00:00:01",
+              "end_time": "2026-05-07 23:59:58",
+              "duration": 604797.146
+            }
+          ],
+          "total_changes": 0
+        }
+      },
+      "TF_EH_QIE_HUAN_1_HAO_YUN_XING_ZHONG": {
+        "desc": "二号风机切换至一号风机处于切换运行过程",
+        "analysis": {
+          "type": "bool",
+          "current": "False",
+          "changes": [
+            {
+              "change_time": "2026-05-03 08:13:48",
+              "from": "False",
+              "to": "True",
+              "duration_sec": 2.39
+            },
+            {
+              "change_time": "2026-05-03 08:16:56",
+              "from": "True",
+              "to": "False",
+              "duration_sec": 2.72
+            }
+          ],
+          "stable_periods": [
+            {
+              "value": "False",
+              "start_time": "2026-05-01 00:00:01",
+              "end_time": "2026-05-03 08:13:45",
+              "duration": 202424.396
+            },
+            {
+              "value": "True",
+              "start_time": "2026-05-03 08:13:48",
+              "end_time": "2026-05-03 08:16:53",
+              "duration": 185.258
+            },
+            {
+              "value": "False",
+              "start_time": "2026-05-03 08:16:56",
+              "end_time": "2026-05-07 23:59:58",
+              "duration": 402182.382
+            }
+          ],
+          "total_changes": 2
+        }
+      }
+    }
+  }
+}

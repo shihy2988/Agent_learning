@@ -1,0 +1,230 @@
+fan_system:
+
+  1号空压机:
+    信号:
+      YF_KONG_YA_JI_1_ZHUANG_TAI: 1号空压机工作状态反馈信号
+      YF_KONG_YA_JI_1_YUN_XING_WEI: 1号空压机处于运行状态信号
+      YF_KONG_YA_JI_1_JIA_ZAI_WEI: 1号空压机处于加载运行状态信号
+      YF_KONG_YA_JI_1_GU_ZHANG_WEI: 1号空压机检测到故障状态信号
+      YF_KONG_YA_JI_1_TING_ZHI_WEI: 1号空压机处于停止状态信号
+      YF_YI_HAO_ZHOU_WEN_BAO_JING: 1号空压机轴温过高报警信号
+      YF_YI_HAO_DIAN_JI_WEN_DU_YU_JING: 1号空压机电机温度预警信号
+    状态:
+      YF_YI_HAO_YI_WEI_WEI_BEI_YONG: 1号空压机已处于备用状态
+      YF_YI_HAO_YI_TOU_RU: 1号空压机已投入运行状态
+      YF_YI_HAO_YI_BEI_YONG: 1号空压机已设置为备用状态
+      YF_YI_HAO_YI_JIAN_XIU: 1号空压机已设置为检修状态
+    指令:
+      YF_KONG_1_BAO_YANG_SHI_JIAN_QING_LING: 1号空压机保养运行时间清零指令
+      YF_KONG_YA_JI_1_QI_DONG: 1号空压机执行启动操作指令
+      YF_KONG_YA_JI_1_TING_ZHI: 1号空压机执行停止操作指令
+      YF_TOU_RU_1_HAO: 1号空压机投入运行控制指令
+      YF_BEI_YONG_1_HAO: 设定1号空压机为备用状态指令
+      YF_JIAN_XIU_1_HAO: 设定1号空压机为检修状态指令
+      YF_XUAN_ZE_YI_HAO_WEI_BEI_YONG: 设定1号空压机为备用机组
+    监测值:
+      YF_GUAN_DAO_1_WEN_DU: 1号空压机管道温度实时监测值
+      YF_FENG_BAO_1_WEN_DU: 1号空压机风包温度实时监测值
+      YF_GUAN_DAO_1_YA_LI: 1号空压机管道压力实时监测值
+      YF_FENG_BAO_1_YA_LI: 1号空压机风包压力实时监测值
+      YF_PAI_QI_YA_LI_1: 1号空压机排气压力实时监测值
+      YF_KONG_YA_JI_1_YOU_YA: 1号空压机润滑油压力实时值
+      YF_KONG_YA_JI_1_YOU_GONG: 1号空压机有功功率实时监测值
+      YF_KONG_YA_JI_1_WU_GONG: 1号空压机无功功率实时监测值
+      YF_JI_TOU_1_WEN_DU: 1号空压机机头温度实时监测值
+    时间戳:
+      YF_TIMESTAMP: 系统时间戳
+  2号空压机:
+    信号:
+      YF_KONG_YA_JI_2_ZHUANG_TAI: 2号空压机工作状态反馈信号
+      YF_KONG_YA_JI_2_YUN_XING_WEI: 2号空压机处于运行状态信号
+      YF_KONG_YA_JI_2_JIA_ZAI_WEI: 2号空压机处于加载运行状态信号
+      YF_KONG_YA_JI_2_GU_ZHANG_WEI: 2号空压机检测到故障状态信号
+      YF_KONG_YA_JI_2_TING_ZHI_WEI: 2号空压机处于停止状态信号
+      YF_ER_HAO_ZHOU_WEN_BAO_JING: 2号空压机轴温过高报警信号
+      YF_ER_HAO_DIAN_JI_WEN_DU_YU_JING: 2号空压机电机温度预警信号
+    状态:
+      YF_ER_HAO_YI_WEI_WEI_BEI_YONG: 2号空压机已处于备用状态
+      YF_ER_HAO_YI_TOU_RU: 2号空压机已投入运行状态
+      YF_ER_HAO_YI_BEI_YONG: 2号空压机已设置为备用状态
+      YF_ER_HAO_YI_JIAN_XIU: 2号空压机已设置为检修状态
+    指令:
+      YF_KONG_2_BAO_YANG_SHI_JIAN_QING_LING: 2号空压机保养运行时间清零指令
+      YF_KONG_YA_JI_2_QI_DONG: 2号空压机执行启动操作指令
+      YF_KONG_YA_JI_2_TING_ZHI: 2号空压机执行停止操作指令
+      YF_TOU_RU_2_HAO: 2号空压机投入运行控制指令
+      YF_BEI_YONG_2_HAO: 设定2号空压机为备用状态指令
+      YF_JIAN_XIU_2_HAO: 设定2号空压机为检修状态指令
+      YF_XUAN_ZE_ER_HAO_WEI_BEI_YONG: 设定2号空压机为备用机组
+    监测值:
+      YF_GUAN_DAO_2_WEN_DU: 2号空压机管道温度实时监测值
+      YF_FENG_BAO_2_WEN_DU: 2号空压机风包温度实时监测值
+      YF_GUAN_DAO_2_YA_LI: 2号空压机管道压力实时监测值
+      YF_FENG_BAO_2_YA_LI: 2号空压机风包压力实时监测值
+      YF_PAI_QI_YA_LI_2: 2号空压机排气压力实时监测值
+      YF_KONG_YA_JI_2_YOU_YA: 2号空压机润滑油压力实时值
+      YF_KONG_YA_JI_2_YOU_GONG: 2号空压机有功功率实时监测值
+      YF_KONG_YA_JI_2_WU_GONG: 2号空压机无功功率实时监测值
+      YF_ER_HAO_GONG_LV_YIN_SHU: 2号回路功率因数实时监测值
+      YF_JI_TOU_2_WEN_DU: 2号空压机机头温度实时监测值
+    时间戳:
+      YF_TIMESTAMP: 系统时间戳
+  3号空压机:
+    信号:
+      YF_KONG_YA_JI_3_ZHUANG_TAI: 3号空压机工作状态反馈信号
+      YF_KONG_YA_JI_3_TING_ZHI_ZHONG_HMI: 3号空压机处于停止过程状态信号
+      YF_KONG_YA_JI_3_YUN_XING_ZHONG_HMI: 3号空压机处于运行过程状态信号
+      YF_KONG_YA_JI_3_GU_ZHANG_ZHONG_HMI: 3号空压机处于故障报警状态信号
+      YF_SAN_HAO_ZHOU_WEN_BAO_JING: 3号空压机轴温过高报警信号
+      YF_SAN_HAO_DIAN_JI_WEN_DU_YU_JING: 3号空压机电机温度预警信号
+    状态:
+      YF_SAN_HAO_YI_WEI_WEI_BEI_YONG: 3号空压机已处于备用状态
+      YF_SAN_HAO_YI_TOU_RU: 3号空压机已投入运行状态
+      YF_SAN_HAO_YI_BEI_YONG: 3号空压机已设置为备用状态
+      YF_SAN_HAO_YI_JIAN_XIU: 3号空压机已设置为检修状态
+    指令:
+      YF_KONG_YA_JI_3_FU_WEI_HMI: 人机界面下发3号空压机故障复位指令
+      YF_KONG_YA_JI_3_QI_DONG: 3号空压机执行启动操作指令
+      YF_KONG_YA_JI_3_TING_ZHI: 3号空压机执行停止操作指令
+      YF_TOU_RU_3_HAO: 3号空压机投入运行控制指令
+      YF_BEI_YONG_3_HAO: 设定3号空压机为备用状态指令
+      YF_JIAN_XIU_3_HAO: 设定3号空压机为检修状态指令
+      YF_KONG_YA_JI_3_QI_DONG_HMI: 人机界面下发3号空压机启动指令
+      YF_KONG_YA_JI_3_TING_ZHI_HMI: 人机界面下发3号空压机停止指令
+      YF_XUAN_ZE_SAN_HAO_WEI_BEI_YONG: 设定3号空压机为备用机组
+    监测值:
+      YF_GUAN_DAO_3_WEN_DU: 3号空压机管道温度实时监测值
+      YF_FENG_BAO_3_WEN_DU: 3号空压机风包温度实时监测值
+      YF_GUAN_DAO_3_YA_LI: 3号空压机管道压力实时监测值
+      YF_FENG_BAO_3_YA_LI: 3号空压机风包压力实时监测值
+      YF_KONG_YA_JI_3_DIAN_LIU: 3号空压机工作电流实时监测值
+      YF_KONG_YA_JI_3_PAI_QI_YA_LI: 3号空压机排气压力实时监测值
+      YF_KONG_YA_JI_3_YOU_YA: 3号空压机润滑油压力实时值
+      YF_YI_HAO_GONG_LV_YIN_SHU: 1号回路功率因数实时监测值
+      YF_JI_TOU_3_WEN_DU: 3号空压机机头温度实时监测值
+    时间戳:
+      YF_TIMESTAMP: 系统时间戳
+
+  断路器系统:
+    信号:
+      YF_DUAN_LU_QI_1_ZHUANG_TAI: 断路器1工作状态反馈信号
+      YF_DUAN_LU_QI_2_ZHUANG_TAI: 断路器2工作状态反馈信号
+      YF_DUAN_LU_QI_3_ZHUANG_TAI: 断路器3工作状态反馈信号
+    指令:
+      YF_DUAN_LU_QI_1_FEN_ZHA: 断路器1执行分闸操作指令
+      YF_DUAN_LU_QI_1_HE_ZHA: 断路器1执行合闸操作指令
+      YF_DUAN_LU_QI_2_FEN_ZHA: 断路器2执行分闸操作指令
+      YF_DUAN_LU_QI_2_HE_ZHA: 断路器2执行合闸操作指令
+      YF_MU_LIAN_DUAN_LU_QI_HE_ZHA: 母联断路器执行合闸操作指令
+      YF_MU_LIAN_DUAN_LU_QI_FEN_ZHA: 母联断路器执行分闸操作指令
+    监测值:
+      YF_DUAN_LU_QI_DIAN_LIU_1: 断路器1回路电流实时监测值
+      YF_DUAN_LU_QI_DIAN_LIU_2: 断路器2回路电流实时监测值
+      YF_DUAN_LU_QI_GONG_LV_1: 断路器1回路有功功率实时监测值
+      YF_DUAN_LU_QI_GONG_LV_2: 断路器2回路有功功率实时监测值
+      YF_DUAN_LU_QI_MU_LIAN_DIAN_LIU: 母联断路器回路电流实时监测值
+      YF_DUAN_LU_QI_MU_LIAN_GONG_LV: 母联断路器回路有功功率监测值
+      YF_MU_LIAN_WU_GONG: 母联回路无功功率实时监测值
+      YF_MU_LIAN_GONG_LV_YIN_SHU: 母联回路功率因数实时监测值
+    时间戳:
+      YF_TIMESTAMP: 系统时间戳
+      
+
+  系统级:
+    指令:
+      YF_ZI_DONG_QI_DONG: 系统执行自动启动操作指令
+      YF_ZI_DONG_TING_ZHI: 系统执行自动停止操作指令
+      YF_QUAN_ZU_TOU_RU_MO_SHI: 压风系统所有机组投入运行模式
+      YF_QUAN_ZU_YI_TOU_RU: 压风系统全部机组已投入运行
+    模式:
+      YF_ZI_DONG_MO_SHI: 系统处于自动控制运行模式
+      YF_QUAN_ZU_JIE_CHU_MO_SHI: 压风系统所有机组解除运行模式
+    信号:
+      YF_BAO_YANG_TI_XING: 设备保养周期提醒信号
+      YF_BAO_YANG_TI_XING_1: 1号设备保养周期提醒信号
+    设定值:
+      YF_YA_LI_XIA_XIAN_SHE_DING: 系统供气压力下限阈值设定值
+      YF_YA_LI_SHANG_XIAN_SHE_DING: 系统供气压力上限阈值设定值
+      YF_DIAN_JI_ZHOU_WEN_BAO_JING_SHE_DING: 电机轴温过高报警阈值设定值
+      YF_WEN_DU_YU_JING_SHE_DING: 设备温度预警阈值设定值
+    监测值:
+      YF_ZONG_GUAN_YA_LI: 压风系统总管压力实时监测值
+      YF_ZONG_GUAN_LIU_LIANG: 压风系统总管流量实时监测值
+      YF_PIN_LV: 空压机运行频率实时监测值
+      YF_GONG_LV_YIN_SHU: 系统回路功率因数实时监测值
+
+    时间戳:
+      YF_TIMESTAMP: 系统时间戳
+
+  电机系统:
+    监测值:
+      YF_DIAN_JI_1_QIAN_ZHOU_WEN_DU: 1号电机前轴温度实时监测值
+      YF_DIAN_JI_1_HOU_ZHOU_WEN_DU: 1号电机后轴温度实时监测值
+      YF_DING_ZI_1_WEN_DU: 1号电机定子温度实时监测值
+      YF_DIAN_JI_2_QIAN_ZHOU_WEN_DU: 2号电机前轴温度实时监测值
+      YF_DIAN_JI_2_HOU_ZHOU_WEN_DU: 2号电机后轴温度实时监测值
+      YF_DING_ZI_2_WEN_DU: 2号电机定子温度实时监测值
+      YF_DIAN_JI_3_QIAN_ZHOU_WEN_DU: 3号电机前轴温度实时监测值
+      YF_DIAN_JI_3_HOU_ZHOU_WEN_DU: 3号电机后轴温度实时监测值
+      YF_DING_ZI_3_WEN_DU: 3号电机定子温度实时监测值
+
+
+  机房配电室操作室环境烟雾温度系统:
+    信号:
+      YF_PEI_DIAN_SHI_YAN_WU_BAO_JING: 配电室检测到烟雾报警信号
+      YF_CAO_ZUO_SHI_YAN_WU_BAO_JING: 操作室检测到烟雾报警信号
+      YF_JI_FANG_YAN_WU_BAO_JING: 机房检测到烟雾报警信号
+      YF_JI_FANG_WEN_DU_BAO_JING: 机房环境温度过高报警信号
+      YF_JI_FANG_YAN_WU_YU_JING: 机房烟雾浓度达到预警阈值信号
+      YF_PEI_DIAN_SHI_YAN_WU_YU_JING: 配电室烟雾浓度达到预警阈值信号
+      YF_CAO_ZUO_SHI_YAN_WU_YU_JING: 操作室烟雾浓度达到预警阈值信号
+      YF_JI_FANG_WEN_DU_YU_JING: 机房温度达到预警阈值信号
+    设定值:
+      YF_JI_FANG_WEN_DU_BAO_JING_SHE_DING: 机房环境温度报警阈值设定值
+      YF_JI_FANG_WEN_DU_YU_JING_SHE_DING: 机房温度预警阈值设定值
+      YF_YAN_WU_BAO_JING_SHE_DING: 环境烟雾报警阈值设定值
+      YF_YAN_WU_YU_JING_SHE_DING: 环境烟雾预警阈值设定值
+    监测值:
+      YF_JI_FANG_YAN_WU: 机房内烟雾浓度实时监测值
+      YF_PEI_DIAN_SHI_YAN_WU: 配电室内烟雾浓度实时监测值
+      YF_CAO_ZUO_SHI_YAN_WU: 操作室内烟雾浓度实时监测值
+      YF_JI_FANG_SHI_DU: 机房环境湿度实时监测值
+      YF_JI_FANG_WEN_DU: 机房环境温度实时监测值
+    时间戳:
+      YF_TIMESTAMP: 系统时间戳
+
+  振动系统:
+    信号:
+      YF_ZHEN_DONG_1_BAO_JING: 1号振动监测点超限报警信号
+      YF_ZHEN_DONG_2_BAO_JING: 2号振动监测点超限报警信号
+      YF_ZHEN_DONG_3_BAO_JING: 3号振动监测点超限报警信号
+      YF_ZHEN_DONG_1_YU_JING: 1号振动监测点达到预警阈值信号
+      YF_ZHEN_DONG_2_YU_JING: 2号振动监测点达到预警阈值信号
+      YF_ZHEN_DONG_3_YU_JING: 3号振动监测点达到预警阈值信号
+    设定值:
+      YF_ZHEN_DONG_BAO_JING_SHE_DING: 设备振动超限报警阈值设定值
+      YF_ZHEN_DONG_YU_JING_SHE_DING: 设备振动预警阈值设定值
+    监测值:
+      YF_ZHEN_DONG_1: 1号振动传感器实时监测值
+      YF_ZHEN_DONG_2: 2号振动传感器实时监测值
+      YF_ZHEN_DONG_3: 3号振动传感器实时监测值
+    时间戳:
+      YF_TIMESTAMP: 系统时间戳
+
+  逻辑控制系统:
+    停止逻辑:
+      YF_SAN_HAO_WEI_BEI_YONG_TING_1: 3号为备用时机组1停止逻辑
+      YF_ER_HAO_WEI_BEI_YONG_TING_1: 2号为备用时机组1停止逻辑
+      YF_SAN_HAO_WEI_BEI_YONG_TING_2: 3号为备用时机组2停止逻辑
+      YF_YI_HAO_WEI_BEI_YONG_TING_2: 1号为备用时机组2停止逻辑
+      YF_YI_HAO_WEI_BEI_YONG_TING_3: 1号为备用时机组3停止逻辑
+      YF_ER_HAO_WEI_BEI_YONG_TING_3: 2号为备用时机组3停止逻辑
+    控制逻辑:
+      YF_BEI_YONG_WEI_3_TING_2_YI_XUAN: 已选择备用3停2控制逻辑
+      YF_BEI_YONG_WEI_3_TING_1_YI_XUAN: 已选择备用3停1控制逻辑
+      YF_BEI_YONG_WEI_1_TING_3_YI_XUAN: 已选择备用1停3控制逻辑
+      YF_BEI_YONG_WEI_1_TING_2_YI_XUAN: 已选择备用1停2控制逻辑
+      YF_BEI_YONG_WEI_2_TING_1_YI_XUAN: 已选择备用2停1控制逻辑
+      YF_BEI_YONG_WEI_2_TING_3_YI_XUAN: 已选择备用2停3控制逻辑  
+    时间戳:
+      YF_TIMESTAMP: 系统时间戳

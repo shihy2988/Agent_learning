@@ -1,0 +1,44 @@
+2026-07-27 11:57:44,720 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=0, status=None)) after connection broken by 'SSLError(SSLError(1, '[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)'))': /?query_id=e77f2143-33da-45c6-94f8-77bf43107098
+2026-07-27 11:57:44,869 - clickhouse_connect.driver.httpclient - WARNING - Unexpected Http Driver Exception
+2026-07-27 11:57:44,869 - MinePersonnelService - ERROR - Failed to connect to ClickHouse: Error HTTPSConnectionPool(host='10.11.3.210', port=8123): Max retries exceeded with url: /?query_id=e77f2143-33da-45c6-94f8-77bf43107098 (Caused by SSLError(SSLError(1, '[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)'))) executing HTTP request attempt 1 (https://10.11.3.210:8123)
+2026-07-27 11:57:58,567 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-07-27 11:57:58,568 - MinePersonnelService - INFO - person_name_filters-----None, department_filters-----None, worktype_filters-----None, duty_filters-----None, area_filters-----None, station_filters-----None, numeric_filters-----None, statistics_filter-----None, start_date-----2026-06-27 00:00:00, end_date-----2026-07-27 00:00:00
+2026-07-27 11:57:58,588 - MinePersonnelService - INFO - query_todayornow_personlist called with params: person_name_filters=None, department_filters=None,worktype_filters=None, duty_filters=None, area_filters=None, station_filters=Nonenumeric_filters=None, statistics_filter=None, today_or_now True
+2026-07-27 11:57:58,588 - MinePersonnelService - INFO - step 0: 参数适配 - 处理姓名/部门/工种/职位/区域/站点/时间等条件
+2026-07-27 11:57:58,588 - MinePersonnelService - INFO - step 1: 检查和处理时间参数
+2026-07-27 11:57:58,590 - MinePersonnelService - INFO - step 2: 处理 numeric_filters 和 statistics_filter
+2026-07-27 11:57:58,594 - MinePersonnelService - ERROR - step 3: traceback: Traceback (most recent call last):
+  File "G:\git\Agent_learning\HJL_agent\tools\person_tools\person_tool.py", line 402, in query_todayornow_personlist
+    step += 1; logger.info(f"step {step}: 调用 get_person_infos_daytype_with_cache 下发筛选请求 参数: person_name_filters={names}, department_filters={departments}, worktype_filters={work_types}, duty_filters={duties}, area_filters={areas}, station_filters={stations}, start_date={start_time}, end_time={end_time}, numeric_filters={num_filters}, now_or_today={now_or_today}, statistics_filter={stat_filter}")
+                                                                                                                                                                                                                                                                                                                                                                        ^^^^^^^^^^^^
+NameError: name 'now_or_today' is not defined
+
+2026-07-27 11:58:47,486 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-07-27 11:58:47,487 - MinePersonnelService - INFO - person_name_filters-----None, department_filters-----None, worktype_filters-----None, duty_filters-----None, area_filters-----None, station_filters-----None, numeric_filters-----None, statistics_filter-----None, start_date-----2026-06-27 00:00:00, end_date-----2026-07-27 00:00:00
+2026-07-27 11:58:47,517 - MinePersonnelService - INFO - query_todayornow_personlist called with params: person_name_filters=None, department_filters=None,worktype_filters=None, duty_filters=None, area_filters=None, station_filters=Nonenumeric_filters=None, statistics_filter=None, today_or_now True
+2026-07-27 11:58:47,517 - MinePersonnelService - INFO - step 0: 参数适配 - 处理姓名/部门/工种/职位/区域/站点/时间等条件
+2026-07-27 11:58:47,517 - MinePersonnelService - INFO - step 1: 检查和处理时间参数
+2026-07-27 11:58:47,517 - MinePersonnelService - INFO - step 2: 处理 numeric_filters 和 statistics_filter
+2026-07-27 11:58:47,517 - MinePersonnelService - INFO - step 3: 调用 get_person_infos_daytype_with_cache 下发筛选请求 参数: person_name_filters=None, department_filters=None, worktype_filters=None, duty_filters=None, area_filters=None, station_filters=None, start_date=2026-07-27 00:00:00, end_time=2026-07-27 11:58:47, numeric_filters=None, , statistics_filter=None
+2026-07-27 11:58:47,517 - MinePersonnelService - INFO - person_name_filters-----None, department_filters-----None, worktype_filters-----None, duty_filters-----None, area_filters-----None, station_filters-----None, numeric_filters-----None, statistics_filter-----None, start_date-----2026-07-27 00:00:00, end_date-----2026-07-27 11:58:47
+2026-07-27 11:58:47,545 - MinePersonnelService - INFO - missed_days-----['2026-07-27']
+2026-07-27 11:58:47,545 - MinePersonnelService - INFO - fetch_start-----2026-07-27 00:00:00 start 
+2026-07-27 11:58:48,187 - MinePersonnelService - INFO - missed_days-----['2026-06-27', '2026-06-28', '2026-06-29', '2026-06-30', '2026-07-01', '2026-07-02', '2026-07-03', '2026-07-04', '2026-07-05', '2026-07-06', '2026-07-07', '2026-07-08', '2026-07-09', '2026-07-10', '2026-07-11', '2026-07-12', '2026-07-24', '2026-07-25', '2026-07-26', '2026-07-27']
+2026-07-27 11:58:48,203 - MinePersonnelService - INFO - fetch_start-----2026-06-25 00:00:00 start 
+2026-07-27 11:58:48,549 - MinePersonnelService - INFO - fetch_end-----2026-07-27 11:58:47 end
+2026-07-27 11:58:48,549 - MinePersonnelService - INFO - fetch_result----into cache start
+2026-07-27 11:58:48,574 - MinePersonnelService - INFO - cache updated for day 2026-07-27
+2026-07-27 11:58:48,574 - MinePersonnelService - INFO - fetch_result----into cache end
+2026-07-27 11:58:48,574 - MinePersonnelService - INFO - 开始按每日输出过滤后的数据
+2026-07-27 11:58:48,587 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 1 days.
+2026-07-27 11:58:48,627 - MinePersonnelService - INFO - step 4: 检查查询结果有效性
+2026-07-27 11:58:48,627 - MinePersonnelService - INFO - step 5: 序列化查询到的数据
+2026-07-27 11:58:48,630 - MinePersonnelService - INFO - step 5: 已经序列化查询结果, 序列化长度: 293565
+2026-07-27 11:58:48,630 - MinePersonnelService - INFO - step 6: 判断是否需要进行统计项过滤
+2026-07-27 11:58:48,630 - MinePersonnelService - INFO - step 6: statistics_filter_passed=False
+2026-07-27 11:58:48,630 - MinePersonnelService - INFO - step 7: json_full超过30k，对每日数据做第一次筛选压缩
+2026-07-27 11:58:48,630 - MinePersonnelService - INFO - step 7: 进行person_filter筛选 key=2026-07-27
+2026-07-27 11:58:48,747 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人']
+2026-07-27 11:58:48,748 - MinePersonnelService - INFO - step 7: 首轮压缩后json长度: 12607
+2026-07-27 11:58:48,748 - MinePersonnelService - INFO - step 7: 压缩人员 records, 当前json长度: len_json_full=12607
+2026-07-27 11:58:48,749 - MinePersonnelService - INFO - step 8: 函数执行完成, 返回json_full

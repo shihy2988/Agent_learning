@@ -1,0 +1,373 @@
+2026-05-26 11:58:43,209 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-05-26 11:59:26,659 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-05-26 11:59:26,671 - MinePersonnelService - INFO - 通用缓存管理器初始化: data/person_car_cache.db
+2026-05-26 11:59:26,854 - MinePersonnelService - INFO - query_person_trajectory called: name=王利明, start_time=2026-05-21 00:00:00, end_time=2026-05-28 23:59:59
+2026-05-26 11:59:26,909 - MinePersonnelService - INFO - [person_trajectory] 缺失 1 段，增量查询
+2026-05-26 14:01:44,202 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-05-26 14:01:44,214 - MinePersonnelService - INFO - 通用缓存管理器初始化: data/person_car_cache.db
+2026-05-26 14:01:44,368 - MinePersonnelService - INFO - query_person_trajectory called: name=王利明, start_time=2026-05-21 00:00:00, end_time=2026-05-28 23:59:59
+2026-05-26 14:03:10,417 - MinePersonnelService - INFO - [person_trajectory] 缺失 1 段，增量查询
+2026-05-26 14:14:50,457 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-05-26 14:14:50,542 - MinePersonnelService - INFO - 通用缓存管理器初始化: data/person_car_cache.db
+2026-05-26 14:14:50,805 - MinePersonnelService - INFO - query_person_trajectory called: name=王利明, start_time=2026-05-21 00:00:00, end_time=2026-05-28 23:59:59
+2026-05-26 14:15:01,979 - MinePersonnelService - INFO - [person_trajectory] 缺失 1 段，增量查询
+2026-05-26 14:18:25,186 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-05-26 14:18:25,202 - MinePersonnelService - INFO - 通用缓存管理器初始化: data/person_car_cache.db
+2026-05-26 14:18:25,487 - MinePersonnelService - INFO - query_person_trajectory called: name=王利明, start_time=2026-05-21 00:00:00, end_time=2026-05-28 23:59:59
+2026-05-26 14:18:25,504 - MinePersonnelService - INFO - [person_trajectory] 缺失 1 段，增量查询
+2026-05-26 14:27:23,036 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-05-26 14:27:23,218 - MinePersonnelService - INFO - query_person_trajectory called: name=王利明, start_time=2026-05-21 00:00:00, end_time=2026-05-28 23:59:59
+2026-05-26 14:31:38,430 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-05-26 14:31:38,755 - MinePersonnelService - INFO - query_person_trajectory called: name=王利明, start_time=2026-05-21 00:00:00, end_time=2026-05-28 23:59:59
+2026-05-26 14:32:38,658 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-05-26 14:32:38,669 - MinePersonnelService - INFO - 通用缓存管理器初始化: data/person_car_cache.db
+2026-05-26 14:32:38,989 - MinePersonnelService - INFO - query_person_trajectory called: name=王利明, start_time=2026-05-21 00:00:00, end_time=2026-05-28 23:59:59
+2026-05-26 14:32:39,006 - MinePersonnelService - INFO - [person_trajectory] 缺失 1 段，增量查询
+2026-05-26 14:34:10,485 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-05-26 14:34:10,573 - MinePersonnelService - INFO - 通用缓存管理器初始化: data/person_car_cache.db
+2026-05-26 14:34:10,935 - MinePersonnelService - INFO - query_person_trajectory called: name=王利明, start_time=2026-05-21 00:00:00, end_time=2026-05-28 23:59:59
+2026-05-26 14:34:10,951 - MinePersonnelService - INFO - [person_trajectory] 缺失 1 段，增量查询
+2026-05-26 14:42:04,490 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-05-26 14:42:04,501 - MinePersonnelService - INFO - 通用缓存管理器初始化: data/person_car_cache.db
+2026-05-26 14:42:04,518 - MinePersonnelService - INFO - query_person_trajectory called: name=王利明, start_time=2026-05-21 00:00:00, end_time=2026-05-28 23:59:59
+2026-05-26 14:42:04,529 - MinePersonnelService - INFO - [person_trajectory] 缺失 1 段，增量查询
+2026-05-26 19:53:48,943 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-05-26 19:53:49,037 - MinePersonnelService - INFO - 通用缓存管理器初始化: data/person_car_cache.db
+2026-05-26 19:53:49,184 - MinePersonnelService - INFO - query_person_trajectory called: name=王利明, start_time=2026-05-21 00:00:00, end_time=2026-05-28 23:59:59
+2026-05-26 19:53:49,194 - MinePersonnelService - INFO - [person_trajectory] 缺失 1 段，增量查询
+2026-05-26 19:54:46,519 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-05-26 19:54:46,830 - MinePersonnelService - INFO - query_person_trajectory called: name=王利明, start_time=2026-05-21 00:00:00, end_time=2026-05-28 23:59:59
+2026-05-26 19:59:44,271 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-05-26 19:59:44,401 - MinePersonnelService - INFO - query_person_trajectory called: name=王利明, start_time=2026-05-21 00:00:00, end_time=2026-05-28 23:59:59
+2026-05-26 20:13:00,769 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-05-26 20:13:00,915 - MinePersonnelService - INFO - query_person_trajectory called: name=王利明, start_time=2026-05-21 00:00:00, end_time=2026-05-28 23:59:59
+2026-05-26 20:16:44,774 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-05-26 20:16:44,932 - MinePersonnelService - INFO - query_person_trajectory called: name=王利明, start_time=2026-05-21 00:00:00, end_time=2026-05-28 23:59:59
+2026-06-01 16:21:17,894 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-01 16:21:18,040 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-01 16:24:59,332 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-01 16:24:59,349 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-01 16:27:03,901 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-01 16:27:03,919 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-01 16:27:26,008 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-01 16:27:26,026 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-01 16:28:37,811 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-01 16:28:37,829 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-01 16:29:58,803 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-01 16:29:58,822 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-01 16:29:59,501 - MinePersonnelService - INFO - query_underground_status 查询成功: total_underground=73, total_out_today=160, total_today=233, 返回字段长度=6737
+2026-06-02 10:19:50,291 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 10:19:50,414 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-02 10:23:06,687 - MinePersonnelService - INFO - query_underground_status 查询成功: total_underground=112, total_out_today=84, total_today=196, 返回字段长度=6777
+2026-06-02 10:24:08,330 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 10:24:08,456 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-02 10:27:02,953 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 10:27:03,090 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-02 10:27:37,646 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 10:27:37,781 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-02 10:30:03,515 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 10:30:03,635 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-02 10:30:51,418 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 10:30:51,543 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-02 10:40:21,399 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 10:40:21,513 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-02 10:44:01,176 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 10:44:01,301 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-02 10:46:29,422 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 10:46:29,545 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-02 10:47:15,462 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 10:47:15,480 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-02 10:47:15,914 - MinePersonnelService - INFO - query_underground_status 查询成功: total_underground=113, total_out_today=83, total_today=203, 返回字段长度=7640
+2026-06-02 10:52:54,433 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 10:52:54,451 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-02 10:52:54,770 - MinePersonnelService - INFO - query_underground_status 查询成功: total_underground=107, total_out_today=89, total_today=203, 返回字段长度=7561
+2026-06-02 11:10:34,515 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 11:10:34,638 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 11:12:42,971 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 11:12:46,665 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 11:13:53,639 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 11:13:53,768 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 11:15:47,434 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 11:15:47,557 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 11:16:27,593 - MinePersonnelService - ERROR - 分段轨迹查询失败: Executing a streaming operation on a closed stream
+Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 2792, in get_person_trajectory_with_stay
+    for row in tqdm(result.result_rows):
+                    ^^^^^^^^^^^^^^^^^^
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\query.py", line 447, in result_rows
+    for block in stream:
+                 ^^^^^^
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\common.py", line 208, in __next__
+    return next(self.gen)
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\query.py", line 467, in _row_block_stream
+    for block in self._column_block_stream():
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\query.py", line 461, in _column_block_stream
+    raise StreamClosedError
+clickhouse_connect.driver.exceptions.StreamClosedError: Executing a streaming operation on a closed stream
+
+2026-06-02 11:18:21,810 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 11:18:21,927 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 11:23:57,799 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 11:23:57,923 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 11:23:58,520 - MinePersonnelService - ERROR - 分段轨迹查询失败: not enough arguments for format string
+Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 2785, in get_person_trajectory_with_stay
+    result = self.client.query(
+        query,
+    ...<4 lines>...
+        }
+    )
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\client.py", line 392, in query
+    query_context = self.create_query_context(**kwargs)
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\client.py", line 702, in create_query_context
+    return QueryContext(query=query,
+                        parameters=parameters,
+    ...<16 lines>...
+                        external_data=external_data,
+                        transport_settings=transport_settings)
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\query.py", line 259, in __init__
+    self._update_query()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\query.py", line 391, in _update_query
+    self.final_query, self.bind_params = bind_query(self.query, self.parameters, self.server_tz)
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\binding.py", line 116, in bind_query
+    query, bound_params = finalize_query(query, final_params, server_tz), {}
+                          ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\binding.py", line 49, in finalize_query
+    return query % {k: format_query_value(v, server_tz) for k, v in parameters.items()}
+           ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: not enough arguments for format string
+
+2026-06-02 11:24:14,273 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 11:24:14,291 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 11:24:15,204 - MinePersonnelService - ERROR - 分段轨迹查询失败: not enough arguments for format string
+Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 2785, in get_person_trajectory_with_stay
+    result = self.client.query(
+        query,
+    ...<4 lines>...
+        }
+    )
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\client.py", line 392, in query
+    query_context = self.create_query_context(**kwargs)
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\client.py", line 702, in create_query_context
+    return QueryContext(query=query,
+                        parameters=parameters,
+    ...<16 lines>...
+                        external_data=external_data,
+                        transport_settings=transport_settings)
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\query.py", line 259, in __init__
+    self._update_query()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\query.py", line 391, in _update_query
+    self.final_query, self.bind_params = bind_query(self.query, self.parameters, self.server_tz)
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\binding.py", line 116, in bind_query
+    query, bound_params = finalize_query(query, final_params, server_tz), {}
+                          ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\minianaconda\envs\agent\Lib\site-packages\clickhouse_connect\driver\binding.py", line 49, in finalize_query
+    return query % {k: format_query_value(v, server_tz) for k, v in parameters.items()}
+           ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: not enough arguments for format string
+
+2026-06-02 11:24:21,923 - MinePersonnelService - ERROR - find_status 异常: 'segments'
+Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 524, in query_person_trajectory
+    segments = person_records['segments']
+               ~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'segments'
+2026-06-02 11:29:29,975 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 11:29:30,095 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 11:39:47,528 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 11:39:47,656 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 11:41:51,342 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 11:41:51,475 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 11:42:04,440 - MinePersonnelService - ERROR - find_status 异常: unsupported operand type(s) for +: 'NoneType' and 'str'
+Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 520, in query_person_trajectory
+    key = record.get('UserName')+'_'+record.get('UserNo')
+          ~~~~~~~~~~~~~~~~~~~~~~^~~~
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+2026-06-02 11:43:56,980 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 11:43:57,102 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 11:44:01,554 - MinePersonnelService - ERROR - find_status 异常: unsupported operand type(s) for +: 'NoneType' and 'str'
+Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 520, in query_person_trajectory
+    key = record.get('UserName')+'_'+record.get('UserNo','unknown')
+          ~~~~~~~~~~~~~~~~~~~~~~^~~~
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+2026-06-02 11:45:01,729 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 11:45:01,747 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 11:45:05,634 - MinePersonnelService - ERROR - find_status 异常: 'segments'
+Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 527, in query_person_trajectory
+    segments = person_records['segments']
+               ~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'segments'
+2026-06-02 11:45:50,371 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 11:45:50,495 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 11:46:54,621 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 11:46:54,738 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 11:52:11,707 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 11:52:11,828 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 11:53:59,129 - MinePersonnelService - INFO - find_status 查询成功: 返回精简JSON(多卡/同名支持), 字段长度: 51616
+2026-06-02 14:02:47,623 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 14:02:47,750 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 14:14:07,035 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 14:14:07,053 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 14:14:08,442 - MinePersonnelService - ERROR - find_status 异常: list indices must be integers or slices, not str
+Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 498, in query_person_trajectory
+    names[key] = info
+    ~~~~~^^^^^
+TypeError: list indices must be integers or slices, not str
+2026-06-02 14:14:50,589 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 14:14:50,606 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 14:14:52,644 - MinePersonnelService - ERROR - find_status 异常: list indices must be integers or slices, not str Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 498, in query_person_trajectory
+    names[key] = info
+    ~~~~~^^^^^
+TypeError: list indices must be integers or slices, not str
+Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 498, in query_person_trajectory
+    names[key] = info
+    ~~~~~^^^^^
+TypeError: list indices must be integers or slices, not str
+2026-06-02 14:15:28,632 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 14:15:28,650 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 14:16:09,686 - MinePersonnelService - INFO - find_status 查询成功: 返回精简JSON(多卡/同名支持), 字段长度: 35636
+2026-06-02 14:17:50,719 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 14:17:50,837 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 14:18:37,456 - MinePersonnelService - INFO - find_status 查询成功: 返回精简JSON(多卡/同名支持), 字段长度: 34456
+2026-06-02 14:26:11,999 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 14:26:12,123 - MinePersonnelService - INFO - query_person_trajectory called: name=李治军, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 14:28:32,244 - MinePersonnelService - INFO - find_status 查询成功: 返回精简JSON(多卡/同名支持), 字段长度: 34615
+2026-06-02 14:29:24,685 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 14:29:24,702 - MinePersonnelService - INFO - query_person_trajectory called: name=王利明, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00
+2026-06-02 14:29:29,960 - MinePersonnelService - INFO - find_status 查询成功: 返回详细JSON(多卡/同名支持), 字段长度: 66347
+2026-06-02 14:43:32,532 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 14:43:32,668 - MinePersonnelService - INFO - query_personnel_list called with params: cardids=None, names=['李治军'], electricitys=None, work_types=None, class_names=None, departments=None, start_time=None, end_time=None, main_stations=None, sub_stations=None
+2026-06-02 14:44:50,187 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 14:44:50,313 - MinePersonnelService - INFO - query_personnel_list called with params: cardids=None, names=['李治军'], electricitys=None, work_types=None, class_names=None, departments=None, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00, main_stations=None, sub_stations=None
+2026-06-02 14:46:07,837 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 14:46:07,963 - MinePersonnelService - INFO - query_personnel_list called with params: cardids=None, names=None, electricitys=None, work_types=None, class_names=None, departments=None, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00, main_stations=None, sub_stations=None
+2026-06-02 14:50:27,591 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 14:50:27,609 - MinePersonnelService - INFO - query_personnel_list called with params: cardids=None, names=None, electricitys=None, work_types=None, class_names=None, departments=None, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00, main_stations=None, sub_stations=None
+2026-06-02 14:50:39,149 - MinePersonnelService - ERROR - traceback: Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 762, in query_personnel_list
+    best_match, score = process.extractOne(person_key, list(inout_records_by_person.keys()))
+    ^^^^^^^^^^^^^^^^^
+TypeError: cannot unpack non-iterable NoneType object
+
+2026-06-02 14:51:30,046 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 14:51:30,167 - MinePersonnelService - INFO - query_personnel_list called with params: cardids=None, names=None, electricitys=None, work_types=None, class_names=None, departments=None, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00, main_stations=None, sub_stations=None
+2026-06-02 14:53:50,473 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 14:53:50,589 - MinePersonnelService - INFO - query_personnel_list called with params: cardids=None, names=None, electricitys=None, work_types=None, class_names=None, departments=None, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00, main_stations=None, sub_stations=None
+2026-06-02 14:57:10,261 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 14:57:10,278 - MinePersonnelService - INFO - query_personnel_list called with params: cardids=None, names=None, electricitys=None, work_types=None, class_names=None, departments=None, start_time=2026-05-22 08:00:00, end_time=2026-06-10 10:00:00, main_stations=None, sub_stations=None
+2026-06-02 14:57:34,428 - MinePersonnelService - INFO - 压缩人员 records, 当前json长度: len_json_full4=43627, 最终输出字段: keys=['persons_inout_count', '_summary_area_persons_per_day', '_summary_person_unique_area_per_day']
+2026-06-02 15:22:59,462 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 15:22:59,482 - MinePersonnelService - INFO - query_person_near_station called: station_name=主运大巷, near_distance=100
+2026-06-02 15:23:00,201 - MinePersonnelService - WARNING - request error for stationHeadid 101: 'NoneType' object is not iterable
+2026-06-02 15:23:00,201 - MinePersonnelService - INFO - query_person_near_station 查询成功: 匹配站点ID=['101'], 匹配站点名称=['4-3煤盘区主运大巷10号'], 返回数据人数: 0, 字段长度: 77
+2026-06-02 15:24:45,141 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 15:24:45,159 - MinePersonnelService - INFO - query_person_near_station called: station_name=主运输大巷, near_distance=100
+2026-06-02 15:32:31,535 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 15:32:31,552 - MinePersonnelService - INFO - query_person_near_station called: station_name=主运输大巷, near_distance=100
+2026-06-02 15:32:31,977 - MinePersonnelService - WARNING - request error for stationHeadid 101: 'NoneType' object is not iterable
+2026-06-02 15:32:31,978 - MinePersonnelService - INFO - query_person_near_station 查询成功: 匹配站点ID=['101'], 匹配站点名称=['4-3煤盘区主运大巷10号'], 返回数据人数: 0, 字段长度: 77
+2026-06-02 15:32:51,424 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 15:32:51,444 - MinePersonnelService - INFO - query_person_near_station called: station_name=主运输大巷, near_distance=100
+2026-06-02 15:32:51,703 - MinePersonnelService - WARNING - request error for stationHeadid 91: 'NoneType' object is not iterable
+2026-06-02 15:32:51,799 - MinePersonnelService - WARNING - request error for stationHeadid 101: 'NoneType' object is not iterable
+2026-06-02 15:32:51,902 - MinePersonnelService - WARNING - request error for stationHeadid 141: 'NoneType' object is not iterable
+2026-06-02 15:32:51,987 - MinePersonnelService - WARNING - request error for stationHeadid 151: 'NoneType' object is not iterable
+2026-06-02 15:32:52,079 - MinePersonnelService - WARNING - request error for stationHeadid 291: 'NoneType' object is not iterable
+2026-06-02 15:32:52,175 - MinePersonnelService - WARNING - request error for stationHeadid 331: 'NoneType' object is not iterable
+2026-06-02 15:32:52,175 - MinePersonnelService - INFO - query_person_near_station 查询成功: 匹配站点ID=['91', '101', '141', '151', '291', '331'], 匹配站点名称=['4-3煤辅运大巷400米', '4-3煤盘区主运大巷10号', '5煤主运4联巷内14号', '5煤主运4联巷外15号', '5-1煤主运6联巷29号', '二盘区5煤一段主运9联巷33号'], 返回数据人数: 0, 字段长度: 182
+2026-06-02 15:34:52,279 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 15:34:52,301 - MinePersonnelService - INFO - query_person_near_station called: station_name=主运输大巷, near_distance=100
+2026-06-02 15:34:52,597 - MinePersonnelService - WARNING - request error for stationHeadid 91: 'NoneType' object is not iterable Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 1554, in query_person_near_station
+    collected.extend(data)
+    ~~~~~~~~~~~~~~~~^^^^^^
+TypeError: 'NoneType' object is not iterable
+
+2026-06-02 15:34:52,684 - MinePersonnelService - WARNING - request error for stationHeadid 101: 'NoneType' object is not iterable Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 1554, in query_person_near_station
+    collected.extend(data)
+    ~~~~~~~~~~~~~~~~^^^^^^
+TypeError: 'NoneType' object is not iterable
+
+2026-06-02 15:34:52,781 - MinePersonnelService - WARNING - request error for stationHeadid 141: 'NoneType' object is not iterable Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 1554, in query_person_near_station
+    collected.extend(data)
+    ~~~~~~~~~~~~~~~~^^^^^^
+TypeError: 'NoneType' object is not iterable
+
+2026-06-02 15:34:52,858 - MinePersonnelService - WARNING - request error for stationHeadid 151: 'NoneType' object is not iterable Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 1554, in query_person_near_station
+    collected.extend(data)
+    ~~~~~~~~~~~~~~~~^^^^^^
+TypeError: 'NoneType' object is not iterable
+
+2026-06-02 15:34:52,935 - MinePersonnelService - WARNING - request error for stationHeadid 291: 'NoneType' object is not iterable Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 1554, in query_person_near_station
+    collected.extend(data)
+    ~~~~~~~~~~~~~~~~^^^^^^
+TypeError: 'NoneType' object is not iterable
+
+2026-06-02 15:34:53,006 - MinePersonnelService - WARNING - request error for stationHeadid 331: 'NoneType' object is not iterable Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\tools\person_tools.py", line 1554, in query_person_near_station
+    collected.extend(data)
+    ~~~~~~~~~~~~~~~~^^^^^^
+TypeError: 'NoneType' object is not iterable
+
+2026-06-02 15:34:53,007 - MinePersonnelService - INFO - query_person_near_station 查询成功: 匹配站点ID=['91', '101', '141', '151', '291', '331'], 匹配站点名称=['4-3煤辅运大巷400米', '4-3煤盘区主运大巷10号', '5煤主运4联巷内14号', '5煤主运4联巷外15号', '5-1煤主运6联巷29号', '二盘区5煤一段主运9联巷33号'], 返回数据人数: 0, 字段长度: 182
+2026-06-02 15:37:29,439 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 15:37:29,456 - MinePersonnelService - INFO - query_person_near_station called: station_name=主运输大巷, near_distance=100
+2026-06-02 15:37:30,135 - MinePersonnelService - INFO - query_person_near_station 查询成功: 匹配站点ID=['91', '101', '141', '151', '291', '331'], 匹配站点名称=['4-3煤辅运大巷400米', '4-3煤盘区主运大巷10号', '5煤主运4联巷内14号', '5煤主运4联巷外15号', '5-1煤主运6联巷29号', '二盘区5煤一段主运9联巷33号'], 返回数据人数: 0, 字段长度: 182
+2026-06-02 16:34:07,119 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 16:34:07,242 - MinePersonnelService - INFO - query_person_near_station called: station_name=主运输大巷, near_distance=100
+2026-06-02 16:34:08,019 - MinePersonnelService - INFO - query_person_near_station 查询成功: 匹配站点ID=['91', '101', '141', '151', '291', '331'], 匹配站点名称=['4-3煤辅运大巷400米', '4-3煤盘区主运大巷10号', '5煤主运4联巷内14号', '5煤主运4联巷外15号', '5-1煤主运6联巷29号', '二盘区5煤一段主运9联巷33号'], 返回数据人数: 0, 字段长度: 182
+2026-06-02 16:34:36,914 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 16:34:37,037 - MinePersonnelService - INFO - query_person_underground_status called, now_only=True
+2026-06-02 16:42:38,586 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 16:42:38,605 - MinePersonnelService - INFO - query_person_underground_status called, now_only=True
+2026-06-02 16:42:39,380 - MinePersonnelService - INFO - query_person_underground_status(now_only=True) 查询成功：实时井下人员数量=62, 轨迹记录人数=62, 区域分布数=20, 返回数据长度=600774
+2026-06-02 16:42:39,404 - MinePersonnelService - INFO - query_person_near_station called: station_name=主运输大巷, near_distance=100
+2026-06-02 16:42:40,272 - MinePersonnelService - INFO - query_person_near_station 查询成功: 匹配站点ID=['91', '101', '141', '151', '291', '331'], 匹配站点名称=['4-3煤辅运大巷400米', '4-3煤盘区主运大巷10号', '5煤主运4联巷内14号', '5煤主运4联巷外15号', '5-1煤主运6联巷29号', '二盘区5煤一段主运9联巷33号'], 返回数据人数: 0, 字段长度: 182
+2026-06-02 16:45:12,785 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 16:45:12,907 - MinePersonnelService - INFO - query_person_underground_status called, now_only=True
+2026-06-02 16:50:00,995 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 16:50:01,012 - MinePersonnelService - INFO - query_person_underground_status called, now_only=True
+2026-06-02 16:50:01,867 - MinePersonnelService - INFO - query_person_underground_status(now_only=True) 查询成功：实时井下人员数量=49, 轨迹记录人数=49, 区域分布数=20, 返回数据长度=158945
+2026-06-02 16:53:52,499 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 16:53:52,516 - MinePersonnelService - INFO - query_person_underground_status called, now_only=True
+2026-06-02 16:53:53,095 - MinePersonnelService - INFO - query_person_underground_status(now_only=True) 查询成功：实时井下人员数量=49, 轨迹记录人数=49, 区域分布数=18, 返回数据长度=88985
+2026-06-02 16:55:01,916 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 16:55:02,041 - MinePersonnelService - INFO - query_person_underground_status called, now_only=True
+2026-06-02 16:57:33,286 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 16:57:33,304 - MinePersonnelService - INFO - query_person_underground_status called, now_only=True
+2026-06-02 16:57:33,856 - MinePersonnelService - INFO - query_person_underground_status(now_only=True) 查询成功：实时井下人员数量=49, 轨迹记录人数=49, 区域分布数=19, 返回数据长度=64421
+2026-06-02 16:58:17,494 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 16:58:17,620 - MinePersonnelService - INFO - query_person_underground_status called, now_only=True
+2026-06-02 17:00:22,840 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 17:00:22,859 - MinePersonnelService - INFO - query_person_underground_status called, now_only=True
+2026-06-02 17:00:23,365 - MinePersonnelService - INFO - query_person_underground_status(now_only=True) 查询成功：实时井下人员数量=49, 轨迹记录人数=49, 区域分布数=19, 返回数据长度=60711
+2026-06-02 17:00:44,474 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 17:00:44,599 - MinePersonnelService - INFO - query_person_underground_status called, now_only=True
+2026-06-02 17:24:00,862 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 17:24:00,994 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-02 17:25:12,682 - MinePersonnelService - INFO - query_underground_status 查询成功: total_underground=53, total_out_today=187, total_today=269, 返回字段长度=598020
+2026-06-02 17:33:53,226 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 17:33:53,243 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-02 17:33:54,680 - MinePersonnelService - INFO - query_underground_status 查询成功: total_underground=55, total_out_today=187, total_today=272, 返回字段长度=214747
+2026-06-02 17:38:54,602 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 17:38:54,622 - MinePersonnelService - INFO - query_person_underground_status called, now_only=False
+2026-06-02 17:38:56,257 - MinePersonnelService - INFO - query_underground_status 查询成功: total_underground=55, total_out_today=187, total_today=272, 返回字段长度=56501
+2026-06-02 18:01:09,925 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-06-02 18:01:09,942 - MinePersonnelService - INFO - query_person_underground_status called, now_only=True
+2026-06-02 18:01:10,482 - MinePersonnelService - INFO - query_person_underground_status(now_only=True) 查询成功：实时井下人员数量=53, 轨迹记录人数=53, 区域分布数=19, 返回数据长度=13411

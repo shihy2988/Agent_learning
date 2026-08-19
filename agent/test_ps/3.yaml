@@ -1,0 +1,144 @@
+fan_system:
+
+  一号风机:
+    控制指令:
+      TF_YHFJ_YI_JIAN_QI_DONG: "一号风机执行一键启动操作指令"
+      TF_YHFJ_YI_JIAN_TING_ZHI: "一号风机执行一键停止操作指令"
+      TF_YHFJ_SHUI_PING_FENG_MEN_KAI_FA: "一号风机水平风门执行打开阀门操作"
+      TF_YHFJ_SHUI_PING_FENG_MEN_GUAN_FA: "一号风机水平风门执行关闭阀门操作"
+      TF_YHFJ_SHUI_PING_FENG_MEN_TING_ZHI: "一号风机水平风门执行停止动作操作"
+
+    状态:
+      TF_YHFJ_ZHUN_BEI_JIU_XU: "一号风机系统具备启动运行条件，准备就绪"
+      TF_YHFJ_YI_JIAN_QI_DONG_ZHONG: "一号风机处于一键启动过程运行状态"
+      TF_YHFJ_YI_JIAN_TING_ZHI_ZHONG: "一号风机处于一键停止过程运行状态"
+      TF_YHFJ_SUO_YOU_SHE_BEI_CHU_YU_YUAN_CHENG_ZHUANG_TAI: "一号风机所属全部设备均处于远程控制状态"
+
+    报警:
+      TF_YH_1_TING_JI_BAO_JING: "一号风机1号设备停机报警信号"
+      TF_YH_2_TING_JI_BAO_JING: "一号风机2号设备停机报警信号"
+      TF_YHFJ_YAN_WU: "一号风机区域检测到烟雾报警信号"
+
+    模拟量:
+      TF_YHFJ_FENG_LIANG_SHI_JI_ZHI: "一号风机风量实时监测数值"
+      TF_YHFJ_FENG_SU_SHI_JI_ZHI: "一号风机风速实时监测数值"
+      TF_YHFJ_JING_YA_SHI_JI_ZHI: "一号风机静压实时监测数值"
+      TF_YHFJ_QUAN_YA_SHI_JI_ZHI: "一号风机全压实时监测数值"
+      TF_YHFJ_DONG_YA_SHI_JI_ZHI: "一号风机动压实时监测数值"
+      TF_YHFJ_YUN_XING_XIAO_LV: "一号风机实际运行效率计算数值"
+
+    参数:
+      TF_YH_FENG_LIANG_XI_SHU: "一号风机风量修正计算系数"
+      TF_YH_FENG_SU_XI_SHU: "一号风机风速修正计算系数"
+      TF_YH_JING_YA_XI_SHU: "一号风机静压修正计算系数"
+      TF_YH_QUAN_YA_XI_SHU: "一号风机全压修正计算系数"
+      TF_YH_XIAO_LV_XI_SHU: "一号风机运行效率修正计算系数"
+      TF_YH_ZU_LI_XI_SHU: "一号风机风路阻力修正计算系数"
+
+  二号风机:
+    控制指令:
+      TF_EHFJ_YI_JIAN_QI_DONG: "二号风机执行一键启动操作指令"
+      TF_EHFJ_YI_JIAN_TING_ZHI: "二号风机执行一键停止操作指令"
+
+    状态:
+      TF_EHFJ_ZHUN_BEI_JIU_XU: "二号风机系统具备启动运行条件，准备就绪"
+
+    报警:
+      TF_EH_1_TING_JI_BAO_JING: "二号风机1号设备停机报警信号"
+      TF_EH_2_TING_JI_BAO_JING: "二号风机2号设备停机报警信号"
+
+    模拟量:
+      TF_EHFJ_FENG_LIANG_SHI_JI_ZHI: "二号风机风量实时监测数值"
+      TF_EHFJ_FENG_SU_SHI_JI_ZHI: "二号风机风速实时监测数值"
+
+    参数:
+      TF_EH_FENG_LIANG_XI_SHU: "二号风机风量修正计算系数"
+      TF_EH_FENG_SU_XI_SHU: "二号风机风速修正计算系数"
+
+  变频器:
+
+    一号变频器:
+      控制指令:
+        TF_YHBPQ_QI_DONG: "启动"
+        TF_YHBPQ_TING_ZHI: "停止"
+        TF_YHBPQ_FAN_ZHUAN_QI_DONG: "反转启动"
+
+      状态:
+        TF_YHBPQ_YUN_XING_XIN_HAO: "运行"
+        TF_YHBPQ_ZHENG_ZHUAN_XIN_HAO: "正转"
+        TF_YHBPQ_FAN_ZHUAN_XIN_HAO: "反转"
+        TF_YHBPQ_YUAN_CHENG_XIN_HAO: "远程"
+
+      报警:
+        TF_YHBPQ_GU_ZHANG_XIN_HAO: "故障"
+
+      模拟量:
+        TF_YHBPQ_PIN_LV_FAN_KUI: "频率反馈"
+        TF_YHBPQ_PIN_LV_GEI_DING: "频率给定"
+
+    二号变频器:
+      控制指令:
+        TF_EHBPQ_QI_DONG: "启动"
+        TF_EHBPQ_TING_ZHI: "停止"
+
+      状态:
+        TF_EHBPQ_YUN_XING_XIN_HAO: "运行"
+
+      报警:
+        TF_EHBPQ_GU_ZHANG_XIN_HAO: "故障"
+
+      模拟量:
+        TF_EHBPQ_PIN_LV_FAN_KUI: "频率反馈"
+
+  阀门系统:
+    蝶阀:
+      控制:
+        TF_YHDF_KAI_FA: "开"
+        TF_YHDF_GUAN_FA: "关"
+        TF_YHDF_TING_ZHI: "停止"
+
+      状态:
+        TF_YHDF_KAI_DAO_WEI_XIN_HAO: "开到位"
+        TF_YHDF_GUAN_DAO_WEI_XIN_HAO: "关到位"
+
+    风门:
+      状态:
+        TF_YHSPFM_KAI_DAO_WEI_XIN_HAO: "开到位"
+        TF_YHSPFM_GUAN_DAO_WEI_XIN_HAO: "关到位"
+
+  配电系统:
+    高压柜:
+      控制:
+        TF_YH_GAO_YA_GUI_HE_ZHA: "合闸"
+        TF_YH_GAO_YA_GUI_FEN_ZHA: "分闸"
+
+      状态:
+        TF_YH_GAO_YA_CHU_XIAN_GUI_HE_ZHA_XIN_HAO: "已合闸"
+
+    进线柜:
+      控制:
+        TF_YH_JIN_XIAN_GUI_HE_ZHA: "合闸"
+        TF_YH_JIN_XIAN_GUI_FEN_ZHA: "分闸"
+
+  系统级:
+    控制:
+      TF_YI_JIAN_FU_WEI: "系统复位"
+      TF_ZI_DONG_SHOU_DONG_QIE_HUAN: "自动/手动切换"
+      TF_CHU_SHI_HUA: "初始化"
+
+    状态:
+      TF_CHENG_XU_ZHI_XING_ZHONG: "程序运行中"
+      TF_LIANG_TAI_FENG_JI_DU_WEI_YUN_XING: "两台风机未运行"
+
+    报警:
+      TF_ZUO_YOU_JIN_XIAN_GUI_DU_WEI_HE_ZHA_BAO_JING: "进线柜未合闸"
+
+    参数:
+      TF_DIAN_LIU_BAO_JING_ZHI_SHE_DING: "电流报警阈值"
+      TF_DING_ZI_WEN_DU_BAO_JING_ZHI_SHE_DING: "温度报警阈值"
+      TF_ZHEN_DONG_BAO_JING_ZHI_SHE_DING: "振动报警阈值"
+      TF_ZHOU_CHENG_WEN_DU_BAO_JING_ZHI_SHE_DING: "轴温报警阈值"
+
+    其他:
+      TF_TIMESTAMP: "时间戳"
+      TF_TEST: "测试模式"

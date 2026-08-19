@@ -1,0 +1,241 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+矿井人员定位智能调度系统 - Gradio + FastAPI (支持流式和一次性请求)
+"""
+
+import gradio as gr
+import asyncio
+import re
+import logging
+from fastapi import FastAPI, Request
+from fastapi.responses import StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
+from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
+
+from demo_stream import build_agent, mcp_client
+import os
+# ====================== 日志配置 ======================
+log_dir = "logs"
+os.makedirs(log_dir, exist_ok=True)
+log_path = os.path.join(log_dir, "agent_service.log")
+
+logger = logging.getLogger("loggru.interact")
+logger.setLevel(logging.INFO)
+formatter = logging.Formatter('%(levelname)s %(asctime)s %(name)s: %(message)s')
+
+if not logger.handlers:
+    # 滚动日志：单文件最大50MB，备份一个旧文件，模式为"a"（追加）
+    fh = logging.handlers.RotatingFileHandler(
+        log_path, mode='a', maxBytes=50 * 1024 * 1024, backupCount=1, encoding="utf-8", delay=False
+    )
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+    sh = logging.StreamHandler()
+    sh.setFormatter(formatter)
+    logger.addHandler(sh)
+
+# ====================== Agent 单例 ======================
+agent_instance = None
+
+async def get_agent_instance():
+    global agent_instance
+    if agent_instance is None:
+        print("正在初始化 Agent...")
+        tools = await mcp_client.get_tools()
+        agent_instance = build_agent(tools)
+        print(f"Agent 初始化完成，加载 {len(tools)} 个工具")
+    return agent_instance
+
+
+def process_thinking_process(text: str) -> str:
+    """
+    只处理最外层的 <think>...</think>，支持流式和完整模式
+    """
+    start = text.find("<think>")
+    if start == -1:
+        return text
+
+    end = text.rfind("</think>")
+
+    # 未闭合（流式进行中）
+    if end == -1 or end < start:
+        prefix = text[:start]
+        content = text[start + len("<think>"):]
+        return (
+            f"{prefix}"
+            f"<details open style='color: #666; border-left: 3px solid #888; padding-left: 12px; margin: 8px 0;'>"
+            f"<summary>🤔 正在思考...</summary>{content}</details>"
+        )
+
+    # 已闭合（完整回复）
+    prefix = text[:start]
+    content = text[start + len("<think>"):end]
+    suffix = text[end + len("</think>"):]
+
+    return (
+        f"{prefix}"
+        f"<details style='color: #555; border-left: 3px solid #ccc; padding-left: 12px; margin: 8px 0; background: #f9f9f9;'>"
+        f"<summary>📝 查看思考过程</summary>{content}</details>"
+        f"{suffix}"
+    )
+
+async def generate_response(langchain_history, stream: bool = True):
+    """核心生成逻辑"""
+    agent = await get_agent_instance()
+    full_response = "<think> "
+
+    async for chunk, _ in agent.astream({"messages": langchain_history}, stream_mode="messages"):
+        if isinstance(chunk, AIMessage) and chunk.content:
+            piece = chunk.content
+            if isinstance(piece, list):
+                piece = "".join(p.get("text", "") if isinstance(p, dict) else str(p) for p in piece)
+            full_response += piece
+
+            if stream:
+                yield process_thinking_process(full_response)
+
+    if not stream:
+        yield process_thinking_process(full_response)
+
+
+# ====================== 原始 predict（供 Gradio 使用） ======================
+async def predict(message: str, history, request: gr.Request = None, stream: bool = True):
+    # IP 日志
+    client_ip = "unknown"
+    try:
+        if request and hasattr(request, "client"):
+            client_ip = request.client.host
+    except:
+        pass
+    logger.info(f"[IP:{client_ip}] 用户提问: {message}")
+
+    # ------------------ 构建 LangChain 消息历史 ------------------
+    system_instruction = """
+你是一名资深的**矿井安全生产智能调度专家**，与用户沟通时请严格遵循以下规范：
+
+【最高优先级规则 - 时间处理】
+- 只要用户问题涉及**相对时间**（如今天、昨天、过去几天、上周、刚才、最近、本周、本月、“现在起三小时内”等），你必须始终**第一步调用** `get_system_time` 工具来确定服务器准确时间作为一切推算的基准。
+- 只要【当前轮用户最新问题】涉及相对时间，必须重新调用 get_system_time。不得复用历史轮次中的时间推导结果。
+- 严禁直接推测或手动计算时间起止，务必先获取基准时间后再推导 start_time 和 end_time。
+- 计算人员在井时长时，需判断其出矿状态。如已出矿，出矿时间即为其最后一条有效记录时间。
+- 判断时 如果涉及时间范围（如“过去一周”），需要将这一周内的每一天分别归类统计，再进行汇总总结
+- 工具调用时，所有包含数字类参数的字段都须转换成字符串（str）类型后再传递
+- 回复时请勿直接暴露任何工具名。
+- 每次回复，思考过程须以一对 <think> ... </think> 标签包裹，并置于最前。
+
+注意：
+    你只能根据“当前用户最新问题”判断是否需要调用 get_system_time。禁止参考历史对话中的时间推导结果。
+    如果当前问题包含：今天、昨天、最近、刚刚、本周、本月、当前、现在、过去xx小时、近xx天等相对时间词，必须重新调用 get_system_time。
+
+
+【强制思考结构模版】  
+请在每次回复前，先用如下结构在 <think> 标签内进行结构化思考：
+
+<think>
+1. 用户核心需求及意图：...
+2. 是否涉及相对时间？（是/否）→ 若是，必须第一步调用 get_system_time
+3. 应推荐的工具及输入参数：...
+4. 工具调用顺序：第1步 → 第2步 → ...
+5. 关键注意事项与边界说明：...
+</think>
+
+只有在结构化思考充分完毕后，才可进入工具调用和对用户的专业、条理化、简明答复。请统一使用便于阅读的 markdown 格式输出。
+"""
+
+
+    langchain_history = [SystemMessage(content=system_instruction)]
+    for h in history or []:
+        content = h.get('content', "")
+        if isinstance(content, list):
+            content = "".join(p.get("text","") if isinstance(p,dict) else str(p) for p in content)
+        role = h.get('role')
+        if role == 'user':
+            langchain_history.append(HumanMessage(content=content))
+        else:
+            clean = re.sub(r"<details.*?</details>", "", str(content), flags=re.DOTALL).strip()
+            langchain_history.append(AIMessage(content=clean))
+            
+
+    langchain_history.append(HumanMessage(content=message))
+
+    async for resp in generate_response(langchain_history, stream=stream):
+        yield resp
+
+
+# ====================== FastAPI 部分 ======================
+fastapi_app = FastAPI(title="矿井人员定位系统 API")
+
+fastapi_app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# 合并为单端口，通过 stream 参数控制流式/非流式响应
+@fastapi_app.post("/chat")
+async def chat(request: Request):
+    data = await request.json()
+    message = data.get("message", "")
+    history = data.get("history", [])
+    stream = data.get("stream", False)
+
+    if not stream:
+        # 非流式，按普通 JSON 返回
+        final_result = None
+        async for response in predict(message, history, stream=False):
+            final_result = response
+        return {"response": final_result}
+    else:
+        # 流式 SSE 返回
+        async def event_generator():
+            async for response in predict(message, history, stream=True):
+                yield f"data: {response}\n\n"
+            yield "data: [DONE]\n\n"
+        return StreamingResponse(
+            event_generator(),
+            media_type="text/event-stream"
+        )
+
+
+# ====================== Gradio Blocks ======================
+with gr.Blocks(title="矿井人员定位智能调度系统") as demo:
+    gr.Markdown("""
+    # 数字人 👷‍♂️🤖🦺⛑️⛏️🚜🚦 矿井人员车辆定位智能调度查询
+
+    **🚀 安全生产调度专家助手 🤓**  
+    <br>
+    | 👷‍♂️ 实时井下人数  | 🧑‍🤝‍🧑 人员轨迹  | 🗺️ 区域分布  | 🔍 多条件查询 |
+    |:----------------:|:-------------:|:-----------:|:-------------:|
+    | 统计 👥         | 查询 🕵️      | 分布 🗾    | 组合筛选 🛠️  |
+
+    """)
+    
+    gr.ChatInterface(
+        fn=predict,
+        chatbot=gr.Chatbot(height=680),
+        textbox=gr.Textbox(placeholder="例如：现在井下有多少人？...", lines=1),
+       examples=[
+                ["现在井下实时人数和区域分布如何？"],
+                ["昨天入井的总人数是多少？谁已经出井了？"],
+            ],
+        submit_btn="发送",
+        api_name="chat",
+    )
+
+
+# ====================== 启动 ======================
+if __name__ == "__main__":
+    # 同时启动 Gradio + FastAPI（推荐方式）
+    app = gr.mount_gradio_app(fastapi_app, demo, path="/web")
+
+    uvicorn.run(
+        app,
+        host="10.11.3.210",
+        port=7862,
+        log_level="info"
+    )

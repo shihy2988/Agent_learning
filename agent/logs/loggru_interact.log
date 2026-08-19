@@ -1,0 +1,189 @@
+INFO 2026-04-24 16:52:04,241 loggru.interact: [IP:172.31.254.199] 用户提问: 查询今天早班所有电工在 43204 区域的人员
+INFO 2026-04-24 16:52:35,411 loggru.interact: [IP:172.31.254.186] 用户提问: 石小龙最近一次入井是什么时候？
+INFO 2026-04-24 16:52:52,045 loggru.interact: [IP:172.31.254.199] 用户提问: 查询今天所有在 43204 区域的人员
+INFO 2026-04-24 16:59:07,217 loggru.interact: [IP:172.31.254.168] 用户提问: 今天有没有触发sos的
+INFO 2026-04-24 17:00:06,754 loggru.interact: [IP:172.31.254.168] 用户提问: 今天出入井人数和人次分别是多少
+INFO 2026-04-24 17:00:53,717 loggru.interact: [IP:172.31.254.168] 用户提问: 查询过去一周王利明的轨迹情况
+INFO 2026-04-24 17:13:57,970 loggru.interact: [IP:172.31.254.168] 用户提问: 4月每日出井趋势
+INFO 2026-04-24 17:15:40,248 loggru.interact: [IP:172.31.254.168] 用户提问: 4月入井趋势
+INFO 2026-04-24 17:20:43,183 loggru.interact: [IP:172.31.254.168] 用户提问: 由人员定位信息，你还可以分析出来什么信息
+INFO 2026-04-24 17:21:28,271 loggru.interact: [IP:172.31.254.168] 用户提问: 重点区域是否超过限定人数
+INFO 2026-04-24 17:35:26,851 loggru.interact: [IP:172.31.254.168] 用户提问: 定位终端显示离线，可能是什么原因造成的？
+INFO 2026-04-24 17:36:17,595 loggru.interact: [IP:172.31.254.168] 用户提问: 我们这套系统的静态定位精度和动态定位精度分别是多少？
+INFO 2026-04-24 17:42:49,685 loggru.interact: [IP:172.31.254.202] 用户提问: 昨天井下带班领导谁是谁
+INFO 2026-04-24 17:45:23,565 loggru.interact: [IP:172.31.254.202] 用户提问: 昨天井下带班领导是谁
+INFO 2026-04-24 17:46:25,501 loggru.interact: [IP:172.31.254.199] 用户提问: 王利明近7天下井情况
+INFO 2026-04-24 17:49:02,124 loggru.interact: [IP:172.31.254.168] 用户提问: 支持实时井下人数、人员轨迹、区域分布、多条件查询等功能
+INFO 2026-04-24 17:54:45,066 loggru.interact: [IP:172.31.254.181] 用户提问: 陈玉岭今天在井下的活动轨迹是怎样的？
+INFO 2026-04-24 17:56:04,512 loggru.interact: [IP:172.31.254.181] 用户提问: 你的数据来源是
+INFO 2026-04-24 17:56:50,828 loggru.interact: [IP:172.31.254.214] 用户提问: 现在井下实时人数和区域分布如何？
+INFO 2026-04-27 14:08:00,589 loggru.interact: [IP:172.31.254.186] 用户提问: 给出你收集的基本信息
+INFO 2026-04-27 14:51:14,039 loggru.interact: [IP:172.31.254.186] 用户提问: 43203辅运掘面周围有谁
+INFO 2026-04-27 14:53:15,833 loggru.interact: [IP:172.31.254.186] 用户提问: 安明芸 的工种 及其现在位置
+INFO 2026-04-27 15:17:26,214 loggru.interact: [IP:172.31.254.186] 用户提问: 安明芸 的工种 及其现在位置
+INFO 2026-04-27 15:20:14,824 loggru.interact: [IP:172.31.254.186] 用户提问: 安明芸 的工种 及其现在位置
+INFO 2026-04-27 15:21:18,805 loggru.interact: [IP:172.31.254.186] 用户提问: 距离主站多少米
+INFO 2026-04-27 15:22:50,588 loggru.interact: [IP:172.31.254.186] 用户提问: 安明芸 最新的一条记录
+INFO 2026-04-27 15:29:20,335 loggru.interact: [IP:172.31.254.186] 用户提问: 安明芸 最新记录信息
+INFO 2026-04-27 15:29:58,267 loggru.interact: [IP:172.31.254.186] 用户提问: 51206辅运掘面 周围有几个人
+INFO 2026-04-27 17:47:40,064 loggru.interact: [IP:172.31.254.186] 用户提问: 分站数量
+INFO 2026-04-27 17:48:07,719 loggru.interact: [IP:172.31.254.186] 用户提问: 特种人员
+INFO 2026-04-27 17:49:44,812 loggru.interact: [IP:172.31.254.186] 用户提问: 目前井下特种作业人员
+INFO 2026-04-27 18:27:27,202 loggru.interact: [IP:172.31.254.186] 用户提问: 陈玉岭今天在井下的活动轨迹是怎样的？
+INFO 2026-04-27 18:38:57,568 loggru.interact: [IP:172.31.254.186] 用户提问: 王斌杰 近三天的出入井记录
+INFO 2026-04-28 10:00:06,203 loggru.interact: [IP:20.24.31.20] 用户提问: 现在井下有多少人？
+INFO 2026-04-28 10:02:03,414 loggru.interact: [IP:172.31.254.186] 用户提问: 现在井下有多少人？
+INFO 2026-04-28 10:02:52,043 loggru.interact: [IP:172.31.254.186] 用户提问: 现在井下有多少人？
+INFO 2026-04-28 10:10:27,329 loggru.interact: [IP:172.31.254.186] 用户提问: 现在井下有多少人？
+INFO 2026-04-28 10:18:57,290 loggru.interact: [IP:172.31.254.186] Q: 现在井下多少人
+INFO 2026-04-28 10:18:57,291 loggru.interact: 初始化 Agent...
+INFO 2026-04-28 10:18:58,603 loggru.interact: Agent 初始化完成: 10 tools
+INFO 2026-04-28 10:28:36,921 loggru.interact: [IP:172.31.254.186] 用户提问: 现在井下实时人数和区域分布如何？
+INFO 2026-04-28 10:31:02,081 loggru.interact: [IP:unknown] 用户提问: 现在井下有谁
+INFO 2026-04-28 10:39:39,733 loggru.interact: [IP:unknown] 用户提问: 现在井下有多少人？
+INFO 2026-04-28 10:40:58,416 loggru.interact: [IP:unknown] 用户提问: 现在井下有多少人？
+INFO 2026-04-28 10:44:25,873 loggru.interact: [IP:unknown] 用户提问: 现在井下有多少人？
+INFO 2026-04-28 10:44:46,566 loggru.interact: [IP:unknown] 用户提问: 现在井下有多少人？
+INFO 2026-04-28 10:49:24,762 loggru.interact: [IP:unknown] 用户提问: 现在井下有多少人？
+INFO 2026-04-28 11:02:24,840 loggru.interact: [IP:172.31.254.186] 用户提问: 现在井下有多少人？
+INFO 2026-04-28 11:21:48,259 loggru.interact: [IP:172.31.254.186] 用户提问: 现在矿下的车辆信息
+ERROR 2026-04-28 11:22:01,511 loggru.interact: 生成回复时发生错误: unhandled errors in a TaskGroup (1 sub-exception)
+  + Exception Group Traceback (most recent call last):
+  |   File "G:\git\Agent_learning\agent\agent_engine.py", line 98, in generate_response
+  |     async for chunk, metadata in agent.astream(
+  |     ...<17 lines>...
+  |                 yield process_thinking_process(full_response)
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\langgraph\pregel\main.py", line 2997, in astream
+  |     async for _ in runner.atick(
+  |     ...<13 lines>...
+  |             yield o
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\langgraph\pregel\_runner.py", line 410, in atick
+  |     _panic_or_proceed(
+  |     ~~~~~~~~~~~~~~~~~^
+  |         futures.done.union(f for f, t in futures.items() if t is not None),
+  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |         timeout_exc_cls=asyncio.TimeoutError,
+  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |         panic=reraise,
+  |         ^^^^^^^^^^^^^^
+  |     )
+  |     ^
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\langgraph\pregel\_runner.py", line 520, in _panic_or_proceed
+  |     raise exc
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\langgraph\pregel\_retry.py", line 163, in arun_with_retry
+  |     return await task.proc.ainvoke(task.input, config)
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\langgraph\_internal\_runnable.py", line 705, in ainvoke
+  |     input = await asyncio.create_task(
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |         step.ainvoke(input, config, **kwargs), context=context
+  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |     )
+  |     ^
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\langgraph\_internal\_runnable.py", line 473, in ainvoke
+  |     ret = await self.afunc(*args, **kwargs)
+  |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "G:\git\Agent_learning\agent\demo_stream.py", line 68, in tool_node
+  |     observation = await tool.ainvoke(tool_call["args"])
+  |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\langchain_core\tools\structured.py", line 70, in ainvoke
+  |     return await super().ainvoke(input, config, **kwargs)
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\langchain_core\tools\base.py", line 652, in ainvoke
+  |     return await self.arun(tool_input, **kwargs)
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\langchain_core\tools\base.py", line 1131, in arun
+  |     raise error_to_raise
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\langchain_core\tools\base.py", line 1097, in arun
+  |     response = await coro_with_context(coro, context)
+  |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\langchain_core\tools\structured.py", line 124, in _arun
+  |     return await self.coroutine(*args, **kwargs)
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\langchain_mcp_adapters\tools.py", line 412, in call_tool
+  |     call_tool_result = await handler(request)
+  |                        ^^^^^^^^^^^^^^^^^^^^^^
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\langchain_mcp_adapters\tools.py", line 372, in execute_tool
+  |     async with create_session(
+  |                ~~~~~~~~~~~~~~^
+  |         effective_connection, mcp_callbacks=mcp_callbacks
+  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |     ) as tool_session:
+  |     ^
+  |   File "D:\minianaconda\envs\agent\Lib\contextlib.py", line 235, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 410, in create_session
+  |     async with _create_streamable_http_session(**params) as session:
+  |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  |   File "D:\minianaconda\envs\agent\Lib\contextlib.py", line 235, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 311, in _create_streamable_http_session
+  |     streamablehttp_client(
+  |     ~~~~~~~~~~~~~~~~~~~~~^
+  |         url,
+  |         ^^^^
+  |     ...<5 lines>...
+  |         **kwargs,
+  |         ^^^^^^^^^
+  |     ) as (read, write, _),
+  |     ^
+  |   File "D:\minianaconda\envs\agent\Lib\contextlib.py", line 235, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\mcp\client\streamable_http.py", line 717, in streamablehttp_client
+  |     async with streamable_http_client(
+  |                ~~~~~~~~~~~~~~~~~~~~~~^
+  |         url,
+  |         ^^^^
+  |         http_client=client,
+  |         ^^^^^^^^^^^^^^^^^^^
+  |         terminate_on_close=terminate_on_close,
+  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |     ) as streams:
+  |     ^
+  |   File "D:\minianaconda\envs\agent\Lib\contextlib.py", line 235, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\mcp\client\streamable_http.py", line 647, in streamable_http_client
+  |     async with anyio.create_task_group() as tg:
+  |                ~~~~~~~~~~~~~~~~~~~~~~~^^
+  |   File "D:\minianaconda\envs\agent\Lib\site-packages\anyio\_backends\_asyncio.py", line 783, in __aexit__
+  |     raise BaseExceptionGroup(
+  |         "unhandled errors in a TaskGroup", self._exceptions
+  |     ) from None
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  | During task with name 'tool_node' and id 'e3ca77e1-0a85-3a04-d769-a5946c457276'
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "D:\minianaconda\envs\agent\Lib\site-packages\mcp\client\streamable_http.py", line 565, in handle_request_async
+    |     await self._handle_post_request(ctx)
+    |   File "D:\minianaconda\envs\agent\Lib\site-packages\mcp\client\streamable_http.py", line 358, in _handle_post_request
+    |     response.raise_for_status()
+    |     ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+    |   File "D:\minianaconda\envs\agent\Lib\site-packages\httpx\_models.py", line 829, in raise_for_status
+    |     raise HTTPStatusError(message, request=request, response=self)
+    | httpx.HTTPStatusError: Server error '502 Bad Gateway' for url 'http://20.24.31.20:8677/mcp'
+    | For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502
+    +------------------------------------
+INFO 2026-04-28 11:22:53,626 loggru.interact: [IP:172.31.254.186] 用户提问: 现在矿下的车辆信息
+INFO 2026-04-28 17:35:28,860 loggru.interact: [IP:172.31.254.186] 用户提问: 现在井下实时人数和区域分布如何？
+INFO 2026-04-28 17:35:54,378 loggru.interact: [IP:172.31.254.186] 用户提问: 今日的出入井分布
+INFO 2026-04-28 17:37:43,627 loggru.interact: [IP:172.31.254.186] 用户提问: 都有谁 给出详情信息
+INFO 2026-04-28 17:46:20,911 loggru.interact: [IP:172.31.254.186] 用户提问: 现在井下实时人数和区域分布如何？
+INFO 2026-04-28 17:47:23,080 loggru.interact: [IP:172.31.254.186] 用户提问: 都有谁
+INFO 2026-04-28 17:48:48,763 loggru.interact: [IP:172.31.254.186] 用户提问: 曹丁丁最近几天的井下轨迹
+INFO 2026-04-28 17:50:20,257 loggru.interact: [IP:172.31.254.186] 用户提问: 51205辅运最近都有谁去了
+INFO 2026-04-28 17:56:00,336 loggru.interact: [IP:172.31.254.186] 用户提问: 51205辅运最近2天都有谁去了
+INFO 2026-04-28 18:00:01,747 loggru.interact: [IP:172.31.254.186] 用户提问: 51205辅运最近2天都有谁去了
+INFO 2026-04-28 18:03:45,759 loggru.interact: [IP:172.31.254.186] 用户提问: 矿上的基础信息
+INFO 2026-04-28 18:05:08,526 loggru.interact: [IP:172.31.254.186] 用户提问: 当前井下车辆分布 以及今日出入井车辆
+INFO 2026-04-28 18:07:24,119 loggru.interact: [IP:172.31.254.186] 用户提问: 9号自行车最近3天的轨迹
+INFO 2026-04-28 18:08:55,598 loggru.interact: [IP:172.31.254.186] 用户提问: 主井口最近3天的来往车辆
+INFO 2026-04-28 18:09:55,914 loggru.interact: [IP:172.31.254.186] 用户提问: 目前水泵房附近的人员
+INFO 2026-04-28 18:11:47,780 loggru.interact: [IP:172.31.254.168] 用户提问: 现在井下实时人数和区域分布如何？
+INFO 2026-04-28 18:13:06,593 loggru.interact: [IP:172.31.254.186] 用户提问: 水仓附近的人员
+INFO 2026-04-28 18:16:33,158 loggru.interact: [IP:172.31.254.168] 用户提问: 今天都有哪些车辆入井了
+INFO 2026-04-28 18:19:31,088 loggru.interact: [IP:172.31.254.168] 用户提问: SYG99999 轨迹信息
+INFO 2026-04-28 18:21:27,013 loggru.interact: [IP:172.31.254.168] 用户提问: SYG99999  防爆人车拉了几个人
+INFO 2026-04-28 18:22:16,354 loggru.interact: [IP:172.31.254.168] 用户提问: 查询 SYG99999 在 51205 辅运 18 联巷停留期间（08:44-15:53） 该区域内的所有人员，进行人工核对
+INFO 2026-04-29 09:16:36,990 loggru.interact: [IP:172.31.254.186] 用户提问: 现在井下实时人数和区域分布如何？
+INFO 2026-04-29 09:17:29,302 loggru.interact: [IP:172.31.254.186] 用户提问: 特种作业人员有哪些
+INFO 2026-04-29 09:18:14,031 loggru.interact: [IP:172.31.254.186] 用户提问: 现在都有哪些特种作业人员在矿下
