@@ -32,6 +32,9 @@ from typing import Union
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+# sys.path.append("/home/code/HJL_MCP/utils")
+# print(sys.path)
+
 
 from sqls.persons_sqls import (
     query_person_info,
@@ -96,8 +99,230 @@ def convert_sets_to_lists(obj):
 
 
 # 在序列化之前转换
+def truncate_person_list(persons_data, top_n: int = 5):
+    """
+    保留"入井次数"最多的 top_n 个人员，兼容 dict / list 两种结构。
+    """
+    if not persons_data:
+        return persons_data
+    try:
+        def _extract_count(value):
+            if isinstance(value, dict):
+                for kk in ("入井次数", "count", "次数", "入井次数_次"):
+                    if kk in value:
+                        try:
+                            return float(value[kk])
+                        except (ValueError, TypeError):
+                            return 0.0
+                return 0.0
+            if isinstance(value, (int, float)):
+                return float(value)
+            if isinstance(value, str):
+                try:
+                    return float(value)
+                except ValueError:
+                    return 0.0
+            if isinstance(value, (list, tuple)):
+                for v in reversed(value):
+                    try:
+                        return float(v)
+                    except (ValueError, TypeError):
+                        continue
+            return 0.0
+
+        if isinstance(persons_data, dict):
+            sorted_items = sorted(
+                persons_data.items(),
+                key=lambda kv: _extract_count(kv[1]),
+                reverse=True,
+            )
+            return dict(sorted_items[:top_n])
+        elif isinstance(persons_data, list):
+            sorted_items = sorted(
+                persons_data,
+                key=lambda item: _extract_count(item),
+                reverse=True,
+            )
+            return sorted_items[:top_n]
+    except Exception as e:
+        logger.warning(f"truncate_person_list 处理失败: {e}")
+    return persons_data
 
 
+def _extract_number(v):
+    """从值中提取数字，失败返回 None。"""
+    if isinstance(v, bool):
+        return None
+    if isinstance(v, (int, float)):
+        return float(v)
+    if isinstance(v, str):
+        m = re.search(r'-?\d+\.?\d*', v)
+        if m:
+            try:
+                return float(m.group())
+            except ValueError:
+                return None
+    return None
+
+
+def _merge_values(a, b):
+    """合并两个统计值：字典递归合并，数值字符串相加，其余保留后者。"""
+    if isinstance(a, dict) and isinstance(b, dict):
+        result = {}
+        keys = list(a.keys()) + [k for k in b.keys() if k not in a]
+        for k in keys:
+            if k in a and k in b:
+                result[k] = _merge_values(a[k], b[k])
+            elif k in a:
+                result[k] = a[k]
+            else:
+                result[k] = b[k]
+        return result
+    na, nb = _extract_number(a), _extract_number(b)
+    if na is not None and nb is not None:
+        total = na + nb
+        if isinstance(a, str) and a.rstrip().endswith("人"):
+            return f"{int(total)}人"
+        if isinstance(a, str) and a.rstrip().endswith("条"):
+            return f"{int(total)}条"
+        if isinstance(a, str):
+            return str(int(total)) if total == int(total) else str(total)
+        return total
+    return b
+
+
+def _merge_dicts(values):
+    """按顺序合并一组字典/数值。"""
+    result = None
+    for v in values:
+        if v is None:
+            continue
+        if result is None:
+            result = copy.deepcopy(v)
+        else:
+            result = _merge_values(result, v)
+    return result
+
+
+def _aggregate_multi_day_stats(per_day_stats, days):
+    """
+    多日统计聚合：
+    - 总人数：给出每日明细 + 合计人次
+    - 人员列表_姓名_卡号_入井次数：按 姓名+卡号 汇总入井次数，取 TOP5
+    - 其他分布：跨天累加合并（嵌套字典递归合并，数值字符串相加）
+    """
+    if not per_day_stats:
+        return {}
+    all_keys = set()
+    for day in days:
+        all_keys.update(per_day_stats.get(day, {}).keys())
+
+    result = {}
+    for key in all_keys:
+        if key == "总人数":
+            daily = {}
+            total = 0
+            for day in days:
+                v = per_day_stats.get(day, {}).get(key)
+                try:
+                    n = int(v)
+                    daily[day] = n
+                    total += n
+                except (TypeError, ValueError):
+                    continue
+            result["总人数"] = {"每日": daily, "合计人次": total}
+
+        elif key == "人员列表_姓名_卡号_入井次数":
+            merged = {}
+            for day in days:
+                v = per_day_stats.get(day, {}).get(key)
+                items = []
+                if isinstance(v, list):
+                    items = v
+                elif isinstance(v, dict):
+                    # 兼容 dict 结构
+                    for kk, vv in v.items():
+                        if isinstance(vv, (list, tuple)) and len(vv) >= 2:
+                            # 形如 {name: [card, count]} 或 {name_card: count}
+                            pass
+                    items = list(v.items())
+                for item in items:
+                    if isinstance(item, (list, tuple)) and len(item) >= 3:
+                        name, card, cnt = item[0], item[1], item[2]
+                        kk = (name, card)
+                        try:
+                            c = int(cnt)
+                        except (TypeError, ValueError):
+                            c = 0
+                        merged[kk] = merged.get(kk, 0) + c
+                    elif isinstance(item, (list, tuple)) and len(item) == 2:
+                        kk, val = item
+                        try:
+                            c = int(val)
+                        except (TypeError, ValueError):
+                            c = 0
+                        merged[kk] = merged.get(kk, 0) + c
+            sorted_items = sorted(merged.items(), key=lambda kv: kv[1], reverse=True)[:5]
+            result[key] = [[k[0], k[1], v] for k, v in sorted_items]
+
+        else:
+            values = [per_day_stats.get(day, {}).get(key) for day in days]
+            values = [v for v in values if v is not None]
+            if values:
+                result[key] = _merge_dicts(values)
+    return result
+
+
+def summarize_station_status(station_result):
+    """
+    汇总基站状态：
+    - 运行状态统计：按最终运行状态计数
+    - 供电状态统计：按最终供电状态计数
+    - 状态变化基站：仅收录状态发生过变化的基站，给出其变化过程（无时间）
+    """
+    if not station_result:
+        return "无基站状态记录"
+
+    run_state_summary = {}
+    power_state_summary = {}
+    changed_stations = {}
+
+    for station_name, periods in station_result.items():
+        if not periods:
+            continue
+        try:
+            periods_sorted = sorted(periods, key=lambda p: p.get("起始时间", ""))
+        except Exception:
+            periods_sorted = periods
+
+        changes = []
+        prev_key = None
+        for p in periods_sorted:
+            run = p.get("基站运行状态", "")
+            power = p.get("基站供电状态", "")
+            cur_key = (run, power)
+            if cur_key != prev_key:
+                changes.append({"运行状态": run, "供电状态": power})
+                prev_key = cur_key
+
+        if changes:
+            final = changes[-1]
+            if final.get("运行状态"):
+                rs = final["运行状态"]
+                run_state_summary[rs] = run_state_summary.get(rs, 0) + 1
+            if final.get("供电状态"):
+                ps = final["供电状态"]
+                power_state_summary[ps] = power_state_summary.get(ps, 0) + 1
+
+        if len(changes) > 1:
+            changed_stations[station_name] = f"{len(changes)} 次"
+
+    return {
+        "运行状态统计": run_state_summary,
+        "供电状态统计": power_state_summary,
+        "状态变化基站": changed_stations if changed_stations else "无状态变化基站",
+    }
+    
 class PersonnelMCPService():
     def __init__(
             self,
@@ -115,7 +340,7 @@ class PersonnelMCPService():
             "username": user,
             "password": password,
             "database": database,
-            "secure": True,
+            "secure": False,
             "verify": False,
             "connect_timeout": 10,
             'autogenerate_session_id': False
@@ -267,7 +492,12 @@ class PersonnelMCPService():
             #### 6. `get_infos` (基础档案与名录字典)
             - **何时使用**：用户需要“查找某人的卡号”、“列出所有区域”、“查看基站列表”或进行基础数据核对。
             - **关键参数**：`type` 必须是 "person", "area_limit", 或 "station" (支持列表如 `["person", "station"]`)。`name` 参数支持对姓名、区域名、基站名的**模糊匹配** (相似度>60即返回)。
-
+            
+            #### 7. `generate_personnel_report` (报告生成)
+            - **何时使用**：用户明确要"出一份报告"、"汇总汇报"、"生成日报/周报/多日报告"等。
+            - **入参**：只需 `start_date` 和 `end_date`（"YYYY-MM-DD HH:MM:SS" 或 "YYYY-MM-DD"）。
+            - 同一天 → **单日报告**；跨天 → **多日报告**。
+            - **固定输出**：12 项统计 + 该时间段的**报警信息** + **基站状态**；人员列表只保留入井次数 TOP5。
             ---
 
             ### ⚠️ 异常处理与兜底策略
@@ -477,7 +707,7 @@ class PersonnelMCPService():
                 logger.info(f"step {step}: statistics_filter_passed={statistics_filter_passed}")
 
                 if statistics_filter_passed:
-                    step += 1;
+                    step += 1
                     logger.info(f"step {step}: statistics_filter 不为空，进行精准统计项过滤抽取")
                     day_datas = person_records.get('每日数据')
                     filtered_record = {'每日数据': {}}
@@ -509,10 +739,37 @@ class PersonnelMCPService():
                     json_full = json.dumps(filtered_record, ensure_ascii=False, separators=(",", ":"))
                     len_json_full = len(json_full)
                     logger.info(f"step {step}: statistics_filter抽取后json长度: {len_json_full}")
+                    if len_json_full > 30000:
+                        step += 1
+                        logger.info(f"step {step}: 首轮压缩仍超30k，仅保留总人数与入井次数")
+                        all_days_agg = {}
+                        day_datas = person_records.get('每日数据')
+                        if '人员列表_姓名_卡号_入井次数' in statistics_filters_values:
+                             statistics_filters.remove('人员列表_姓名_卡号_入井次数')
+                             statistics_filtersnew = statistics_filters
+                        else:
+                             statistics_filtersnew = statistics_filters
+
+                        for k in statistics_filtersnew:
+                            all_days_agg[k] = {}
+                        for day, day_data in day_datas.items():
+                            logger.info(f"step {step}: 处理 day={day} 的核心统计")
+                            summary = self.person_base.person_filter(
+                                pdata=day_data,
+                                statistics_filter=statistics_filtersnew
+                            )
+                            for k in statistics_filtersnew:
+                                if k in summary["statistics"]:
+                                    all_days_agg[k][day] = summary["statistics"][k]
+                                    logger.info(f"step {step}: 保存 {k} 统计 day={day}")
+
+                        json_full = json.dumps(all_days_agg, ensure_ascii=False, separators=(",", ":"))
+                        len_json_full = len(json_full)
+                        logger.info(f"step {step}: 最精简核心统计后json长度: {len_json_full}")
 
                 else:
                     if len_json_full > 30000:
-                        step += 1;
+                        step += 1
                         logger.info(f"step {step}: json_full超过30k，对每日数据做第一次筛选压缩")
                         new_outs_record = {'每日数据': []}
                         day_datas = person_records.get('每日数据')
@@ -756,7 +1013,34 @@ class PersonnelMCPService():
                     json_full = json.dumps(filtered_record, ensure_ascii=False, separators=(",", ":"))
                     len_json_full = len(json_full)
                     logger.info(f"step {step}: statistics_filter抽取后json长度: {len_json_full}")
+                    if len_json_full > 30000:
+                        step += 1
+                        logger.info(f"step {step}: 首轮压缩仍超30k，仅保留key")
+                        all_days_agg = {}
+                        day_datas = person_records.get('每日数据')
+                        if '人员列表_姓名_卡号_入井次数' in statistics_filters_values:
+                            statistics_filters.remove('人员列表_姓名_卡号_入井次数')
+                            statistics_filtersnew = statistics_filters
 
+                        else:
+                            statistics_filtersnew = statistics_filters
+
+                        for k in statistics_filtersnew:
+                            all_days_agg[k] = {}
+                        for day, day_data in day_datas.items():
+                            logger.info(f"step {step}: 处理 day={day} 的核心统计")
+                            summary = self.person_base.person_filter(
+                                pdata=day_data,
+                                statistics_filter=statistics_filtersnew
+                            )
+                            for k in statistics_filtersnew:
+                                if k in summary["statistics"]:
+                                    all_days_agg[k][day] = summary["statistics"][k]
+                                    logger.info(f"step {step}: 保存 {k} 统计 day={day}")
+
+                        json_full = json.dumps(all_days_agg, ensure_ascii=False, separators=(",", ":"))
+                        len_json_full = len(json_full)
+                        logger.info(f"step {step}: 最精简核心统计后json长度: {len_json_full}")
                 else:
                     if len_json_full > 30000:
                         step += 1;
@@ -975,7 +1259,202 @@ class PersonnelMCPService():
             except Exception as e:
                 logger.error("traceback-----------------\n%s", traceback.format_exc())
                 return json.dumps({"error": "当前查询失败，请尝试其他维度查询"}, ensure_ascii=False)
+        
+        @self.mcp.tool()
+        def generate_personnel_report(
+                start_date: Union[str, datetime, None] = None,
+                end_date: Union[str, datetime, None] = None,
+        ) -> str:
+            """
+            【报告生成工具】根据起止日期生成结构化的矿井人员定位分析报告。
 
+            【使用场景】
+            用户说"出一份今天的报告"、"帮我汇总近3天的入井情况"、"生成7月11日到7月14日的报告"等。
+
+            【参数说明】
+            - start_date: 起始日期 (格式: "YYYY-MM-DD HH:MM:SS" 或 "YYYY-MM-DD")，缺省为当天 00:00:00。
+            - end_date:   截止日期 (格式: "YYYY-MM-DD HH:MM:SS" 或 "YYYY-MM-DD")，缺省为当天 23:59:59。
+
+            【报告内容】
+            1. 总人数
+            2. 人员列表_姓名_卡号_入井次数（仅保留入井次数最多的前 5 人）
+            3. 入井时长分布/人次
+            4. 入井时间段分布/人次
+            5. 出井时间段分布/人次
+            6. 区域分布/条
+            7. 基站分布/条
+            8. 基站停留时长分布/条
+            9. 部门分布/人
+            10. 职位分布/人
+            11. 工种分布/人
+            12. 每小时人数统计/人
+            附带：该时间段内的报警信息；基站状态（按运行状态 / 供电状态汇总，仅列出发生过变化的基站及其变化过程）。
+
+            【单日 vs 多日】
+            - 单日：直接输出当日统计。
+            - 多日：对分布类统计做跨天聚合（数值相加、嵌套递归合并），总人数给出每日明细+合计人次，
+              人员列表按"姓名+卡号"合并入井次数并取 TOP5，**不再按天列出列表**。
+            """
+            logger.info(
+                f"generate_personnel_report called with params: "
+                f"start_date={start_date}, end_date={end_date}"
+            )
+            try:
+                step = 0
+
+                # ========== 时间处理 ==========
+                def _normalize_time(t, is_end: bool):
+                    if t is None:
+                        return None
+                    if isinstance(t, datetime):
+                        return t.strftime("%Y-%m-%d %H:%M:%S")
+                    t = str(t).strip()
+                    if not t:
+                        return None
+                    if len(t) == 10:
+                        return f"{t} 23:59:59" if is_end else f"{t} 00:00:00"
+                    return t
+
+                today = datetime.now().date()
+                start_time = _normalize_time(start_date, is_end=False) or f"{today} 00:00:00"
+                end_time = _normalize_time(end_date, is_end=True) or f"{today} 23:59:59"
+
+                # ========== 拉取人员数据 ==========
+                step += 1
+                logger.info(f"step {step}: 拉取人员数据 [{start_time} ~ {end_time}]")
+                person_records = self.person_base.get_person_infos_daytype_with_cache(
+                    start_date=start_time,
+                    end_date=end_time,
+                )
+
+                if not person_records:
+                    return json.dumps(
+                        {"message": "未找到符合条件的人员记录，无法生成报告，请调整查询时间范围。"},
+                        ensure_ascii=False,
+                    )
+
+                all_stats = [
+                    "总人数",
+                    "人员列表_姓名_卡号_入井次数",
+                    "入井时长分布/人次",
+                    "入井时间段分布/人次",
+                    "出井时间段分布/人次",
+                    "区域分布/条",
+                    "基站分布/条",
+                    "基站停留时长分布/条",
+                    "部门分布/人",
+                    "职位分布/人",
+                    "工种分布/人",
+                    "每小时人数统计/人",
+                ]
+
+                day_datas = person_records.get("每日数据", {}) or {}
+                days = sorted(list(day_datas.keys()))
+                if not days:
+                    return json.dumps(
+                        {"message": "在指定时间范围内未找到任何每日数据，无法生成报告。"},
+                        ensure_ascii=False,
+                    )
+
+                # ========== 逐日抽取统计 ==========
+                step += 1
+                logger.info(f"step {step}: 开始逐日统计, 天数={len(days)}")
+                per_day_stats = {}
+                for day in days:
+                    summary = self.person_base.person_filter(
+                        pdata=day_datas[day],
+                        statistics_filter=all_stats,
+                    )
+                    stats = dict(summary.get("statistics", {}))
+
+                    # 每小时人数统计：只保留"XX人"
+                    hours_nums = stats.get("每小时人数统计/人", {}) or {}
+                    new_hours = {}
+                    for key, data in hours_nums.items():
+                        try:
+                            new_hours[key] = str(data['个数']) + '人'
+                        except Exception:
+                            continue
+                    stats["每小时人数统计/人"] = new_hours
+
+                    per_day_stats[day] = stats
+
+                # ========== 单日 / 多日 报告结构 ==========
+                if len(days) == 1:
+                    step += 1
+                    logger.info(f"step {step}: 生成单日报告")
+                    stats = per_day_stats[days[0]]
+                    # 单日：人员列表只保留入井次数 TOP5
+                    if "人员列表_姓名_卡号_入井次数" in stats:
+                        stats["人员列表_姓名_卡号_入井次数"] = truncate_person_list(
+                            stats["人员列表_姓名_卡号_入井次数"], top_n=5
+                        )
+                    report = {
+                        "报告类型": "单日报告",
+                        "日期": days[0],
+                        "统计内容": stats,
+                    }
+                else:
+                    step += 1
+                    logger.info(f"step {step}: 生成多日聚合报告, 天数={len(days)}")
+                    agg_stats = _aggregate_multi_day_stats(per_day_stats, days)
+                    report = {
+                        "报告类型": "多日报告",
+                        "起始日期": days[0],
+                        "结束日期": days[-1],
+                        "统计天数": len(days),
+                        "统计内容": agg_stats,
+                    }
+
+                # ========== 报警信息 ==========
+                step += 1
+                logger.info(f"step {step}: 查询报警信息 [{start_time} ~ {end_time}]")
+                try:
+                    where_sql = f"TIME >= '{start_time}' AND TIME <= '{end_time}'"
+                    warning_result = query_warning_history(
+                        self.client, where_clause=where_sql
+                    )
+                    warning_filtered = {}
+                    for k, v in (warning_result or {}).items():
+                        if isinstance(v, list) and len(v) > 0:
+                            warning_filtered[k] = v
+                        elif v and not isinstance(v, list):
+                            warning_filtered[k] = v
+                    report["报警信息"] = warning_filtered if warning_filtered else "无报警信息"
+                except Exception as e:
+                    logger.error(f"generate_personnel_report 查询报警信息失败: {traceback.format_exc()}")
+                    report["报警信息"] = f"查询失败: {str(e)}"
+
+                # ========== 基站状态（按运行/供电状态统计，仅保留有变化的基站的变化过程） ==========
+                step += 1
+                logger.info(f"step {step}: 查询基站状态 [{start_time} ~ {end_time}]")
+                try:
+                    where_sql = f"TIME >= '{start_time}' AND TIME <= '{end_time}'"
+                    station_result = query_jizhan_history(
+                        self.person_base.client, where_clause=where_sql
+                    )
+                    report["基站状态"] = summarize_station_status(station_result)
+                except Exception as e:
+                    logger.error(f"generate_personnel_report 查询基站状态失败: {traceback.format_exc()}")
+                    report["基站状态"] = f"查询失败: {str(e)}"
+
+                step += 1
+                json_full = json.dumps(report, ensure_ascii=False, separators=(",", ":"))
+                logger.info(f"step {step}: 生成报告完成, 长度: {len(json_full)}")
+                return json_full
+
+            except Exception as e:
+                logger.error(f"generate_personnel_report 异常: {traceback.format_exc()}")
+                return json.dumps(
+                    {
+                        "error": "报告生成失败",
+                        "message": str(e),
+                        "traceback": traceback.format_exc(),
+                    },
+                    ensure_ascii=False,
+                )
+
+        
         @self.mcp.tool()
         def get_infos(
                 type: Union[str, list] = "",
@@ -1084,20 +1563,24 @@ async def test_all_tools():
         print("\n--- 测试 query_station_status ---")
 
         # # 1. 历史区间筛查
-        params_station_history = {
-            # "start_date": "2026-07-11 00:00:00",
-            # "end_date": "2026-07-18 00:00:00",
-            # "person_name_filters": "石",  # 姓名
-            # "department_filters": ["综掘队", "车队"],  # 队组班组/部门
-            # "worktype_filters": None,  # 工种
-            # "duty_filters": "普工",  # 职位
-            # "area_filters": "30108",  # 区域筛选
-            # "station_filters": "30110",  # 基站筛选
-            "today_or_now": False
-        }
+        # params_station_history = {
+        #     "start_date": "2026-07-11 00:00:00",
+        #     "end_date": "2026-08-18 00:00:00",
+        #     # "person_name_filters": "石",  # 姓名
+        #     # "department_filters": ["综掘队", "车队"],  # 队组班组/部门
+        #     # "worktype_filters": None,  # 工种
+        #     # "duty_filters": "普工",  # 职位
+        #     # "area_filters": "30108",  # 区域筛选
+        #     # "station_filters": "30110",  # 基站筛选
+        #     # "today_or_now": False
+        #     "statistics_filters": ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '部门分布/人', '工种分布/人', '区域分布/条', '基站分布/条', '入井时间段分布/人次', '出井时间段分布/人次']
+        # }
+        # # statistics_filters: Union[List[str], str, None] = None,
+        # # start_date: Union[str, datetime, None] = None,
+        # # end_date: Union[str, datetime, None] = None,
 
-        result_station_history = await mcp_app.call_tool("query_todayornow_personlist", params_station_history)
-        print("query_warning_info | 历史区间】:\n", result_station_history)
+        # result_station_history = await mcp_app.call_tool("query_personnel_list", params_station_history)
+        # print("query_warning_info | 历史区间】:\n", result_station_history)
 
         # # 5. 只传入base_station_name, 历史区间
         # params_station_name_history = {
@@ -1135,7 +1618,21 @@ async def test_all_tools():
         # result_area = await mcp_app.call_tool("get_infos", params_area)
         # pprint(result_area)
 
-
+        # 单日报告（只传日期也行）
+        result = await mcp_app.call_tool("generate_personnel_report", {
+            "start_date": "2026-07-14",
+            "end_date":   "2026-07-14",
+        })
+        pprint(result)
+        # 多日报告
+        result = await mcp_app.call_tool("generate_personnel_report", {
+            "start_date": "2026-07-11 00:00:00",
+            "end_date":   "2026-07-14 23:59:59",
+        })
+        pprint(result)
+        # 不传参数 → 默认当天
+        result = await mcp_app.call_tool("generate_personnel_report", {})
+        pprint(result)
     except Exception as e:
         print(f"\n❌ 测试过程中发生错误: {e}\n{traceback.format_exc()}")
     finally:
@@ -1160,3 +1657,4 @@ if __name__ == "__main__":
     )
 
     asyncio.run(test_all_tools())
+

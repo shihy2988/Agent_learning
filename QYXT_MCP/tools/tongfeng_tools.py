@@ -9,15 +9,6 @@
 """
 import yaml
 
-# !/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-"""
-文件名:	person_tools.py
-作者:	shihy
-创建日期:	2026-04-22
-描述:	矿井人员定位相关工具方法，提供人员最新入井记录查询、多人员状态筛选、分段轨迹分析、今日名单等能力。依赖 ClickHouse 实时/历史数据与接口服务，支持多维过滤与分析，适用于 MCP 对接的人员定位服务场景。
-"""
 
 from email import message
 import json
@@ -89,6 +80,248 @@ def json_serializer(obj):
         return obj.strftime("%Y-%m-%d %H:%M:%S")
     raise TypeError(f"Type {type(obj)} not serializable")
 
+
+def _fmt_num(v):
+    """格式化数字用于 markdown 表格"""
+    if v is None or v == "":
+        return "-"
+    try:
+        if isinstance(v, float):
+            if v != 0 and abs(v) < 0.001:
+                return f"{v:.4f}"
+            return f"{v:.2f}"
+        if isinstance(v, int):
+            return str(v)
+        return str(v)
+    except Exception:
+        return str(v)
+
+
+def _extract_num(v):
+    """从 {数值, 时间} 结构中提取数值；非 dict 原样返回"""
+    if isinstance(v, dict):
+        return v.get("数值")
+    return v
+
+
+def _signal_status_single(sig_data):
+    """单日：返回一个信号的状态描述"""
+    if not isinstance(sig_data, dict):
+        return "正常"
+    day_dict = sig_data.get("每日数据", {})
+    if not day_dict:
+        return "无数据"
+    day_data = list(day_dict.values())[0]
+    if not isinstance(day_data, dict):
+        return "正常"
+    if day_data.get("变化", "无变化") == "无变化":
+        return "正常"
+    cnt = day_data.get("变化次数", 0)
+    cur = day_data.get("当前值", "")
+    return f"⚠ 有变化（{cnt} 次），当前值 {cur}"
+
+
+def _signal_status_multi(sig_data):
+    """多日：返回一个信号的状态描述"""
+    if not isinstance(sig_data, dict):
+        return "正常"
+    day_dict = sig_data.get("每日数据", {})
+    if not day_dict:
+        return "无数据"
+    total = len(day_dict)
+    changed = sum(
+        1 for d in day_dict.values()
+        if isinstance(d, dict) and d.get("变化", "无变化") != "无变化"
+    )
+    if changed == 0:
+        return f"正常（{total} 天无异常）"
+    return f"⚠ {changed}/{total} 天有变化"
+
+
+def _numeric_cells_single(sig_data):
+    """单日：返回 (平均, 中位, 标准差, 最小, 最大)"""
+    if not isinstance(sig_data, dict):
+        return None
+    day_dict = sig_data.get("每日数据", {})
+    if not day_dict:
+        return None
+    day_data = list(day_dict.values())[0]
+    if not isinstance(day_data, dict):
+        return None
+    return (
+        _fmt_num(day_data.get("平均值")),
+        _fmt_num(day_data.get("中位数")),
+        _fmt_num(day_data.get("标准差")),
+        _fmt_num(_extract_num(day_data.get("最小值"))),
+        _fmt_num(_extract_num(day_data.get("最大值"))),
+    )
+
+
+def _numeric_cells_multi(sig_data):
+    """多日：跨天聚合 (平均, 中位, 标准差, 最小, 最大)"""
+    if not isinstance(sig_data, dict):
+        return None
+    day_dict = sig_data.get("每日数据", {})
+    if not day_dict:
+        return None
+    avgs, meds, stds, mins, maxs = [], [], [], [], []
+    for d in day_dict.values():
+        if not isinstance(d, dict):
+            continue
+        for lst, key in [(avgs, "平均值"), (meds, "中位数"), (stds, "标准差")]:
+            v = d.get(key)
+            if isinstance(v, (int, float)):
+                lst.append(v)
+        mn = _extract_num(d.get("最小值"))
+        mx = _extract_num(d.get("最大值"))
+        if isinstance(mn, (int, float)):
+            mins.append(mn)
+        if isinstance(mx, (int, float)):
+            maxs.append(mx)
+    return (
+        _fmt_num(sum(avgs) / len(avgs) if avgs else None),
+        _fmt_num(sum(meds) / len(meds) if meds else None),
+        _fmt_num(sum(stds) / len(stds) if stds else None),
+        _fmt_num(min(mins) if mins else None),
+        _fmt_num(max(maxs) if maxs else None),
+    )
+
+
+def _find_report_date(records):
+    """从 records 中找出日期或日期范围"""
+    days = set()
+    fengji = records.get("风机系统", {}) or {}
+    for sys_data in fengji.values():
+        if not isinstance(sys_data, dict):
+            continue
+        for sub in ("报警", "状态", "数值"):
+            for sig in (sys_data.get(sub, {}) or {}).values():
+                if isinstance(sig, dict):
+                    days.update((sig.get("每日数据", {}) or {}).keys())
+    return sorted(days)
+
+
+def _build_md_report(records, is_multi_day):
+    """把原始记录转为 markdown 文本"""
+    md = []
+
+    days = _find_report_date(records)
+
+    # ---------- 标题 ----------
+    if is_multi_day:
+        md.append("# 通风系统多日报告")
+        md.append("")
+        if days:
+            md.append(f"**统计周期**：{days[0]} ~ {days[-1]}")
+            md.append(f"**统计天数**：{len(days)} 天")
+        md.append("")
+    else:
+        md.append("# 通风系统日报")
+        md.append("")
+        if days:
+            md.append(f"**日期**：{days[0]}")
+        md.append("")
+
+    md.append("---")
+    md.append("")
+
+    # ---------- 一、风机系统 ----------
+    md.append("## 一、风机系统")
+    md.append("")
+    fengji = records.get("风机系统", {}) or {}
+    for sys_name in ("一号风机系统", "二号风机系统"):
+        sys_data = fengji.get(sys_name, {})
+        if not sys_data:
+            continue
+        md.append(f"### {sys_name}")
+        md.append("")
+
+        # 报警
+        alerts = sys_data.get("报警", {}) or {}
+        if alerts:
+            md.append("**报警信号**")
+            md.append("")
+            for sig_name, sig in alerts.items():
+                status = _signal_status_multi(sig) if is_multi_day else _signal_status_single(sig)
+                md.append(f"- {sig_name}：{status}")
+            md.append("")
+
+        # 状态
+        statuses = sys_data.get("状态", {}) or {}
+        if statuses:
+            md.append("**状态信号**")
+            md.append("")
+            for sig_name, sig in statuses.items():
+                status = _signal_status_multi(sig) if is_multi_day else _signal_status_single(sig)
+                md.append(f"- {sig_name}：{status}")
+            md.append("")
+
+        # 数值
+        numerics = sys_data.get("数值", {}) or {}
+        if numerics:
+            md.append("**数值监测**")
+            md.append("")
+            md.append("| 监测项 | 平均值 | 中位数 | 标准差 | 最小值 | 最大值 |")
+            md.append("|:------|:------|:------|:------|:------|:------|")
+            for sig_name, sig in numerics.items():
+                cells = _numeric_cells_multi(sig) if is_multi_day else _numeric_cells_single(sig)
+                if cells:
+                    md.append(f"| {sig_name} | {cells[0]} | {cells[1]} | {cells[2]} | {cells[3]} | {cells[4]} |")
+            md.append("")
+
+    # ---------- 二、功率能耗 ----------
+    md.append("## 二、功率能耗")
+    md.append("")
+    power = records.get("功率能耗", {}) or {}
+    if isinstance(power, dict) and power:
+        dev_avg = {}
+        dev_energy = {}
+        for day_data in power.values():
+            if not isinstance(day_data, dict):
+                continue
+            avg_p = day_data.get("总平均功率_kw", {}) or {}
+            total_e = day_data.get("总能耗kWh", {}) or {}
+            for dev, val in avg_p.items():
+                if isinstance(val, (int, float)):
+                    dev_avg.setdefault(dev, []).append(val)
+            for dev, val in total_e.items():
+                if isinstance(val, (int, float)):
+                    dev_energy[dev] = dev_energy.get(dev, 0) + val
+
+        md.append("| 设备 | 平均功率 (kW) | 总能耗 (kWh) |")
+        md.append("|:-----|:------------|:------------|")
+        for dev in sorted(set(list(dev_avg.keys()) + list(dev_energy.keys()))):
+            avgs = dev_avg.get(dev, [])
+            avg = sum(avgs) / len(avgs) if avgs else 0
+            total = dev_energy.get(dev, 0)
+            md.append(f"| {dev} | {_fmt_num(avg)} | {_fmt_num(total)} |")
+        md.append("")
+    else:
+        md.append("_无功率能耗数据_")
+        md.append("")
+
+    # ---------- 三、其他系统 ----------
+    md.append("## 三、其他系统")
+    md.append("")
+    others = records.get("其他系统", {}) or {}
+    for sys_name in ("高压柜系统", "阀门系统", "进线柜系统", "风门系统", "母联柜系统"):
+        sys_data = others.get(sys_name, {})
+        if not sys_data:
+            continue
+        md.append(f"### {sys_name}")
+        md.append("")
+        for sub_name in ("信号", "控制指令"):
+            sub = sys_data.get(sub_name, {}) or {}
+            if not sub:
+                continue
+            md.append(f"**{sub_name}**")
+            md.append("")
+            for sig_name, sig in sub.items():
+                status = _signal_status_multi(sig) if is_multi_day else _signal_status_single(sig)
+                md.append(f"- {sig_name}：{status}")
+            md.append("")
+
+    return "\n".join(md)
 
 class TongfengMCPService:
     def __init__(
@@ -402,7 +635,7 @@ class TongfengMCPService:
             本指南包含不同工具的最佳使用场景，可指导大模型合理推断、自动调用合适的查询与分析工具。
             """
             return """
-            你现在是一名矿井安全生产调度专家，具备丰富的井下作业与数据分析经验。使用本系统时，请严格遵循以下操作准则，结合各工具的用途，科学调用、组合工具以获得精确答案：
+            本系统是通风系统，你现在是一名矿井安全生产调度专家，具备丰富的井下作业与数据分析经验。使用本系统时，请严格遵循以下操作准则，结合各工具的用途，科学调用、组合工具以获得精确答案：
             - 回复时，涉及任何数值时必须带上如下对应单位：
                 - 温度：℃  
                 - 振动：mm/s  
@@ -438,7 +671,23 @@ class TongfengMCPService:
             【7. 查询风机功率能耗】
             - 如需查询一号/二号风机（含1级、2级设备）在指定时间段内的功率能耗数据或历史趋势，可调用 `query_power_energy_records(start_time, end_time)` 工具,自动返回结构化的能耗统计与结果说明。
              - start_time/end_time 支持 "YYYY-MM-DD HH:MM:SS" 格式，未指定时默认今日0时至现在。查询时间范围大于一天时，仅返回统计信息与归档结果，需要更详细数据请缩短时间段。
-       
+
+            【8. 生成日报 / 多日报告】
+            - 若用户明确说通风系统的"出一份报告"、"生成日报"、"汇总汇报"、"周报"、"近N天情况"等，请调用 `generate_tongfeng_report(start_date, end_date)`。
+            - 入参只有两个：`start_date` 和 `end_date`（格式 "YYYY-MM-DD HH:MM:SS" 或 "YYYY-MM-DD"）。
+              - 同一天 → **单日报告**；跨天 → **多日报告**（多日已做跨天聚合，不按天罗列）。
+            - 报告固定包含三块：
+              1. **风机系统**：报警 + 状态 + 数值（含风量/风速/静压/全压/效率等关键监测角度）
+              2. **功率能耗**：一号/二号风机 1级、2级设备的功率能耗
+              3. **其他系统**：高压柜 / 阀门 / 进线柜 / 风门 / 母联柜
+            - **不要**用 "`query_fengji_records` + `query_power_energy_records` + `query_others_system_records`" 手工拼装日报——三块内容已内聚到本工具，一次调用即可。
+
+            【9. 通风系统的报告 vs 单项查询的选型】
+            - 需要**报告结构**（三块一次返回）→ 用 `generate_tongfeng_report`
+            - 只需要**风机单项数据** → 用 `query_fengji_records`
+            - 只需要**功率能耗** → 用 `query_power_energy_records`
+            - 只需要**其他系统** → 用 `query_others_system_records`
+            - 只需要**变频器/设备级** → 用 `query_bianpinqi_system_records` / `query_shebei_system_records`
 
             # 注意事项：
             - 未指定时间时，风机查询默认今日0时至现在；
@@ -479,7 +728,7 @@ class TongfengMCPService:
                 value_filters: Optional[Dict[str, tuple]] = None,  # 字段值条件过滤，如{"风量": (">", -100)}，可选
         ) -> str:
             """
-            查询一号、二号或全部风机在指定时间段内的主要参数（报警、控制指令、状态、切换过程、修正系数、数值）。
+            查询通风系统一号、二号或全部风机在指定时间段内的主要参数（报警、控制指令、状态、切换过程、修正系数、数值）。
             字段严格遵循 tongfeng_system.yaml 配置，分组及字段全为大写并带编号，返回结构包含英文名及中文注释。
             
             参数说明：
@@ -563,6 +812,8 @@ class TongfengMCPService:
             system_map = {
                 "1": ["一号风机系统"],
                 "2": ["二号风机系统"],
+                1: ["一号风机系统"],
+                2: ["二号风机系统"],
                 "all": ["一号风机系统", "二号风机系统"],
                 None: ["一号风机系统", "二号风机系统"],
             }
@@ -649,7 +900,7 @@ class TongfengMCPService:
                 end_time: Optional[str] = None  # 结束时间，YYYY-MM-DD HH:MM:SS，可选
         ) -> str:
             """
-            查询高压柜系统、阀门系统、进线柜系统、风门系统、母联柜系统的主要参数。
+            查询通风系统高压柜系统、阀门系统、进线柜系统、风门系统、母联柜系统的主要参数。
             字段严格遵循配置，返回结构包含字段英文名及中文注释。
 
             参数说明：
@@ -739,8 +990,6 @@ class TongfengMCPService:
                                          default=json_serializer)
                 logger.info(f'queryotherssystems请求了以下系统: {system_names}，结果json长度: {len(result_json)}')
            
-           
-
                 return result_json
 
             except Exception as e:
@@ -756,7 +1005,7 @@ class TongfengMCPService:
                 end_time: Optional[str] = None  # 结束时间，YYYY-MM-DD HH:MM:SS，可选):
         ):
             """
-            查询变频器系统在指定时间段内的主要参数。字段和数据结构严格依据配置，返回内容包含字段英文名及中文注释。
+            查询通风系统变频器系统在指定时间段内的主要参数。字段和数据结构严格依据配置，返回内容包含字段英文名及中文注释。
             对应关系:
                 一号变频器 <=> 一号一级电机变频器
                 二号变频器 <=> 一号二级电机变频器
@@ -833,7 +1082,7 @@ class TongfengMCPService:
                 end_time: Optional[str] = None  # 结束时间，YYYY-MM-DD HH:MM:SS，可选
         ):
             """
-            只能查询设定的数值：如设备电流超限报警阈值设定数值、电机定子温度超限报警阈值设定数值、 设备振动超限报警阈值设定数值、轴承温度超限报警阈值设定数值、电流信号互感器变比参数设定数值、电压信号互感器变比参数设定数值、风机风筒横截面积参数设定数值。
+            只能查询通风系统设定的数值：如设备电流超限报警阈值设定数值、电机定子温度超限报警阈值设定数值、 设备振动超限报警阈值设定数值、轴承温度超限报警阈值设定数值、电流信号互感器变比参数设定数值、电压信号互感器变比参数设定数值、风机风筒横截面积参数设定数值。
 
             参数说明：
                 - start_time: 起始时间（格式："YYYY-MM-DD HH:MM:SS"），可选。默认当天00:00:00。
@@ -907,7 +1156,7 @@ class TongfengMCPService:
                 end_time: Optional[str] = None  # 结束时间，YYYY-MM-DD HH:MM:SS，可选
         ):
             """
-            查功率能耗。只能查询如下设定设备的功率能耗相关数据：
+            查通风系统功率能耗。只能查询如下设定设备的功率能耗相关数据：
                 - 一号风机1级设备 (TF_YH_1_JI_GONG_LV_SHI_JI_ZHI)
                 - 一号风机2级设备 (TF_YH_2_JI_GONG_LV_SHI_JI_ZHI)
                 - 二号风机1级设备 (TF_EH_1_JI_GONG_LV_SHI_JI_ZHI)
@@ -982,7 +1231,7 @@ class TongfengMCPService:
         @self.mcp.tool()
         def get_supported_fields():
             """
-            功能描述: 获取当前系统全部支持的字段列表及其分组、中文注释说明。可用于自定义查询、字段筛选、前端字段说明展示等场景。
+            功能描述: 获取当前通风系统全部支持的字段列表及其分组、中文注释说明。可用于自定义查询、字段筛选、前端字段说明展示等场景。
             输入参数: 无
             返回: tongfeng_system.yaml 文件完整结构(JSON格式)，包含风机系统、设备级、变频器系统等全部分组、字段及注释等元信息。
             返回示例: {
@@ -999,6 +1248,105 @@ class TongfengMCPService:
             data = self.service._load_yaml()
             return json.dumps(data, ensure_ascii=False, indent=2)
 
+        
+        @self.mcp.tool()
+        def generate_tongfeng_report(
+                start_date: Union[str, datetime, None] = None,
+                end_date: Union[str, datetime, None] = None,
+        ) -> str:
+            """
+            【报告生成工具】根据起止日期生成通风系统综合日报 / 多日报告（Markdown 格式）。
+
+            【使用场景】
+            用户说"出一份今天的通风报告"、"汇总近3天的风机运行情况"、"生成通风系统的周报/月报"等。
+
+            【参数说明】
+            - start_date: 起始日期 (格式: "YYYY-MM-DD HH:MM:SS" 或 "YYYY-MM-DD")，缺省为当天 00:00:00。
+            - end_date:   截止日期 (格式: "YYYY-MM-DD HH:MM:SS" 或 "YYYY-MM-DD")，缺省为当天 23:59:59。
+
+            【报告内容】
+            一、风机系统（一号 + 二号）：报警信号 / 状态信号 / 数值监测
+                - 报警、状态：如无变化，只输出"正常"；有变化才输出变化次数与当前值
+                - 数值：表格展示 平均值、中位数、标准差、最小值、最大值
+            二、功率能耗：一号1级/2级、二号1级/2级设备的平均功率与总能耗
+            三、其他系统：高压柜 / 阀门 / 进线柜 / 风门 / 母联柜（信号 + 控制指令）
+
+            【返回值】
+            Markdown 文本。
+            - 单日报告：{报告类型=单日报告，含"日期"}
+            - 多日报告：{报告类型=多日报告，含"统计周期"与"统计天数"；数值做跨天聚合}
+            """
+            logger.info(
+                f"generate_tongfeng_report called: start_date={start_date}, end_date={end_date}"
+            )
+            try:
+                # ========== 时间处理 ==========
+                def _normalize_time(t, is_end: bool):
+                    if t is None:
+                        return None
+                    if isinstance(t, datetime):
+                        return t.strftime("%Y-%m-%d %H:%M:%S")
+                    t = str(t).strip()
+                    if not t:
+                        return None
+                    if len(t) == 10:
+                        return f"{t} 23:59:59" if is_end else f"{t} 00:00:00"
+                    return t
+
+                today = datetime.now().date()
+                start_time = _normalize_time(start_date, is_end=False) or f"{today} 00:00:00"
+                end_time = _normalize_time(end_date, is_end=True) or f"{today} 23:59:59"
+
+                start_dt = datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S")
+                end_dt = datetime.strptime(end_time, "%Y-%m-%d %H:%M:%S")
+                is_multi_day = start_dt.date() != end_dt.date()
+
+                # ========== 拉取原始数据 ==========
+                body = {}
+
+                # 1) 风机系统
+                try:
+                    body["风机系统"] = self.service.print_tongfeng_today_with_cache(
+                        system_name_filters=["一号风机系统", "二号风机系统"],
+                        start_date=start_time,
+                        end_date=end_time,
+                        subgroup_filters=["报警", "状态", "数值"],
+                    ) or {}
+                except Exception as e:
+                    logger.error(f"generate_tongfeng_report 风机查询失败: {traceback.format_exc()}")
+                    body["风机系统"] = {}
+
+                # 2) 功率能耗
+                try:
+                    body["功率能耗"] = self.service.calc_gonglv_energy_with_cache(
+                        start_date=start_time, end_date=end_time,
+                    ) or {}
+                except Exception as e:
+                    logger.error(f"generate_tongfeng_report 功率能耗失败: {traceback.format_exc()}")
+                    body["功率能耗"] = {}
+
+                # 3) 其他系统
+                try:
+                    body["其他系统"] = self.service.print_tongfeng_today_with_cache(
+                        system_name_filters=[
+                            "高压柜系统", "阀门系统", "进线柜系统",
+                            "风门系统", "母联柜系统",
+                        ],
+                        start_date=start_time,
+                        end_date=end_time,
+                    ) or {}
+                except Exception as e:
+                    logger.error(f"generate_tongfeng_report 其他系统失败: {traceback.format_exc()}")
+                    body["其他系统"] = {}
+
+                # ========== 生成 Markdown ==========
+                md = _build_md_report(body, is_multi_day)
+                logger.info(f"generate_tongfeng_report 完成, markdown 长度: {len(md)}")
+                return md
+
+            except Exception as e:
+                logger.error(f"generate_tongfeng_report 异常: {traceback.format_exc()}")
+                return f"# 通风系统报告生成失败\n\n错误信息：`{e}`\n"
     # _______________________________辅助函数____________________________________
     def filter_records(self, records):
         filtered = {}
@@ -1218,17 +1566,17 @@ async def test_all_tools():
         # # print(res2)
         # #
         # 3️⃣ query_fengji_records - 指定风机与分组
-        print("\n3️⃣ 测试 query_fengji_records 仅查询一号风机, 分组: '报警', 指定时间")
-        res3 = await mcp_app.call_tool(
-            "query_fengji_records",
-            {
-                "choose": "all",
-                "start_time": "2026-05-20 00:00:00",
-                "end_time": "2026-06-12 23:59:59",
-                # "subgroup_filters": "报警"
-            }
-        )
-        print("query_fengji_records (一号风机-报警) 返回：")
+        # print("\n3️⃣ 测试 query_fengji_records 仅查询一号风机, 分组: '报警', 指定时间")
+        # res3 = await mcp_app.call_tool(
+        #     "query_fengji_records",
+        #     {
+        #         "choose": "all",
+        #         "start_time": "2026-05-20 00:00:00",
+        #         "end_time": "2026-06-12 23:59:59",
+        #         # "subgroup_filters": "报警"
+        #     }
+        # )
+        # print("query_fengji_records (一号风机-报警) 返回：")
         # # print(res3)
         # #
         # # 4️⃣ query_fengji_records - 多分组多风机、分段、批量
@@ -1301,15 +1649,30 @@ async def test_all_tools():
         # )
         # print("query_others_system_records (二号风机 跨天 数值+状态统计) 返回：")
 
-        print("\n6️⃣ 测试 query_power_energy_records 跨天查询统计")
-        res6 = await mcp_app.call_tool(
-            "query_power_energy_records",
-            {
-                "start_time": "2026-04-04 00:00:00",
-                "end_time": "2026-05-09 23:59:59",
-            }
-        )
-        print("query_power_energy_records (二号风机 跨天 数值+状态统计) 返回：")
+        # # 单日报告（今天）
+        # result = await mcp_app.call_tool("generate_tongfeng_report", {
+        #     "start_date": "2026-08-20",
+        #     "end_date":   "2026-08-21",
+        # })
+
+        # 多日报告
+        result = await mcp_app.call_tool("generate_tongfeng_report", {
+            "start_date": "2026-08-30 00:00:00",
+            "end_date":   "2026-09-12 23:59:59",
+        })
+        print(result)
+        # 不传参数 → 默认当天
+        # result = await mcp_app.call_tool("generate_tongfeng_report", {})
+        # print(result)
+        # print("\n6️⃣ 测试 query_power_energy_records 跨天查询统计")
+        # res6 = await mcp_app.call_tool(
+        #     "query_power_energy_records",
+        #     {
+        #         "start_time": "2026-04-04 00:00:00",
+        #         "end_time": "2026-05-09 23:59:59",
+        #     }
+        # )
+        # print("query_power_energy_records (二号风机 跨天 数值+状态统计) 返回：")
 
 
 

@@ -78,6 +78,181 @@ for h in logging.getLogger().handlers:
         logging.getLogger().removeHandler(h)
 logger = logging.getLogger("MinePersonnelService")
 
+
+
+
+def _extract_number(v):
+    """从值中提取数字，失败返回 None。"""
+    if isinstance(v, bool):
+        return None
+    if isinstance(v, (int, float)):
+        return float(v)
+    if isinstance(v, str):
+        m = re.search(r'-?\d+\.?\d*', v)
+        if m:
+            try:
+                return float(m.group())
+            except ValueError:
+                return None
+    return None
+
+
+def _merge_values(a, b):
+    """合并两个统计值：字典递归合并，数值字符串相加，其余保留后者。"""
+    if isinstance(a, dict) and isinstance(b, dict):
+        result = {}
+        keys = list(a.keys()) + [k for k in b.keys() if k not in a]
+        for k in keys:
+            if k in a and k in b:
+                result[k] = _merge_values(a[k], b[k])
+            elif k in a:
+                result[k] = a[k]
+            else:
+                result[k] = b[k]
+        return result
+    na, nb = _extract_number(a), _extract_number(b)
+    if na is not None and nb is not None:
+        total = na + nb
+        if isinstance(a, str) and a.rstrip().endswith("人"):
+            return f"{int(total)}人"
+        if isinstance(a, str) and a.rstrip().endswith("条"):
+            return f"{int(total)}条"
+        if isinstance(a, str) and a.rstrip().endswith("辆"):
+            return f"{int(total)}辆"
+        if isinstance(a, str) and a.rstrip().endswith("辆次"):
+            return f"{int(total)}辆次"
+        if isinstance(a, str):
+            return str(int(total)) if total == int(total) else str(total)
+        return total
+    return b
+
+
+def _merge_dicts(values):
+    """按顺序合并一组字典/数值。"""
+    result = None
+    for v in values:
+        if v is None:
+            continue
+        if result is None:
+            result = copy.deepcopy(v)
+        else:
+            result = _merge_values(result, v)
+    return result
+
+
+def _truncate_ranking(ranking_data, top_n: int = 5):
+    """
+    通用排名截断：兼容 [[名称,编号,次数],...] / [{"入井次数":n},...] / {key: count} 结构。
+    """
+    if not ranking_data:
+        return ranking_data
+    try:
+        def _extract_count(value):
+            if isinstance(value, dict):
+                for kk in ("入井次数", "出入井次数", "count", "次数", "数量"):
+                    if kk in value:
+                        try:
+                            return float(value[kk])
+                        except (ValueError, TypeError):
+                            return 0.0
+                return 0.0
+            if isinstance(value, (int, float)):
+                return float(value)
+            if isinstance(value, str):
+                try:
+                    return float(value)
+                except ValueError:
+                    return 0.0
+            if isinstance(value, (list, tuple)):
+                for v in reversed(value):
+                    try:
+                        return float(v)
+                    except (ValueError, TypeError):
+                        continue
+            return 0.0
+
+        if isinstance(ranking_data, dict):
+            sorted_items = sorted(
+                ranking_data.items(),
+                key=lambda kv: _extract_count(kv[1]),
+                reverse=True,
+            )
+            return dict(sorted_items[:top_n])
+        elif isinstance(ranking_data, list):
+            sorted_items = sorted(
+                ranking_data,
+                key=lambda item: _extract_count(item),
+                reverse=True,
+            )
+            return sorted_items[:top_n]
+    except Exception as e:
+        logger.warning(f"_truncate_ranking 处理失败: {e}")
+    return ranking_data
+
+
+def _aggregate_multi_day_stats(per_day_stats, days, top_list_key=None, top_n=5, total_key="总人数"):
+    """
+    多日统计聚合：
+    - total_key：给出每日明细 + 合计
+    - top_list_key：按 名称+编号 汇总，取 TOP N
+    - 其他分布：跨天累加合并（嵌套字典递归合并，数值字符串按后缀相加）
+    """
+    if not per_day_stats:
+        return {}
+    all_keys = set()
+    for day in days:
+        all_keys.update(per_day_stats.get(day, {}).keys())
+
+    result = {}
+    for key in all_keys:
+        if key == total_key:
+            daily = {}
+            total = 0
+            for day in days:
+                v = per_day_stats.get(day, {}).get(key)
+                try:
+                    n = int(v)
+                    daily[day] = n
+                    total += n
+                except (TypeError, ValueError):
+                    continue
+            result[total_key] = {"每日": daily, "合计": total}
+
+        elif top_list_key and key == top_list_key:
+            merged = {}
+            for day in days:
+                v = per_day_stats.get(day, {}).get(key)
+                items = []
+                if isinstance(v, list):
+                    items = v
+                elif isinstance(v, dict):
+                    items = list(v.items())
+                for item in items:
+                    if isinstance(item, (list, tuple)) and len(item) >= 3:
+                        name, code, cnt = item[0], item[1], item[2]
+                        kk = (name, code)
+                        try:
+                            c = int(cnt)
+                        except (TypeError, ValueError):
+                            c = 0
+                        merged[kk] = merged.get(kk, 0) + c
+                    elif isinstance(item, (list, tuple)) and len(item) == 2:
+                        kk, val = item
+                        try:
+                            c = int(val)
+                        except (TypeError, ValueError):
+                            c = 0
+                        merged[kk] = merged.get(kk, 0) + c
+            sorted_items = sorted(merged.items(), key=lambda kv: kv[1], reverse=True)[:top_n]
+            result[key] = [[k[0], k[1], v] for k, v in sorted_items]
+
+        else:
+            values = [per_day_stats.get(day, {}).get(key) for day in days]
+            values = [v for v in values if v is not None]
+            if values:
+                result[key] = _merge_dicts(values)
+    return result
+
 def get_redis_client():
     """
     获取Redis客户端连接（单例模式）。

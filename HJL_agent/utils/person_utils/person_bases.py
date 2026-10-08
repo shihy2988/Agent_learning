@@ -284,9 +284,9 @@ class PersonBase:
                     fetch_start = start_date if isinstance(start_date, str) else s_dt.strftime("%Y-%m-%d %H:%M:%S")
                     fetch_end = end_date if isinstance(end_date, str) else e_dt.strftime("%Y-%m-%d %H:%M:%S")
                 else:
-                    # 保持原有逻辑：查询当天前后各2天的数据
-                    fetch_start = (datetime.strptime(day, "%Y-%m-%d") - timedelta(days=2)).strftime("%Y-%m-%d 00:00:00")
-                    fetch_end = (datetime.strptime(day, "%Y-%m-%d") + timedelta(days=2)).strftime("%Y-%m-%d 23:59:59")
+                    # 保持原有逻辑：查询当天前后各1天的数据
+                    fetch_start = (datetime.strptime(day, "%Y-%m-%d") - timedelta(days=1)).strftime("%Y-%m-%d 00:00:00")
+                    fetch_end = (datetime.strptime(day, "%Y-%m-%d") + timedelta(days=1)).strftime("%Y-%m-%d 23:59:59")
 
                 try:
                     fetch_result = self.get_persons_by_filters(start_time=fetch_start, end_time=fetch_end)

@@ -3474,3 +3474,158 @@ RuntimeError: cannot schedule new futures after interpreter shutdown
 2026-08-04 14:26:00,957 - MinePersonnelService - INFO - missed_days-----['2026-08-04']
 2026-08-04 14:26:01,128 - MinePersonnelService - INFO - missed_days-----['2026-08-04']
 2026-08-04 14:26:01,363 - MinePersonnelService - INFO - get_infos 查询成功: type=person, total_nums=482, name_filter=, 返回字段长度: 54976
+2026-09-18 15:25:46,838 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-09-18 15:25:47,077 - MinePersonnelService - INFO - _init_station_names refreshed station_names
+2026-09-18 15:25:47,081 - MinePersonnelService - INFO - _init_urls successful.
+2026-09-18 15:25:47,308 - MinePersonnelService - INFO - missed_days-----['2026-08-19', '2026-08-20', '2026-08-21', '2026-08-22', '2026-08-23', '2026-08-24', '2026-08-25', '2026-08-26', '2026-08-27', '2026-08-28', '2026-08-29', '2026-08-30', '2026-08-31', '2026-09-01', '2026-09-02', '2026-09-03', '2026-09-04', '2026-09-05', '2026-09-06', '2026-09-07', '2026-09-08', '2026-09-09', '2026-09-10', '2026-09-11', '2026-09-12', '2026-09-13', '2026-09-14', '2026-09-15', '2026-09-16', '2026-09-17', '2026-09-18']
+2026-09-18 15:25:47,312 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=2026-07-14, end_date=2026-07-14
+2026-09-18 15:25:47,312 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 15:25:47,316 - MinePersonnelService - INFO - missed_days-----['2026-07-14']
+2026-09-18 15:25:55,230 - MinePersonnelService - INFO - fetch_in_out_mine_records got 415 records for 2026-07-14 00:00:00 - 2026-07-14 23:59:59
+2026-09-18 15:25:55,412 - MinePersonnelService - INFO - classify_segments_by_inout completed for 1 days.
+2026-09-18 15:25:55,412 - MinePersonnelService - INFO - get_persons_by_filters total_segments: 10659 for 2026-07-14 00:00:00 - 2026-07-14 23:59:59
+2026-09-18 15:25:55,506 - MinePersonnelService - INFO - cache updated for day 2026-07-14
+2026-09-18 15:25:55,594 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 1 days.
+2026-09-18 15:25:55,597 - MinePersonnelService - INFO - step 2: 拉取车辆数据 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 15:25:55,599 - MinePersonnelService - INFO - missed_days-----['2026-07-14']
+2026-09-18 15:25:56,823 - MinePersonnelService - INFO - step 3: 人员逐日统计, 天数=1
+2026-09-18 15:25:57,257 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '入井地点分布/人次', '出井地点分布/人次', '区域分布/条', '主站分布/条', '分站分布/条', '站点停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '班次分布/人', '每小时人数统计/人']
+2026-09-18 15:25:57,259 - MinePersonnelService - INFO - step 4: 车辆逐日统计, 天数=1
+2026-09-18 15:25:57,321 - MinePersonnelService - INFO - step 5: 生成单日报告, 日期=2026-07-14
+2026-09-18 15:25:57,326 - MinePersonnelService - ERROR - generate_personnel_report 异常: Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\person_tools\person_tool.py", line 1686, in generate_personnel_report
+    p_stats["人员列表_姓名_卡号_入井次数"] = _truncate_ranking(
+                                             ^^^^^^^^^^^^^^^^^
+NameError: name '_truncate_ranking' is not defined
+
+2026-09-18 15:25:57,331 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=2026-07-11 00:00:00, end_date=2026-07-14 23:59:59
+2026-09-18 15:25:57,331 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 15:25:57,371 - MinePersonnelService - INFO - missed_days-----['2026-07-11', '2026-07-12', '2026-07-13']
+2026-09-18 15:25:59,819 - MinePersonnelService - INFO - fetch_in_out_mine_records got 438 records for 2026-07-11 00:00:00 - 2026-07-11 23:59:59
+2026-09-18 15:25:59,941 - MinePersonnelService - INFO - classify_segments_by_inout completed for 1 days.
+2026-09-18 15:25:59,942 - MinePersonnelService - INFO - get_persons_by_filters total_segments: 9106 for 2026-07-11 00:00:00 - 2026-07-11 23:59:59
+2026-09-18 15:25:59,998 - MinePersonnelService - INFO - cache updated for day 2026-07-11
+2026-09-18 15:26:03,165 - MinePersonnelService - INFO - fetch_in_out_mine_records got 426 records for 2026-07-12 00:00:00 - 2026-07-12 23:59:59
+2026-09-18 15:26:03,296 - MinePersonnelService - INFO - classify_segments_by_inout completed for 1 days.
+2026-09-18 15:26:03,296 - MinePersonnelService - INFO - get_persons_by_filters total_segments: 9785 for 2026-07-12 00:00:00 - 2026-07-12 23:59:59
+2026-09-18 15:26:03,356 - MinePersonnelService - INFO - cache updated for day 2026-07-12
+2026-09-18 15:26:06,289 - MinePersonnelService - INFO - fetch_in_out_mine_records got 415 records for 2026-07-13 00:00:00 - 2026-07-13 23:59:59
+2026-09-18 15:26:06,432 - MinePersonnelService - INFO - classify_segments_by_inout completed for 1 days.
+2026-09-18 15:26:06,432 - MinePersonnelService - INFO - get_persons_by_filters total_segments: 10653 for 2026-07-13 00:00:00 - 2026-07-13 23:59:59
+2026-09-18 15:26:06,557 - MinePersonnelService - INFO - cache updated for day 2026-07-13
+2026-09-18 15:26:06,573 - MinePersonnelService - ERROR - person_filter failed: cannot schedule new futures after interpreter shutdown 
+Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\utils\person_utils\person_bases.py", line 1092, in person_filter
+    futures = [executor.submit(process_person, item) for item in pdata.items()]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\minianaconda\envs\pt22\Lib\concurrent\futures\thread.py", line 173, in submit
+    raise RuntimeError('cannot schedule new futures after '
+RuntimeError: cannot schedule new futures after interpreter shutdown
+
+2026-09-18 15:26:06,573 - MinePersonnelService - ERROR - person_filter failed: cannot schedule new futures after interpreter shutdown 
+Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\utils\person_utils\person_bases.py", line 1092, in person_filter
+    futures = [executor.submit(process_person, item) for item in pdata.items()]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\minianaconda\envs\pt22\Lib\concurrent\futures\thread.py", line 173, in submit
+    raise RuntimeError('cannot schedule new futures after '
+RuntimeError: cannot schedule new futures after interpreter shutdown
+
+2026-09-18 15:26:06,574 - MinePersonnelService - ERROR - person_filter failed: cannot schedule new futures after interpreter shutdown 
+Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\utils\person_utils\person_bases.py", line 1092, in person_filter
+    futures = [executor.submit(process_person, item) for item in pdata.items()]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\minianaconda\envs\pt22\Lib\concurrent\futures\thread.py", line 173, in submit
+    raise RuntimeError('cannot schedule new futures after '
+RuntimeError: cannot schedule new futures after interpreter shutdown
+
+2026-09-18 15:26:06,574 - MinePersonnelService - ERROR - person_filter failed: cannot schedule new futures after interpreter shutdown 
+Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\utils\person_utils\person_bases.py", line 1092, in person_filter
+    futures = [executor.submit(process_person, item) for item in pdata.items()]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\minianaconda\envs\pt22\Lib\concurrent\futures\thread.py", line 173, in submit
+    raise RuntimeError('cannot schedule new futures after '
+RuntimeError: cannot schedule new futures after interpreter shutdown
+
+2026-09-18 15:26:06,576 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 0 days.
+2026-09-18 15:26:06,589 - MinePersonnelService - INFO - step 2: 拉取车辆数据 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 15:26:06,594 - MinePersonnelService - INFO - missed_days-----['2026-07-11', '2026-07-12', '2026-07-13']
+2026-09-18 15:26:09,774 - MinePersonnelService - ERROR - car_filter异常: Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\utils\person_utils\car_bases.py", line 960, in car_filter
+    futures = [executor.submit(process_person, item) for item in pdata.items()]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\minianaconda\envs\pt22\Lib\concurrent\futures\thread.py", line 173, in submit
+    raise RuntimeError('cannot schedule new futures after '
+RuntimeError: cannot schedule new futures after interpreter shutdown
+
+2026-09-18 15:26:09,774 - MinePersonnelService - ERROR - car_filter异常: Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\utils\person_utils\car_bases.py", line 960, in car_filter
+    futures = [executor.submit(process_person, item) for item in pdata.items()]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\minianaconda\envs\pt22\Lib\concurrent\futures\thread.py", line 173, in submit
+    raise RuntimeError('cannot schedule new futures after '
+RuntimeError: cannot schedule new futures after interpreter shutdown
+
+2026-09-18 15:26:09,775 - MinePersonnelService - ERROR - car_filter异常: Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\utils\person_utils\car_bases.py", line 960, in car_filter
+    futures = [executor.submit(process_person, item) for item in pdata.items()]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\minianaconda\envs\pt22\Lib\concurrent\futures\thread.py", line 173, in submit
+    raise RuntimeError('cannot schedule new futures after '
+RuntimeError: cannot schedule new futures after interpreter shutdown
+
+2026-09-18 15:26:09,775 - MinePersonnelService - ERROR - car_filter异常: Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\utils\person_utils\car_bases.py", line 960, in car_filter
+    futures = [executor.submit(process_person, item) for item in pdata.items()]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\minianaconda\envs\pt22\Lib\concurrent\futures\thread.py", line 173, in submit
+    raise RuntimeError('cannot schedule new futures after '
+RuntimeError: cannot schedule new futures after interpreter shutdown
+
+2026-09-18 15:26:09,777 - MinePersonnelService - INFO - step 3: 人员逐日统计, 天数=0
+2026-09-18 15:26:09,777 - MinePersonnelService - INFO - step 4: 车辆逐日统计, 天数=0
+2026-09-18 15:26:09,777 - MinePersonnelService - INFO - step 5: 生成多日聚合报告, 天数=0
+2026-09-18 15:26:09,777 - MinePersonnelService - ERROR - generate_personnel_report 异常: Traceback (most recent call last):
+  File "G:\git\Agent_learning\QYXT_MCP\person_tools\person_tool.py", line 1740, in generate_personnel_report
+    "起始日期": all_days[0],
+                ~~~~~~~~^^^
+IndexError: list index out of range
+
+2026-09-18 15:30:26,749 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-09-18 15:30:26,906 - MinePersonnelService - INFO - _init_station_names refreshed station_names
+2026-09-18 15:30:26,909 - MinePersonnelService - INFO - _init_urls successful.
+2026-09-18 15:30:27,128 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=None, end_date=None
+2026-09-18 15:30:27,128 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 15:30:27,135 - MinePersonnelService - INFO - Query end date 2026-09-18 15:30:27.135659 is within 3 days of now, skipping cache.
+2026-09-18 15:30:27,163 - MinePersonnelService - INFO - missed_days-----['2026-09-06', '2026-09-07', '2026-09-08', '2026-09-09', '2026-09-10', '2026-09-11', '2026-09-12', '2026-09-13', '2026-09-14', '2026-09-15', '2026-09-16', '2026-09-17', '2026-09-18']
+2026-09-18 15:30:31,575 - MinePersonnelService - INFO - fetch_in_out_mine_records got 374 records for 2026-09-18 00:00:00 - 2026-09-18 23:59:59
+2026-09-18 15:30:31,759 - MinePersonnelService - INFO - classify_segments_by_inout completed for 1 days.
+2026-09-18 15:30:31,759 - MinePersonnelService - INFO - get_persons_by_filters total_segments: 9374 for 2026-09-18 00:00:00 - 2026-09-18 23:59:59
+2026-09-18 15:30:31,916 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 1 days.
+2026-09-18 15:30:31,919 - MinePersonnelService - INFO - step 2: 拉取车辆数据 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 15:30:31,921 - MinePersonnelService - INFO - missed_days-----['2026-09-18']
+2026-09-18 15:30:32,560 - MinePersonnelService - INFO - step 3: 人员逐日统计, 天数=1
+2026-09-18 15:30:32,933 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '入井地点分布/人次', '出井地点分布/人次', '区域分布/条', '主站分布/条', '分站分布/条', '站点停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '班次分布/人', '每小时人数统计/人']
+2026-09-18 15:30:32,936 - MinePersonnelService - INFO - step 4: 车辆逐日统计, 天数=1
+2026-09-18 15:30:32,976 - MinePersonnelService - INFO - step 5: 生成单日报告, 日期=2026-09-18
+2026-09-18 15:30:32,977 - MinePersonnelService - INFO - step 6: 生成报告完成, 长度: 15509
+2026-09-18 15:31:15,392 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-09-18 15:31:15,572 - MinePersonnelService - INFO - _init_station_names refreshed station_names
+2026-09-18 15:31:15,576 - MinePersonnelService - INFO - _init_urls successful.
+2026-09-18 15:31:15,836 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=None, end_date=None
+2026-09-18 15:31:15,836 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 15:31:15,843 - MinePersonnelService - INFO - Query end date 2026-09-18 15:31:15.843804 is within 3 days of now, skipping cache.
+2026-09-18 15:31:15,886 - MinePersonnelService - INFO - missed_days-----['2026-09-10', '2026-09-11', '2026-09-12', '2026-09-13', '2026-09-14', '2026-09-15', '2026-09-16', '2026-09-17', '2026-09-18']
+2026-09-18 15:31:18,558 - MinePersonnelService - INFO - fetch_in_out_mine_records got 374 records for 2026-09-18 00:00:00 - 2026-09-18 23:59:59
+2026-09-18 15:31:18,724 - MinePersonnelService - INFO - classify_segments_by_inout completed for 1 days.
+2026-09-18 15:31:18,724 - MinePersonnelService - INFO - get_persons_by_filters total_segments: 9380 for 2026-09-18 00:00:00 - 2026-09-18 23:59:59
+2026-09-18 15:31:18,800 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 1 days.
+2026-09-18 15:31:18,803 - MinePersonnelService - INFO - step 2: 拉取车辆数据 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 15:31:18,806 - MinePersonnelService - INFO - missed_days-----['2026-09-18']
+2026-09-18 15:31:19,510 - MinePersonnelService - INFO - step 3: 人员逐日统计, 天数=1
+2026-09-18 15:31:19,873 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '入井地点分布/人次', '出井地点分布/人次', '区域分布/条', '主站分布/条', '分站分布/条', '站点停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '班次分布/人', '每小时人数统计/人']
+2026-09-18 15:31:19,876 - MinePersonnelService - INFO - step 4: 车辆逐日统计, 天数=1
+2026-09-18 15:31:19,921 - MinePersonnelService - INFO - step 5: 生成单日报告, 日期=2026-09-18
+2026-09-18 15:31:19,921 - MinePersonnelService - INFO - step 6: 生成报告完成, 长度: 15510

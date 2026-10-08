@@ -1,0 +1,108 @@
+2026-09-20 14:09:38,045 - MineAQJCService - INFO - Successfully connected to ClickHouse.
+2026-09-20 14:10:38,717 - MineAQJCService - INFO - Successfully connected to ClickHouse.
+2026-09-20 14:10:38,735 - MineAQJCService - INFO - missed_days (needs fetch)-----['2026-08-21', '2026-08-22', '2026-08-23', '2026-08-24', '2026-08-25', '2026-08-26', '2026-08-27', '2026-08-28', '2026-08-29', '2026-08-30', '2026-08-31', '2026-09-01', '2026-09-02', '2026-09-03', '2026-09-04', '2026-09-05', '2026-09-06', '2026-09-07', '2026-09-08', '2026-09-09', '2026-09-10', '2026-09-11', '2026-09-12', '2026-09-13', '2026-09-14', '2026-09-15', '2026-09-16', '2026-09-17', '2026-09-18', '2026-09-19', '2026-09-20']
+2026-09-20 14:10:38,759 - MineAQJCService - INFO - generate_aqjc_report called with params: start_date=2026-09-17, end_date=2026-09-17
+2026-09-20 14:10:38,760 - MineAQJCService - INFO - step 1: 拉取测点数据 [2026-09-17 00:00:00 ~ 2026-09-17 23:59:59]
+2026-09-20 14:10:38,761 - MineAQJCService - INFO - missed_days (needs fetch)-----['2026-09-17']
+2026-09-20 14:10:39,839 - MineAQJCService - INFO - cache updated for history day 2026-08-21
+2026-09-20 14:10:40,502 - MineAQJCService - INFO - get_points_daytype_with_cache completed. Total 1 days.
+2026-09-20 14:10:40,503 - MineAQJCService - INFO - step 2: 开始逐日统计, 天数=1
+2026-09-20 14:10:40,539 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:10:40,540 - MineAQJCService - INFO - step 3: 生成单日报告
+2026-09-20 14:10:40,541 - MineAQJCService - INFO - step 4: 查询测点异常 [2026-09-17 00:00:00 ~ 2026-09-17 23:59:59]
+2026-09-20 14:10:40,598 - MineAQJCService - INFO - step 5: 查询分站状态 [2026-09-17 00:00:00 ~ 2026-09-17 23:59:59]
+2026-09-20 14:10:40,953 - MineAQJCService - INFO - step 6: 生成报告完成, 长度=2681
+2026-09-20 14:13:54,056 - MineAQJCService - INFO - Successfully connected to ClickHouse.
+2026-09-20 14:13:54,076 - MineAQJCService - INFO - missed_days (needs fetch)-----['2026-08-22', '2026-08-23', '2026-08-24', '2026-08-25', '2026-08-26', '2026-08-27', '2026-08-28', '2026-08-29', '2026-08-30', '2026-08-31', '2026-09-01', '2026-09-02', '2026-09-03', '2026-09-04', '2026-09-05', '2026-09-06', '2026-09-07', '2026-09-08', '2026-09-09', '2026-09-10', '2026-09-11', '2026-09-12', '2026-09-13', '2026-09-14', '2026-09-15', '2026-09-16', '2026-09-17', '2026-09-18', '2026-09-19', '2026-09-20']
+2026-09-20 14:13:54,082 - MineAQJCService - INFO - generate_aqjc_report called with params: start_date=2026-09-17, end_date=2026-09-17
+2026-09-20 14:13:54,082 - MineAQJCService - INFO - step 1: 拉取测点数据 [2026-09-17 00:00:00 ~ 2026-09-17 23:59:59]
+2026-09-20 14:13:54,083 - MineAQJCService - INFO - missed_days (needs fetch)-----['2026-09-17']
+2026-09-20 14:13:55,924 - MineAQJCService - INFO - cache updated for history day 2026-08-22
+2026-09-20 14:13:56,150 - MineAQJCService - INFO - get_points_daytype_with_cache completed. Total 1 days.
+2026-09-20 14:13:56,152 - MineAQJCService - INFO - step 2: 开始逐日统计, 天数=1
+2026-09-20 14:13:56,190 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:13:56,191 - MineAQJCService - INFO - step 3: 生成单日报告
+2026-09-20 14:13:56,191 - MineAQJCService - INFO - step 4: 查询测点异常 [2026-09-17 00:00:00 ~ 2026-09-17 23:59:59]
+2026-09-20 14:13:56,221 - MineAQJCService - INFO - step 5: 查询分站状态 [2026-09-17 00:00:00 ~ 2026-09-17 23:59:59]
+2026-09-20 14:13:56,286 - MineAQJCService - INFO - step 6: 生成报告完成, 长度=1151
+2026-09-20 14:14:50,830 - MineAQJCService - INFO - Successfully connected to ClickHouse.
+2026-09-20 14:14:50,853 - MineAQJCService - INFO - generate_aqjc_report called with params: start_date=2026-09-10, end_date=2026-09-17
+2026-09-20 14:14:50,854 - MineAQJCService - INFO - step 1: 拉取测点数据 [2026-09-10 00:00:00 ~ 2026-09-17 23:59:59]
+2026-09-20 14:14:50,854 - MineAQJCService - INFO - missed_days (needs fetch)-----['2026-08-23', '2026-08-24', '2026-08-25', '2026-08-26', '2026-08-27', '2026-08-28', '2026-08-29', '2026-08-30', '2026-08-31', '2026-09-01', '2026-09-02', '2026-09-03', '2026-09-04', '2026-09-05', '2026-09-06', '2026-09-07', '2026-09-08', '2026-09-09', '2026-09-10', '2026-09-11', '2026-09-12', '2026-09-13', '2026-09-14', '2026-09-15', '2026-09-16', '2026-09-17', '2026-09-18', '2026-09-19', '2026-09-20']
+2026-09-20 14:14:50,857 - MineAQJCService - INFO - missed_days (needs fetch)-----['2026-09-10', '2026-09-11', '2026-09-12', '2026-09-13', '2026-09-14', '2026-09-15', '2026-09-16', '2026-09-17']
+2026-09-20 14:14:52,062 - MineAQJCService - INFO - cache updated for history day 2026-08-23
+2026-09-20 14:14:52,721 - MineAQJCService - INFO - cache updated for history day 2026-09-10
+2026-09-20 14:14:53,163 - MineAQJCService - INFO - cache updated for history day 2026-08-24
+2026-09-20 14:14:54,275 - MineAQJCService - INFO - cache updated for history day 2026-08-25
+2026-09-20 14:14:54,338 - MineAQJCService - INFO - cache updated for history day 2026-09-11
+2026-09-20 14:14:55,399 - MineAQJCService - INFO - cache updated for history day 2026-08-26
+2026-09-20 14:14:56,190 - MineAQJCService - INFO - cache updated for history day 2026-09-12
+2026-09-20 14:14:56,438 - MineAQJCService - INFO - cache updated for history day 2026-08-27
+2026-09-20 14:14:57,480 - MineAQJCService - INFO - cache updated for history day 2026-08-28
+2026-09-20 14:14:57,639 - MineAQJCService - INFO - cache updated for history day 2026-09-13
+2026-09-20 14:14:58,612 - MineAQJCService - INFO - cache updated for history day 2026-08-29
+2026-09-20 14:14:59,223 - MineAQJCService - INFO - cache updated for history day 2026-09-14
+2026-09-20 14:14:59,735 - MineAQJCService - INFO - cache updated for history day 2026-08-30
+2026-09-20 14:15:00,933 - MineAQJCService - INFO - cache updated for history day 2026-08-31
+2026-09-20 14:15:01,093 - MineAQJCService - INFO - cache updated for history day 2026-09-15
+2026-09-20 14:15:01,963 - MineAQJCService - INFO - cache updated for history day 2026-09-01
+2026-09-20 14:15:02,651 - MineAQJCService - INFO - cache updated for history day 2026-09-16
+2026-09-20 14:15:03,064 - MineAQJCService - INFO - cache updated for history day 2026-09-02
+2026-09-20 14:15:04,139 - MineAQJCService - INFO - cache updated for history day 2026-09-03
+2026-09-20 14:15:04,708 - MineAQJCService - INFO - get_points_daytype_with_cache completed. Total 8 days.
+2026-09-20 14:15:04,723 - MineAQJCService - INFO - step 2: 开始逐日统计, 天数=8
+2026-09-20 14:15:04,792 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:15:04,832 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:15:04,872 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:15:04,912 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:15:04,954 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:15:04,994 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:15:05,033 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:15:05,106 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:15:05,108 - MineAQJCService - INFO - step 3: 生成多日聚合报告, 天数=8
+2026-09-20 14:15:05,110 - MineAQJCService - ERROR - generate_aqjc_report 异常: Traceback (most recent call last):
+  File "G:\git\Agent_learning\Nao_mcp\tools\aqjc_tools\aqjc_tool.py", line 1688, in generate_aqjc_report
+    agg_stats = _aggregate_multi_day_stats(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\git\Agent_learning\Nao_mcp\tools\aqjc_tools\aqjc_tool.py", line 281, in _aggregate_multi_day_stats
+    result[key] = _merge_dicts(values)
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "G:\git\Agent_learning\Nao_mcp\tools\aqjc_tools\aqjc_tool.py", line 163, in _merge_dicts
+    result = copy.deepcopy(v)
+             ^^^^
+NameError: name 'copy' is not defined. Did you forget to import 'copy'
+
+2026-09-20 14:15:22,921 - MineAQJCService - INFO - Successfully connected to ClickHouse.
+2026-09-20 14:15:22,970 - MineAQJCService - INFO - generate_aqjc_report called with params: start_date=2026-09-17, end_date=2026-09-17
+2026-09-20 14:15:22,970 - MineAQJCService - INFO - step 1: 拉取测点数据 [2026-09-17 00:00:00 ~ 2026-09-17 23:59:59]
+2026-09-20 14:15:22,997 - MineAQJCService - INFO - missed_days (needs fetch)-----['2026-09-17']
+2026-09-20 14:15:23,038 - MineAQJCService - INFO - missed_days (needs fetch)-----['2026-09-04', '2026-09-05', '2026-09-06', '2026-09-07', '2026-09-08', '2026-09-09', '2026-09-17', '2026-09-18', '2026-09-19', '2026-09-20']
+2026-09-20 14:15:24,275 - MineAQJCService - INFO - cache updated for history day 2026-09-04
+2026-09-20 14:15:24,482 - MineAQJCService - INFO - get_points_daytype_with_cache completed. Total 1 days.
+2026-09-20 14:15:24,483 - MineAQJCService - INFO - step 2: 开始逐日统计, 天数=1
+2026-09-20 14:15:24,522 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:15:24,523 - MineAQJCService - INFO - step 3: 生成单日报告
+2026-09-20 14:15:24,523 - MineAQJCService - INFO - step 4: 查询测点异常 [2026-09-17 00:00:00 ~ 2026-09-17 23:59:59]
+2026-09-20 14:15:24,551 - MineAQJCService - INFO - step 5: 查询分站状态 [2026-09-17 00:00:00 ~ 2026-09-17 23:59:59]
+2026-09-20 14:15:24,615 - MineAQJCService - INFO - step 6: 生成报告完成, 长度=1151
+2026-09-20 14:16:02,681 - MineAQJCService - INFO - Successfully connected to ClickHouse.
+2026-09-20 14:16:02,727 - MineAQJCService - INFO - generate_aqjc_report called with params: start_date=2026-09-10, end_date=2026-09-17
+2026-09-20 14:16:02,728 - MineAQJCService - INFO - step 1: 拉取测点数据 [2026-09-10 00:00:00 ~ 2026-09-17 23:59:59]
+2026-09-20 14:16:02,836 - MineAQJCService - INFO - missed_days (needs fetch)-----['2026-09-05', '2026-09-06', '2026-09-07', '2026-09-08', '2026-09-09', '2026-09-17', '2026-09-18', '2026-09-19', '2026-09-20']
+2026-09-20 14:16:02,889 - MineAQJCService - INFO - missed_days (needs fetch)-----['2026-09-17']
+2026-09-20 14:16:03,819 - MineAQJCService - INFO - cache updated for history day 2026-09-05
+2026-09-20 14:16:04,567 - MineAQJCService - INFO - get_points_daytype_with_cache completed. Total 8 days.
+2026-09-20 14:16:04,571 - MineAQJCService - INFO - step 2: 开始逐日统计, 天数=8
+2026-09-20 14:16:04,607 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:16:04,643 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:16:04,680 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:16:04,765 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:16:04,805 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:16:04,842 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:16:04,880 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:16:04,922 - MineAQJCService - INFO - point_filter statistics generated for keys: ['总测点数', '测点列表', '传感器类型分布/个', '测点状态分布/条']
+2026-09-20 14:16:04,923 - MineAQJCService - INFO - step 3: 生成多日聚合报告, 天数=8
+2026-09-20 14:16:04,925 - MineAQJCService - INFO - step 4: 查询测点异常 [2026-09-10 00:00:00 ~ 2026-09-17 23:59:59]
+2026-09-20 14:16:04,930 - MineAQJCService - INFO - cache updated for history day 2026-09-06
+2026-09-20 14:16:04,995 - MineAQJCService - INFO - step 5: 查询分站状态 [2026-09-10 00:00:00 ~ 2026-09-17 23:59:59]
+2026-09-20 14:16:05,207 - MineAQJCService - INFO - step 6: 生成报告完成, 长度=10222

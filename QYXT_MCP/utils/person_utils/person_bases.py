@@ -745,11 +745,27 @@ class PersonBase:
                         start_date=start_date,
                         end_date=end_date,
                     )
+                    # 删除60天之前的缓存数据
+                    db_path = os.path.join(os.path.dirname(__file__), "person_analysis_cache.db")
+                    conn = sqlite3.connect(db_path)
+                    cursor = conn.cursor()
+                    cutoff_date = (datetime.now() - timedelta(days=60)).strftime("%Y-%m-%d")
+                    
+                    cursor.execute(
+                        "DELETE FROM person_atom_cache WHERE day_str < ?",
+                        (cutoff_date,)
+                    )
+                    deleted = cursor.rowcount
+                    conn.commit()
+                    conn.close()
+                    self.logger.info(f"自动分析: 已删除60天前的缓存数据, cutoff={cutoff_date}, deleted={deleted}")
+         
                 except Exception as e:
                     self.logger.info(f"自动分析: print_tongfeng_today_with_cache 异常: {e}")
             except Exception as e:
                 self.logger.info(f"自动分析: 总体异常: {e}")
                 
+                   
       # ==================== 3. 封装cache功能 =====================
     def get_person_infos_daytype_with_cache(
         self,
@@ -771,7 +787,7 @@ class PersonBase:
         """
         简化缓存，仅以day_str为key。所有过滤通过函数处理，不在缓存中做过滤。
         每日数据，适配条件过滤。
-        优化：当查询范围 <= 1天时，跳过缓存直接查库。
+        优化：当查询结束日期距离当前时间在3天以内时，跳过缓存直接查库，且不写缓存。
         """
         try:
             # SQLite缓存数据库文件
@@ -816,10 +832,11 @@ class PersonBase:
             while curr_d <= e_dt.date():
                 req_dates.append(curr_d.strftime("%Y-%m-%d"))
                 curr_d += timedelta(days=1)
-                
+
             # ========== 核心优化：判断是否使用缓存 ==========
-            # 如果请求的天数 <= 1，则不走缓存，直接查库
-            use_cache = len(req_dates) > 1
+            # 如果查询结束日期距离当前时间在 3 天以内，则不走缓存，直接查库，也不写缓存
+            three_days_ago_day = (now - timedelta(days=3)).date()
+            use_cache = e_dt.date() < three_days_ago_day
             # ================================================
 
             final_output = {}  # day -> {person_key: data}
@@ -889,7 +906,7 @@ class PersonBase:
                     final_output[day] = day_data
             else:
                 # ========== 不走缓存，直接查库 ==========
-                self.logger.info(f"Query range <= 1 day ({len(req_dates)} day(s)), skipping cache.")
+                self.logger.info(f"Query end date {e_dt} is within 3 days of now, skipping cache.")
                 for day in req_dates:
                     fetch_start = f"{day} 00:00:00"
                     fetch_end = f"{day} 23:59:59"
@@ -1166,7 +1183,7 @@ if __name__ == "__main__":
     print("统计字段 keys:", stats_keys)
     statistics_filter_values = ["人员列表_姓名_卡号_入井次数","每小时人数统计/人", '入井时间段分布/人次', '出井时间段分布/人次','当前在井下人数']
     daytype_data = person_util.get_person_infos_daytype_with_cache(
-        start_date="2026-08-13 00:00:00", end_date="2026-08-13 23:59:59",
+        start_date="2026-08-13 00:00:00", end_date="2026-08-15 23:59:59",
         person_name_filters=None,
         department_filters=None,
         classtype_filters=None,

@@ -90,6 +90,259 @@ def json_serializer(obj):
         return obj.strftime("%Y-%m-%d %H:%M:%S")
     raise TypeError(f"Type {type(obj)} not serializable")
 
+def _fmt_num(v):
+    """格式化数字用于 markdown 表格"""
+    if v is None or v == "":
+        return "-"
+    try:
+        if isinstance(v, float):
+            if v != 0 and abs(v) < 0.001:
+                return f"{v:.4f}"
+            return f"{v:.2f}"
+        if isinstance(v, int):
+            return str(v)
+        return str(v)
+    except Exception:
+        return str(v)
+
+
+def _extract_num(v):
+    """从 {数值, 时间} 结构中提取数值；非 dict 原样返回"""
+    if isinstance(v, dict):
+        return v.get("数值")
+    return v
+
+
+def _classify_signal(sig_data):
+    """判断信号是 数值型 还是 状态/信号型"""
+    if not isinstance(sig_data, dict):
+        return "unknown"
+    day_dict = sig_data.get("每日数据", {})
+    if not day_dict:
+        return "unknown"
+    day_data = list(day_dict.values())[0]
+    if not isinstance(day_data, dict):
+        return "unknown"
+    if "平均值" in day_data or "中位数" in day_data:
+        return "numeric"
+    return "signal"
+
+
+def _signal_status_single(sig_data):
+    """单日：一个信号的状态描述"""
+    if not isinstance(sig_data, dict):
+        return "正常"
+    day_dict = sig_data.get("每日数据", {})
+    if not day_dict:
+        return "无数据"
+    day_data = list(day_dict.values())[0]
+    if not isinstance(day_data, dict):
+        return "正常"
+    if day_data.get("变化", "无变化") == "无变化":
+        return "正常"
+    cnt = day_data.get("变化次数", 0)
+    cur = day_data.get("当前值", "")
+    return f"⚠ 有变化（{cnt} 次），当前值 {cur}"
+
+
+def _signal_status_multi(sig_data):
+    """多日：一个信号的状态描述"""
+    if not isinstance(sig_data, dict):
+        return "正常"
+    day_dict = sig_data.get("每日数据", {})
+    if not day_dict:
+        return "无数据"
+    total = len(day_dict)
+    changed = sum(
+        1 for d in day_dict.values()
+        if isinstance(d, dict) and d.get("变化", "无变化") != "无变化"
+    )
+    if changed == 0:
+        return f"正常（{total} 天无异常）"
+    return f"⚠ {changed}/{total} 天有变化"
+
+
+def _numeric_cells_single(sig_data):
+    """单日：返回 (平均, 中位, 标准差, 最小, 最大)"""
+    if not isinstance(sig_data, dict):
+        return None
+    day_dict = sig_data.get("每日数据", {})
+    if not day_dict:
+        return None
+    day_data = list(day_dict.values())[0]
+    if not isinstance(day_data, dict):
+        return None
+    return (
+        _fmt_num(day_data.get("平均值")),
+        _fmt_num(day_data.get("中位数")),
+        _fmt_num(day_data.get("标准差")),
+        _fmt_num(_extract_num(day_data.get("最小值"))),
+        _fmt_num(_extract_num(day_data.get("最大值"))),
+    )
+
+
+def _numeric_cells_multi(sig_data):
+    """多日：跨天聚合 (平均, 中位, 标准差, 最小, 最大)"""
+    if not isinstance(sig_data, dict):
+        return None
+    day_dict = sig_data.get("每日数据", {})
+    if not day_dict:
+        return None
+    avgs, meds, stds, mins, maxs = [], [], [], [], []
+    for d in day_dict.values():
+        if not isinstance(d, dict):
+            continue
+        for lst, key in [(avgs, "平均值"), (meds, "中位数"), (stds, "标准差")]:
+            v = d.get(key)
+            if isinstance(v, (int, float)):
+                lst.append(v)
+        mn = _extract_num(d.get("最小值"))
+        mx = _extract_num(d.get("最大值"))
+        if isinstance(mn, (int, float)):
+            mins.append(mn)
+        if isinstance(mx, (int, float)):
+            maxs.append(mx)
+    return (
+        _fmt_num(sum(avgs) / len(avgs) if avgs else None),
+        _fmt_num(sum(meds) / len(meds) if meds else None),
+        _fmt_num(sum(stds) / len(stds) if stds else None),
+        _fmt_num(min(mins) if mins else None),
+        _fmt_num(max(maxs) if maxs else None),
+    )
+
+
+def _find_yafeng_report_date(records):
+    """从 records 中找出日期或日期范围"""
+    days = set()
+    for sys_data in (records or {}).values():
+        if not isinstance(sys_data, dict):
+            continue
+        for sub in sys_data.values():
+            if not isinstance(sub, dict):
+                continue
+            for sig in sub.values():
+                if isinstance(sig, dict) and "每日数据" in sig:
+                    days.update((sig.get("每日数据", {}) or {}).keys())
+    return sorted(days)
+
+
+def _emit_system_md(md, sys_data, is_multi_day):
+    """输出一个系统的各子分组 markdown"""
+    for sub_name, sub in (sys_data or {}).items():
+        if not isinstance(sub, dict):
+            continue
+        numeric_sigs = []
+        signal_sigs = []
+        for sig_name, sig in sub.items():
+            if not isinstance(sig, dict):
+                continue
+            kind = _classify_signal(sig)
+            if kind == "numeric":
+                numeric_sigs.append((sig_name, sig))
+            else:
+                signal_sigs.append((sig_name, sig))
+
+        if not numeric_sigs and not signal_sigs:
+            continue
+
+        md.append(f"**{sub_name}**")
+        md.append("")
+
+        if signal_sigs:
+            for sig_name, sig in signal_sigs:
+                status = _signal_status_multi(sig) if is_multi_day else _signal_status_single(sig)
+                md.append(f"- {sig_name}：{status}")
+            md.append("")
+
+        if numeric_sigs:
+            md.append("| 监测项 | 平均值 | 中位数 | 标准差 | 最小值 | 最大值 |")
+            md.append("|:------|:------|:------|:------|:------|:------|")
+            for sig_name, sig in numeric_sigs:
+                cells = _numeric_cells_multi(sig) if is_multi_day else _numeric_cells_single(sig)
+                if cells:
+                    md.append(f"| {sig_name} | {cells[0]} | {cells[1]} | {cells[2]} | {cells[3]} | {cells[4]} |")
+            md.append("")
+
+
+def _build_yafeng_md(records, energy_records, is_multi_day):
+    """把原始记录转为 markdown 文本"""
+    md = []
+    days = _find_yafeng_report_date(records)
+
+    # ---------- 标题 ----------
+    if is_multi_day:
+        md.append("# 压风系统多日报告")
+        md.append("")
+        if days:
+            md.append(f"**统计周期**：{days[0]} ~ {days[-1]}")
+            md.append(f"**统计天数**：{len(days)} 天")
+    else:
+        md.append("# 压风系统日报")
+        md.append("")
+        if days:
+            md.append(f"**日期**：{days[0]}")
+    md.append("")
+    md.append("---")
+    md.append("")
+
+    # ---------- 固定分区 ----------
+    system_order = [
+        ("一、空压机系统", ["1号空压机", "2号空压机", "3号空压机"]),
+        ("二、电机系统", ["电机系统"]),
+        ("三、振动系统", ["振动系统"]),
+        ("四、断路器系统", ["断路器系统"]),
+        ("五、环境监测", ["机房配电室操作室环境烟雾温度系统"]),
+        ("六、逻辑控制系统", ["逻辑控制系统"]),
+        ("七、系统级", ["系统级"]),
+    ]
+
+    for section_title, sys_names in system_order:
+        present = [s for s in sys_names if s in (records or {}) and records[s]]
+        if not present:
+            continue
+        md.append(f"## {section_title}")
+        md.append("")
+        for sys_name in present:
+            sys_data = records.get(sys_name, {})
+            # 空压机单独加三级标题；其它系统在 section 里只有一个，不必重复
+            if len(present) > 1:
+                md.append(f"### {sys_name}")
+                md.append("")
+            _emit_system_md(md, sys_data, is_multi_day)
+
+    # ---------- 功率能耗 ----------
+    md.append("## 八、功率能耗")
+    md.append("")
+    if isinstance(energy_records, dict) and energy_records:
+        dev_avg = {}
+        dev_energy = {}
+        for day_data in energy_records.values():
+            if not isinstance(day_data, dict):
+                continue
+            avg_p = day_data.get("总平均功率_kw", {}) or {}
+            total_e = day_data.get("总能耗kWh", {}) or {}
+            for dev, val in avg_p.items():
+                if isinstance(val, (int, float)):
+                    dev_avg.setdefault(dev, []).append(val)
+            for dev, val in total_e.items():
+                if isinstance(val, (int, float)):
+                    dev_energy[dev] = dev_energy.get(dev, 0) + val
+
+        md.append("| 设备 | 平均功率 (kW) | 总能耗 (kWh) |")
+        md.append("|:-----|:------------|:------------|")
+        for dev in sorted(set(list(dev_avg.keys()) + list(dev_energy.keys()))):
+            avgs = dev_avg.get(dev, [])
+            avg = sum(avgs) / len(avgs) if avgs else 0
+            total = dev_energy.get(dev, 0)
+            md.append(f"| {dev} | {_fmt_num(avg)} | {_fmt_num(total)} |")
+        md.append("")
+    else:
+        md.append("_无功率能耗数据_")
+        md.append("")
+
+    return "\n".join(md)
+
+
 class YafengMCPService:
     def __init__(
             self,
@@ -156,7 +409,7 @@ class YafengMCPService:
         @self.mcp.resource("docs://personnel/data-dictionary")
         def get_data_dictionary() -> str:
             """
-            获取通风系统的数据字典和字段说明。
+            获取压风系统的数据字典和字段说明。
             """
             return """
             # 矿井人员定位系统数据字典
@@ -407,12 +660,12 @@ class YafengMCPService:
         @self.mcp.prompt()
         def analysis_guide() -> str:
             """
-            获取主要设备分析的专业操作指南。模型在处理用户请求前应默认加载此提示词。
+            获取压风系统主要设备分析的专业操作指南。模型在处理用户请求前应默认加载此提示词。
             本指南根据系统内已注册的各类分析工具，说明其最佳使用场景，指导大模型自动选择与合理组合工具，完善多类型查询与数据解释。
 
             """
             return """
-            你是矿井安全生产调度与设备分析专家，熟悉井下工业系统的运行机制。使用本系统时，请依据如下准则和工具描述，科学推理、自动选择最合适的工具并可灵活组合，以获得准确结果：
+            本系统是压风系统，你是矿井安全生产调度与设备分析专家，熟悉井下工业系统的运行机制。使用本系统时，请依据如下准则和工具描述，科学推理、自动选择最合适的工具并可灵活组合，以获得准确结果：
 
             - 所有数值回复，需带清晰单位，如：
                 - 温度：℃
@@ -449,6 +702,23 @@ class YafengMCPService:
             【6. 获取系统支持字段与分组】
             - 使用 `get_supported_fields()` 工具，直接返回 tongfeng_system.yaml（JSON结构），列出全部支持字段、分组、分组注释与字段中文说明。用于界面字段配置、自定义查询、前端说明等。
 
+            【7. 生成日报 / 多日报告】
+            - 若用户明确针对亚风系统说"出一份报告"、"生成日报"、"汇总汇报"、"周报"、"近N天情况"等，请调用 `generate_yafeng_report(start_date, end_date)`。
+            - 入参只有两个：`start_date` 和 `end_date`（格式 "YYYY-MM-DD HH:MM:SS" 或 "YYYY-MM-DD"）。
+              - 同一天 → **单日报告**；跨天 → **多日报告**（多日已做跨天聚合，不按天罗列）。
+            - 报告固定包含：
+              1. **空压机系统**（1/2/3号）：信号、运行状态、指令、温度/压力/功率监测值
+              2. **电机系统**：前轴/后轴/定子温度
+              3. **振动系统**：1/2/3 号振动监测点
+              4. **断路器系统**：1/2/母联断路器电流、功率
+              5. **环境监测**：机房、配电室、操作室烟雾/温度
+              6. **逻辑控制系统**：停止逻辑、控制逻辑
+              7. **系统级**：自动模式、总管压力/流量、频率、保养提醒
+              8. **功率能耗**：1/2号空压机、断路器1/2、母联断路器
+            - 信号/状态/指令类：**无变化只输出"正常"**；有变化才输出变化次数与当前值。
+            - 监测值类：**只展示平均值、中位数、标准差、最小值、最大值**。
+            - 返回格式为 **Markdown 文本**（非 JSON）。
+            - **不要**用 `query_kongyaji_records` + `query_others_system_records` + `query_power_energy_records` 手工拼装日报——三块内容已内聚到本工具，一次调用即可。
             # 重要注意事项：
 
             - 未指定时间时，所有查询默认当天00:00:00至当前；
@@ -491,7 +761,7 @@ class YafengMCPService:
                 subgroup_filters: Union[List[str], str, None] = None,  # 分组筛选（如"信号"、"指令"、"状态"、"监测值"），可选
         ) -> str:
             """
-            查询1号、2号、3号或全部空压机在指定时间段内的主要参数（信号、指令、状态、监测值）。
+            查询压风系统1号、2号、3号或全部空压机在指定时间段内的主要参数（信号、指令、状态、监测值）。
             字段严格遵循 yafeng_system.yaml 配置，分组及字段全为大写并带编号，返回结构包含英文名及中文注释。
 
             参数说明：
@@ -557,6 +827,9 @@ class YafengMCPService:
                 "1": ["1号空压机"],
                 "2": ["2号空压机"],
                 "3": ["3号空压机"],
+                1: ["1号空压机"],
+                2: ["2号空压机"],
+                3: ["3号空压机"],
                 "all": ["1号空压机", "2号空压机", "3号空压机"],
                 None: ["1号空压机", "2号空压机", "3号空压机"],
             }
@@ -637,7 +910,7 @@ class YafengMCPService:
                 end_time: Optional[str] = None      # 结束时间，YYYY-MM-DD HH:MM:SS，可选
         ) -> str:
             """
-            查询断路器系统、振动系统、逻辑控制系统、机房配电室操作室环境烟雾温度系统、电机系统、系统级的记录数据并进行分析。 
+            查询压风系统断路器系统、振动系统、逻辑控制系统、机房配电室操作室环境烟雾温度系统、电机系统、系统级的记录数据并进行分析。 
             字段严格遵循配置，返回结构包含字段英文名及中文注释。
 
             参数说明：
@@ -761,7 +1034,7 @@ class YafengMCPService:
                 end_time: Optional[str] = None  # 结束时间，YYYY-MM-DD HH:MM:SS，可选
         ):
             """
-            查功率能耗。只能查询如下设定设备的功率能耗相关数据：
+            查压风系统功率能耗。只能查询如下设定设备的功率能耗相关数据：
                 - 1号空压机有功功率实时监测值 (YF_KONG_YA_JI_1_YOU_GONG)
                 - 2号空压机有功功率实时监测值 (YF_KONG_YA_JI_2_YOU_GONG)
                 - 断路器1回路有功功率实时监测值 (YF_DUAN_LU_QI_GONG_LV_1)
@@ -839,7 +1112,7 @@ class YafengMCPService:
         @self.mcp.tool()
         def get_supported_fields():
             """
-            功能描述: 获取当前系统全部支持的字段列表及其分组、中文注释说明。可用于自定义查询、字段筛选、前端字段说明展示等场景。
+            功能描述: 获取压风系统全部支持的字段列表及其分组、中文注释说明。可用于自定义查询、字段筛选、前端字段说明展示等场景。
             输入参数: 无
             返回: tongfeng_system.yaml 文件完整结构(JSON格式)，包含1、2、3号空压机、断路器、机房配电室操作室环境烟雾等全部分组、字段及注释等元信息。
             返回示例: {
@@ -853,6 +1126,97 @@ class YafengMCPService:
             data =  self.service._load_yaml()
             return json.dumps(data, ensure_ascii=False, indent=2)
 
+        @self.mcp.tool()
+        def generate_yafeng_report(
+                start_date: Union[str, datetime, None] = None,
+                end_date: Union[str, datetime, None] = None,
+        ) -> str:
+            """
+            【报告生成工具】根据起止日期生成压风系统综合日报 / 多日报告（Markdown 格式）。
+
+            【使用场景】
+            用户说"出一份今天的压风报告"、"汇总近3天的空压机运行情况"、"生成压风系统的周报/月报"等。
+
+            【参数说明】
+            - start_date: 起始日期 (格式: "YYYY-MM-DD HH:MM:SS" 或 "YYYY-MM-DD")，缺省为当天 00:00:00。
+            - end_date:   截止日期 (格式: "YYYY-MM-DD HH:MM:SS" 或 "YYYY-MM-DD")，缺省为当天 23:59:59。
+
+            【报告内容】
+            一、空压机系统（1号 / 2号 / 3号）：信号 / 运行状态 / 指令 / 温度监测值 / 压力监测值 / 功率监测值
+                - 信号、状态、指令：如无变化，只输出"正常"；有变化才输出变化次数与当前值
+                - 监测值：表格展示 平均值、中位数、标准差、最小值、最大值
+            二、电机系统（前轴/后轴/定子温度）
+            三、振动系统（1/2/3 号振动监测点）
+            四、断路器系统（1/2/母联断路器电流、功率）
+            五、环境监测（机房、配电室、操作室烟雾/温度）
+            六、逻辑控制系统（停止逻辑、控制逻辑）
+            七、系统级（自动模式、总管压力/流量、频率、保养提醒）
+            八、功率能耗（1/2号空压机、断路器1/2、母联断路器）
+
+            【返回值】
+            Markdown 文本。
+            - 单日报告：含"日期"
+            - 多日报告：含"统计周期"与"统计天数"；信号状态带天数、数值做跨天聚合
+            """
+            logger.info(
+                f"generate_yafeng_report called: start_date={start_date}, end_date={end_date}"
+            )
+            try:
+                # ========== 时间处理 ==========
+                def _normalize_time(t, is_end: bool):
+                    if t is None:
+                        return None
+                    if isinstance(t, datetime):
+                        return t.strftime("%Y-%m-%d %H:%M:%S")
+                    t = str(t).strip()
+                    if not t:
+                        return None
+                    if len(t) == 10:
+                        return f"{t} 23:59:59" if is_end else f"{t} 00:00:00"
+                    return t
+
+                today = datetime.now().date()
+                start_time = _normalize_time(start_date, is_end=False) or f"{today} 00:00:00"
+                end_time = _normalize_time(end_date, is_end=True) or f"{today} 23:59:59"
+
+                start_dt = datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S")
+                end_dt = datetime.strptime(end_time, "%Y-%m-%d %H:%M:%S")
+                is_multi_day = start_dt.date() != end_dt.date()
+
+                # ========== 拉取原始数据 ==========
+                all_systems = [
+                    "1号空压机", "2号空压机", "3号空压机",
+                    "电机系统", "振动系统", "断路器系统",
+                    "机房配电室操作室环境烟雾温度系统",
+                    "逻辑控制系统", "系统级",
+                ]
+
+                try:
+                    records = self.service.print_yafeng_today_with_cache(
+                        system_name_filters=all_systems,
+                        start_date=start_time,
+                        end_date=end_time,
+                    ) or {}
+                except Exception as e:
+                    logger.error(f"generate_yafeng_report 主数据查询失败: {traceback.format_exc()}")
+                    records = {}
+
+                try:
+                    energy_records = self.service.calc_gonglv_energy_with_cache(
+                        start_date=start_time, end_date=end_time,
+                    ) or {}
+                except Exception as e:
+                    logger.error(f"generate_yafeng_report 功率能耗查询失败: {traceback.format_exc()}")
+                    energy_records = {}
+
+                # ========== 生成 Markdown ==========
+                md = _build_yafeng_md(records, energy_records, is_multi_day)
+                logger.info(f"generate_yafeng_report 完成, markdown 长度: {len(md)}")
+                return md
+
+            except Exception as e:
+                logger.error(f"generate_yafeng_report 异常: {traceback.format_exc()}")
+                return f"# 压风系统报告生成失败\n\n错误信息：`{e}`\n"
 
 
     #_______________________________辅助函数____________________________________
@@ -1029,82 +1393,95 @@ async def test_all_tools():
         # res1 = await mcp_app.call_tool("get_supported_fields")
         # print("get_system_time 返回：")
         # print(res1)
+        # 单日报告（今天）
+        # result = await mcp_app.call_tool("generate_yafeng_report", {
+        #     "start_date": "2026-05-20",
+        #     "end_date":   "2026-05-20",
+        # })
+        # print(result)
+        # # 多日报告（近3天）
+        result = await mcp_app.call_tool("generate_yafeng_report", {
+            "start_date": "2026-09-10 00:00:00",
+            "end_date":   "2026-09-12 23:59:59",
+        })
+        # print(result)
+        # 不传参数 → 默认当天
+        # result = await mcp_app.call_tool("generate_yafeng_report", {})
+        print(result)
+        # # 测试 query_kongyaji_records
+        # print("\n🧪 测试 query_kongyaji_records - all 空压机（默认/全部）")
+        # res_all = await mcp_app.call_tool(
+        #     "query_kongyaji_records", 
+        #     {
+        #         "choose": "all", 
+        #         "start_time": "2026-04-10 00:00:00",
+        #         "end_time": "2026-06-05 00:00:00", 
+        #         "subgroup_filters": None
+        #     }
+        # )
+        # print("query_kongyaji_records (全部) 返回：")
+        # # print(res_all)
 
+        # print("\n🧪 测试 query_kongyaji_records - 仅 1号空压机，监测值")
+        # res_1 = await mcp_app.call_tool(
+        #     "query_kongyaji_records", 
+        #     {
+        #         "choose": "1", 
+        #         "start_time": "2026-04-10 00:00:00",
+        #         "end_time": "2026-06-05 23:59:59", 
+        #         "subgroup_filters": ["监测值"]
+        #     }
+        # )
+        # print("query_kongyaji_records (1号空压机，监测值) 返回：")
+        # # print(res_1)
+
+        # print("\n🧪 测试 query_kongyaji_records - 仅 2号空压机，指令")
+        # res_2 = await mcp_app.call_tool(
+        #     "query_kongyaji_records", 
+        #     {
+        #         "choose": "2", 
+        #         "start_time": "2026-04-01 00:00:00",
+        #         "end_time": "2026-05-16 23:59:59", 
+        #         "subgroup_filters": ["指令"]
+        #     }
+        # )
+        # print("query_kongyaji_records (2号空压机，指令) 返回：")
+        # # print(res_2)
+
+        # print("\n🧪 测试 query_kongyaji_records - 仅 3号空压机，状态&信号")
+        # res_3 = await mcp_app.call_tool(
+        #     "query_kongyaji_records", 
+        #     {
+        #         "choose": "3", 
+        #         "start_time": "2026-04-01 00:00:00",
+        #         "end_time": "2026-05-21 23:59:59", 
+        #         "subgroup_filters": ["状态", "信号"]
+        #     }
+        # )
+        # print("query_kongyaji_records (3号空压机，状态+信号) 返回：")
+        # # print(res_3)
         
-        # 测试 query_kongyaji_records
-        print("\n🧪 测试 query_kongyaji_records - all 空压机（默认/全部）")
-        res_all = await mcp_app.call_tool(
-            "query_kongyaji_records", 
-            {
-                "choose": "all", 
-                "start_time": "2026-04-10 00:00:00",
-                "end_time": "2026-06-05 00:00:00", 
-                "subgroup_filters": None
-            }
-        )
-        print("query_kongyaji_records (全部) 返回：")
-        # print(res_all)
-
-        print("\n🧪 测试 query_kongyaji_records - 仅 1号空压机，监测值")
-        res_1 = await mcp_app.call_tool(
-            "query_kongyaji_records", 
-            {
-                "choose": "1", 
-                "start_time": "2026-04-10 00:00:00",
-                "end_time": "2026-06-05 23:59:59", 
-                "subgroup_filters": ["监测值"]
-            }
-        )
-        print("query_kongyaji_records (1号空压机，监测值) 返回：")
-        # print(res_1)
-
-        print("\n🧪 测试 query_kongyaji_records - 仅 2号空压机，指令")
-        res_2 = await mcp_app.call_tool(
-            "query_kongyaji_records", 
-            {
-                "choose": "2", 
-                "start_time": "2026-04-01 00:00:00",
-                "end_time": "2026-05-16 23:59:59", 
-                "subgroup_filters": ["指令"]
-            }
-        )
-        print("query_kongyaji_records (2号空压机，指令) 返回：")
-        # print(res_2)
-
-        print("\n🧪 测试 query_kongyaji_records - 仅 3号空压机，状态&信号")
-        res_3 = await mcp_app.call_tool(
-            "query_kongyaji_records", 
-            {
-                "choose": "3", 
-                "start_time": "2026-04-01 00:00:00",
-                "end_time": "2026-05-21 23:59:59", 
-                "subgroup_filters": ["状态", "信号"]
-            }
-        )
-        print("query_kongyaji_records (3号空压机，状态+信号) 返回：")
-        # print(res_3)
-        
-        # 这里分别测试6个可选字段，确保都能被 query_others_system_records 正确处理
-        test_systems = [
-            # "断路器系统",
-            # "振动系统",
-            # "逻辑控制系统",
-            # "机房配电室操作室环境烟雾温度系统",
-            # "电机系统",
-            "系统级",
-        ]
-        for system_name in test_systems:
-            print(f"\n6️⃣ 测试 query_others_system_records 跨天查询统计 - {system_name}")
-            res = await mcp_app.call_tool(
-                "query_others_system_records",
-                {
-                    "choose": [system_name],
-                    "start_time": "2026-04-09 00:00:00",
-                    "end_time": "2026-05-12 23:59:59",
-                }
-            )
-            print(f"query_others_system_records ({system_name} 跨天 数值+状态统计) 返回：")
-            # print(res)
+        # # 这里分别测试6个可选字段，确保都能被 query_others_system_records 正确处理
+        # test_systems = [
+        #     # "断路器系统",
+        #     # "振动系统",
+        #     # "逻辑控制系统",
+        #     # "机房配电室操作室环境烟雾温度系统",
+        #     # "电机系统",
+        #     "系统级",
+        # ]
+        # for system_name in test_systems:
+        #     print(f"\n6️⃣ 测试 query_others_system_records 跨天查询统计 - {system_name}")
+        #     res = await mcp_app.call_tool(
+        #         "query_others_system_records",
+        #         {
+        #             "choose": [system_name],
+        #             "start_time": "2026-04-09 00:00:00",
+        #             "end_time": "2026-05-12 23:59:59",
+        #         }
+        #     )
+        #     print(f"query_others_system_records ({system_name} 跨天 数值+状态统计) 返回：")
+        #     # print(res)
  
         
         

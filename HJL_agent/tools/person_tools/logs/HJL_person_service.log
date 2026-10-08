@@ -70,3 +70,267 @@
 2026-07-28 10:46:57,672 - MinePersonnelService - INFO - step 7: 首轮压缩后json长度: 4833
 2026-07-28 10:46:57,672 - MinePersonnelService - INFO - step 7: 压缩人员 records, 当前json长度: len_json_full=4833
 2026-07-28 10:46:57,672 - MinePersonnelService - INFO - step 8: 函数执行完成, 返回json_full
+2026-09-18 10:23:46,634 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=0, status=None)) after connection broken by 'SSLError(SSLError(1, '[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)'))': /?query_id=35b77f63-2ba6-4f0e-88b0-3c51a4e12e48
+2026-09-18 10:23:46,814 - clickhouse_connect.driver.httpclient - WARNING - Unexpected Http Driver Exception
+2026-09-18 10:23:46,816 - MinePersonnelService - ERROR - Failed to connect to ClickHouse: Error HTTPSConnectionPool(host='10.11.3.210', port=8123): Max retries exceeded with url: /?query_id=35b77f63-2ba6-4f0e-88b0-3c51a4e12e48 (Caused by SSLError(SSLError(1, '[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)'))) executing HTTP request attempt 1 (https://10.11.3.210:8123)
+2026-09-18 10:25:06,940 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-09-18 10:25:06,941 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:25:06,976 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=2026-07-14, end_date=2026-07-14
+2026-09-18 10:25:06,976 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:25:06,976 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:25:07,032 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-08-19', '2026-08-20', '2026-08-21', '2026-08-22', '2026-08-23', '2026-08-24', '2026-08-25', '2026-08-26', '2026-08-27', '2026-08-28', '2026-08-29', '2026-08-30', '2026-08-31', '2026-09-01', '2026-09-02', '2026-09-03', '2026-09-04', '2026-09-05', '2026-09-06', '2026-09-07', '2026-09-08', '2026-09-09', '2026-09-10', '2026-09-11', '2026-09-12', '2026-09-13', '2026-09-14', '2026-09-15', '2026-09-16', '2026-09-17', '2026-09-18']
+2026-09-18 10:25:07,102 - MinePersonnelService - INFO - missed_days (needs API fetch)-----[]
+2026-09-18 10:25:07,137 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 10:25:07,138 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=1
+2026-09-18 10:25:07,679 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:25:07,682 - MinePersonnelService - INFO - step 3: 查询报警信息 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:25:08,007 - MinePersonnelService - INFO - step 4: 查询基站状态 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:25:08,351 - MinePersonnelService - INFO - step 5: 生成报告完成, 长度: 26864
+2026-09-18 10:25:08,436 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=2026-07-11 00:00:00, end_date=2026-07-14 23:59:59
+2026-09-18 10:25:08,436 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:25:08,436 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:25:08,526 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-07-11', '2026-07-12']
+2026-09-18 10:25:09,830 - MinePersonnelService - INFO - cache updated for history day 2026-08-19
+2026-09-18 10:25:10,832 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-11
+2026-09-18 10:25:13,015 - MinePersonnelService - INFO - cache updated for history day 2026-08-20
+2026-09-18 10:25:13,587 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 10:25:13,591 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=4
+2026-09-18 10:25:13,591 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:25:13,591 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:25:13,942 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:25:14,495 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:25:14,497 - MinePersonnelService - INFO - step 3: 查询报警信息 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:25:14,977 - MinePersonnelService - INFO - step 4: 查询基站状态 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:25:15,581 - MinePersonnelService - INFO - step 5: 生成报告完成, 长度: 43187
+2026-09-18 10:25:15,651 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=None, end_date=None
+2026-09-18 10:25:15,651 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 10:25:15,651 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:25:15,653 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-09-18']
+2026-09-18 10:25:16,108 - MinePersonnelService - INFO - cache updated for history day 2026-08-21
+2026-09-18 10:25:17,983 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 10:25:18,013 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=1
+2026-09-18 10:25:18,028 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:25:18,044 - MinePersonnelService - INFO - step 3: 查询报警信息 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 10:25:18,639 - MinePersonnelService - INFO - step 4: 查询基站状态 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 10:25:18,883 - MinePersonnelService - INFO - step 5: 生成报告完成, 长度: 250
+2026-09-18 10:39:25,010 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-09-18 10:39:25,011 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:39:25,069 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=2026-07-14, end_date=2026-07-14
+2026-09-18 10:39:25,069 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:39:25,069 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:39:25,072 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-08-23', '2026-08-24', '2026-08-25', '2026-08-26', '2026-08-27', '2026-08-28', '2026-08-29', '2026-08-30', '2026-08-31', '2026-09-01', '2026-09-02', '2026-09-03', '2026-09-04', '2026-09-05', '2026-09-06', '2026-09-07', '2026-09-08', '2026-09-09', '2026-09-10', '2026-09-11', '2026-09-12', '2026-09-13', '2026-09-14', '2026-09-15', '2026-09-16', '2026-09-17', '2026-09-18']
+2026-09-18 10:39:25,084 - MinePersonnelService - INFO - missed_days (needs API fetch)-----[]
+2026-09-18 10:39:25,137 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 10:39:25,138 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=1
+2026-09-18 10:39:25,677 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:39:25,680 - MinePersonnelService - ERROR - generate_personnel_report 异常: Traceback (most recent call last):
+  File "G:\git\Agent_learning\HJL_agent\tools\person_tools\person_tool.py", line 1200, in generate_personnel_report
+    print('data[个数]---',data['个数'])
+                          ~~~~^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+
+2026-09-18 10:39:25,682 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=2026-07-11 00:00:00, end_date=2026-07-14 23:59:59
+2026-09-18 10:39:25,682 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:39:25,682 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:39:25,700 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-07-11', '2026-07-12']
+2026-09-18 10:39:28,220 - MinePersonnelService - INFO - cache updated for history day 2026-08-23
+2026-09-18 10:39:28,512 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-11
+2026-09-18 10:39:31,411 - MinePersonnelService - INFO - cache updated for history day 2026-08-24
+2026-09-18 10:39:31,601 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 10:39:31,603 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=4
+2026-09-18 10:39:31,603 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:39:31,604 - MinePersonnelService - ERROR - generate_personnel_report 异常: Traceback (most recent call last):
+  File "G:\git\Agent_learning\HJL_agent\tools\person_tools\person_tool.py", line 1200, in generate_personnel_report
+    print('data[个数]---',data['个数'])
+                          ~~~~^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+
+2026-09-18 10:39:31,608 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=None, end_date=None
+2026-09-18 10:39:31,608 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 10:39:31,608 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:39:31,609 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-09-18']
+2026-09-18 10:39:34,323 - MinePersonnelService - INFO - cache updated for history day 2026-08-25
+2026-09-18 10:39:34,431 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 10:39:34,431 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=1
+2026-09-18 10:39:34,431 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:39:34,431 - MinePersonnelService - ERROR - generate_personnel_report 异常: Traceback (most recent call last):
+  File "G:\git\Agent_learning\HJL_agent\tools\person_tools\person_tool.py", line 1200, in generate_personnel_report
+    print('data[个数]---',data['个数'])
+                          ~~~~^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+
+2026-09-18 10:40:45,158 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-09-18 10:40:45,159 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:40:45,228 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=2026-07-14, end_date=2026-07-14
+2026-09-18 10:40:45,228 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:40:45,228 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:40:45,267 - MinePersonnelService - INFO - missed_days (needs API fetch)-----[]
+2026-09-18 10:40:45,275 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-08-26', '2026-08-27', '2026-08-28', '2026-08-29', '2026-08-30', '2026-08-31', '2026-09-01', '2026-09-02', '2026-09-03', '2026-09-04', '2026-09-05', '2026-09-06', '2026-09-07', '2026-09-08', '2026-09-09', '2026-09-10', '2026-09-11', '2026-09-12', '2026-09-13', '2026-09-14', '2026-09-15', '2026-09-16', '2026-09-17', '2026-09-18']
+2026-09-18 10:40:45,303 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 10:40:45,303 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=1
+2026-09-18 10:40:45,850 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:40:45,853 - MinePersonnelService - ERROR - generate_personnel_report 异常: Traceback (most recent call last):
+  File "G:\git\Agent_learning\HJL_agent\tools\person_tools\person_tool.py", line 1204, in generate_personnel_report
+    new_hours[key] = str(data['个数'])+'人'
+                         ~~~~^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+
+2026-09-18 10:40:45,856 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=2026-07-11 00:00:00, end_date=2026-07-14 23:59:59
+2026-09-18 10:40:45,856 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:40:45,856 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:40:45,873 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-07-11', '2026-07-12']
+2026-09-18 10:40:47,900 - MinePersonnelService - INFO - cache updated for history day 2026-08-26
+2026-09-18 10:40:52,354 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-11
+2026-09-18 10:40:52,896 - MinePersonnelService - INFO - cache updated for history day 2026-08-27
+2026-09-18 10:40:59,512 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 10:40:59,514 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=4
+2026-09-18 10:40:59,514 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:40:59,515 - MinePersonnelService - ERROR - generate_personnel_report 异常: Traceback (most recent call last):
+  File "G:\git\Agent_learning\HJL_agent\tools\person_tools\person_tool.py", line 1204, in generate_personnel_report
+    new_hours[key] = str(data['个数'])+'人'
+                         ~~~~^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+
+2026-09-18 10:40:59,518 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=None, end_date=None
+2026-09-18 10:40:59,518 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 10:40:59,518 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:40:59,520 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-09-18']
+2026-09-18 10:41:00,363 - MinePersonnelService - INFO - cache updated for history day 2026-08-28
+2026-09-18 10:41:06,262 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 10:41:06,263 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=1
+2026-09-18 10:41:06,263 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:41:06,266 - MinePersonnelService - ERROR - generate_personnel_report 异常: Traceback (most recent call last):
+  File "G:\git\Agent_learning\HJL_agent\tools\person_tools\person_tool.py", line 1204, in generate_personnel_report
+    new_hours[key] = str(data['个数'])+'人'
+                         ~~~~^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+
+2026-09-18 10:44:35,481 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-09-18 10:44:35,482 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:44:35,553 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=2026-07-14, end_date=2026-07-14
+2026-09-18 10:44:35,554 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:44:35,554 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:44:35,605 - MinePersonnelService - INFO - missed_days (needs API fetch)-----[]
+2026-09-18 10:44:35,667 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 10:44:35,667 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-08-29', '2026-08-30', '2026-08-31', '2026-09-01', '2026-09-02', '2026-09-03', '2026-09-04', '2026-09-05', '2026-09-06', '2026-09-07', '2026-09-08', '2026-09-09', '2026-09-10', '2026-09-11', '2026-09-12', '2026-09-13', '2026-09-14', '2026-09-15', '2026-09-16', '2026-09-17', '2026-09-18']
+2026-09-18 10:44:35,667 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=1
+2026-09-18 10:44:36,212 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:44:36,214 - MinePersonnelService - INFO - step 3: 查询报警信息 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:44:36,526 - MinePersonnelService - INFO - step 4: 查询基站状态 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:44:36,795 - MinePersonnelService - INFO - step 5: 生成报告完成, 长度: 16294
+2026-09-18 10:44:36,799 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=2026-07-11 00:00:00, end_date=2026-07-14 23:59:59
+2026-09-18 10:44:36,799 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:44:36,799 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:44:36,816 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-07-11', '2026-07-12']
+2026-09-18 10:44:38,491 - MinePersonnelService - INFO - cache updated for history day 2026-08-29
+2026-09-18 10:44:39,183 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-11
+2026-09-18 10:44:41,014 - MinePersonnelService - INFO - cache updated for history day 2026-08-30
+2026-09-18 10:44:41,987 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 10:44:41,990 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=4
+2026-09-18 10:44:41,992 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:44:41,992 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:44:42,545 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:44:43,158 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:44:43,163 - MinePersonnelService - INFO - step 3: 查询报警信息 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:44:43,830 - MinePersonnelService - INFO - step 4: 查询基站状态 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:44:44,225 - MinePersonnelService - INFO - step 5: 生成报告完成, 长度: 24134
+2026-09-18 10:44:44,462 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=None, end_date=None
+2026-09-18 10:44:44,462 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 10:44:44,462 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:44:44,472 - MinePersonnelService - INFO - cache updated for history day 2026-08-31
+2026-09-18 10:44:44,475 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-09-18']
+2026-09-18 10:44:47,451 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 10:44:47,467 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=1
+2026-09-18 10:44:47,499 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:44:47,530 - MinePersonnelService - INFO - step 3: 查询报警信息 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 10:44:47,759 - MinePersonnelService - INFO - cache updated for history day 2026-09-01
+2026-09-18 10:44:47,966 - MinePersonnelService - INFO - step 4: 查询基站状态 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 10:44:48,162 - MinePersonnelService - INFO - step 5: 生成报告完成, 长度: 241
+2026-09-18 10:55:24,025 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-09-18 10:55:24,027 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:55:24,097 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=2026-07-14, end_date=2026-07-14
+2026-09-18 10:55:24,097 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:55:24,097 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:55:24,140 - MinePersonnelService - INFO - missed_days (needs API fetch)-----[]
+2026-09-18 10:55:24,229 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 10:55:24,230 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=1
+2026-09-18 10:55:24,261 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-09-02', '2026-09-03', '2026-09-04', '2026-09-05', '2026-09-06', '2026-09-07', '2026-09-08', '2026-09-09', '2026-09-10', '2026-09-11', '2026-09-12', '2026-09-13', '2026-09-14', '2026-09-15', '2026-09-16', '2026-09-17', '2026-09-18']
+2026-09-18 10:55:24,919 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:55:24,921 - MinePersonnelService - INFO - step 3: 生成单日报告
+2026-09-18 10:55:24,921 - MinePersonnelService - INFO - step 4: 查询报警信息 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:55:25,227 - MinePersonnelService - INFO - step 5: 查询基站状态 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:55:25,523 - MinePersonnelService - INFO - step 6: 生成报告完成, 长度: 6292
+2026-09-18 10:55:25,678 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=2026-07-11 00:00:00, end_date=2026-07-14 23:59:59
+2026-09-18 10:55:25,772 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:55:25,783 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:55:25,807 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-07-11', '2026-07-12']
+2026-09-18 10:55:27,302 - MinePersonnelService - INFO - cache updated for history day 2026-09-02
+2026-09-18 10:55:28,035 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-11
+2026-09-18 10:55:29,800 - MinePersonnelService - INFO - cache updated for history day 2026-09-03
+2026-09-18 10:55:30,699 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 10:55:30,702 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=4
+2026-09-18 10:55:30,703 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:55:30,704 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:55:31,100 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:55:31,831 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:55:31,835 - MinePersonnelService - INFO - step 3: 生成多日聚合报告, 天数=4
+2026-09-18 10:55:31,837 - MinePersonnelService - INFO - step 4: 查询报警信息 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:55:32,503 - MinePersonnelService - INFO - step 5: 查询基站状态 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 10:55:32,961 - MinePersonnelService - INFO - step 6: 生成报告完成, 长度: 9074
+2026-09-18 10:55:33,085 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=None, end_date=None
+2026-09-18 10:55:33,087 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 10:55:33,087 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 10:55:33,097 - MinePersonnelService - INFO - cache updated for history day 2026-09-04
+2026-09-18 10:55:33,103 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-09-18']
+2026-09-18 10:55:35,358 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 10:55:35,359 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=1
+2026-09-18 10:55:35,359 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 10:55:35,359 - MinePersonnelService - INFO - step 3: 生成单日报告
+2026-09-18 10:55:35,359 - MinePersonnelService - INFO - step 4: 查询报警信息 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 10:55:35,844 - MinePersonnelService - INFO - step 5: 查询基站状态 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 10:55:36,161 - MinePersonnelService - INFO - cache updated for history day 2026-09-05
+2026-09-18 10:55:36,236 - MinePersonnelService - INFO - step 6: 生成报告完成, 长度: 241
+2026-09-18 11:01:00,430 - MinePersonnelService - INFO - Successfully connected to ClickHouse.
+2026-09-18 11:01:00,431 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 11:01:00,479 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=2026-07-14, end_date=2026-07-14
+2026-09-18 11:01:00,479 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 11:01:00,479 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 11:01:00,525 - MinePersonnelService - INFO - missed_days (needs API fetch)-----[]
+2026-09-18 11:01:00,622 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 11:01:00,622 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=1
+2026-09-18 11:01:00,871 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-09-06', '2026-09-07', '2026-09-08', '2026-09-09', '2026-09-10', '2026-09-11', '2026-09-12', '2026-09-13', '2026-09-14', '2026-09-15', '2026-09-16', '2026-09-17', '2026-09-18']
+2026-09-18 11:01:01,192 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 11:01:01,193 - MinePersonnelService - INFO - step 3: 生成单日报告
+2026-09-18 11:01:01,193 - MinePersonnelService - INFO - step 4: 查询报警信息 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 11:01:01,564 - MinePersonnelService - INFO - step 5: 查询基站状态 [2026-07-14 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 11:01:01,898 - MinePersonnelService - INFO - step 6: 生成报告完成, 长度: 6208
+2026-09-18 11:01:02,021 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=2026-07-11 00:00:00, end_date=2026-07-14 23:59:59
+2026-09-18 11:01:02,131 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 11:01:02,147 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 11:01:02,186 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-07-11', '2026-07-12']
+2026-09-18 11:01:03,365 - MinePersonnelService - INFO - cache updated for history day 2026-09-06
+2026-09-18 11:01:04,588 - MinePersonnelService - INFO - cache updated (empty) for history day 2026-07-11
+2026-09-18 11:01:06,148 - MinePersonnelService - INFO - cache updated for history day 2026-09-07
+2026-09-18 11:01:07,275 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 11:01:07,279 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=4
+2026-09-18 11:01:07,281 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 11:01:07,283 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 11:01:07,889 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 11:01:08,660 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 11:01:08,661 - MinePersonnelService - INFO - step 3: 生成多日聚合报告, 天数=4
+2026-09-18 11:01:08,662 - MinePersonnelService - INFO - step 4: 查询报警信息 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 11:01:09,145 - MinePersonnelService - INFO - step 5: 查询基站状态 [2026-07-11 00:00:00 ~ 2026-07-14 23:59:59]
+2026-09-18 11:01:09,498 - MinePersonnelService - INFO - cache updated for history day 2026-09-08
+2026-09-18 11:01:09,706 - MinePersonnelService - INFO - step 6: 生成报告完成, 长度: 8342
+2026-09-18 11:01:09,710 - MinePersonnelService - INFO - generate_personnel_report called with params: start_date=None, end_date=None
+2026-09-18 11:01:09,710 - MinePersonnelService - INFO - step 1: 拉取人员数据 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 11:01:09,711 - MinePersonnelService - INFO - Starting data fetch with 7-day fresh logic...
+2026-09-18 11:01:09,714 - MinePersonnelService - INFO - missed_days (needs API fetch)-----['2026-09-18']
+2026-09-18 11:01:12,244 - MinePersonnelService - INFO - cache updated for history day 2026-09-09
+2026-09-18 11:01:12,569 - MinePersonnelService - INFO - get_person_infos_daytype_with_cache completed. Total 2 days.
+2026-09-18 11:01:12,569 - MinePersonnelService - INFO - step 2: 开始逐日统计, 天数=1
+2026-09-18 11:01:12,569 - MinePersonnelService - INFO - person_filter statistics generated for keys: ['总人数', '人员列表_姓名_卡号_入井次数', '入井时长分布/人次', '入井时间段分布/人次', '出井时间段分布/人次', '区域分布/条', '基站分布/条', '基站停留时长分布/条', '部门分布/人', '职位分布/人', '工种分布/人', '每小时人数统计/人']
+2026-09-18 11:01:12,569 - MinePersonnelService - INFO - step 3: 生成单日报告
+2026-09-18 11:01:12,569 - MinePersonnelService - INFO - step 4: 查询报警信息 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 11:01:12,858 - MinePersonnelService - INFO - step 5: 查询基站状态 [2026-09-18 00:00:00 ~ 2026-09-18 23:59:59]
+2026-09-18 11:01:13,049 - MinePersonnelService - INFO - step 6: 生成报告完成, 长度: 241

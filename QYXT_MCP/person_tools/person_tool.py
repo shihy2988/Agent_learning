@@ -11,7 +11,7 @@
 import json
 import logging
 import re
-from sympy import N
+
 import urllib3
 import requests
 import clickhouse_connect
@@ -29,7 +29,7 @@ from collections import defaultdict
 import copy
 from fuzzywuzzy import fuzz, process
 from tqdm import tqdm
-from base_tool import Base_tool
+from base_tool import Base_tool,_extract_number,_merge_values,_merge_dicts,_aggregate_multi_day_stats,_truncate_ranking
 
             
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -66,7 +66,7 @@ handler = RotatingFileHandler(
     LOG_FILE,
     maxBytes=10 * 1024 * 1024,  # 50MB
     backupCount=5,
-    encoding='utf-8'
+    encoding='utf-8', mode='w'
 )
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 handler.setFormatter(formatter)
@@ -241,8 +241,28 @@ class PersonnelMCPService(Base_tool):
             13. **职位分布/人**: 按职务/职位统计的人数。
             14. **工种分布/人**: 按工种统计的人数。
             15. **班次分布/人**: 按班次统计的人数。
-       
+            15. **班次分布/人**: 按班次统计的人数。
+            16. **每小时人数统计/人**: 统计每小时的人数。
+  
 
+            在 `query_cars_list` 中，通过 `statistics_filters` 指定需要返回的统计维度。若不指定，默认返回精简摘要。
+            ###支持的统计 Key:
+            1. **总车辆数**: 符合条件的车辆总数。
+            2. **车辆总览**: 车辆名称、编号、所属部门、车辆类型的汇总列表。
+            3. **车辆列表_名称_编号_出入井次数**: 详细车辆名单及其基础出入井统计。
+            4. **出入井时长分布/辆次**: 按不同时长区间统计的辆次分布。
+            5. **入井时间段分布/辆次**: 按一天中不同时段入井的辆次分布。
+            6. **出井时间段分布/辆次**: 按一天中不同时段出井的辆次分布。
+            7. **入井地点分布/辆次**: 按入井地点统计的辆次分布。
+            8. **出井地点分布/辆次**: 按出井地点统计的辆次分布。
+            9. **区域分布/条**: 车辆在各个区域的分布情况（按时段×区域去重统计）。
+            10. **主站分布/条**: 车辆关联主站的分布情况（按主站去重统计）。
+            11. **分站分布/条**: 车辆关联分站的分布情况（按分站去重统计）。
+            12. **站点停留时长分布/条**: 车辆在不同站点停留时长的分布。
+            13. **所属部门分布/辆**: 按所属部门/队组统计的车辆数。
+            14. **车辆类型分布/辆**: 按车辆类型统计的车辆数。
+            15. **每小时车辆数统计/辆**: 统计每小时的在线车辆数（轨迹与某小时有交集即计入，同一车同小时只计一次）。
+       
             ## 3. 其他基础信息类型 (get_infos)
             - **department**: 部门基础信息（部门名称、部门ID、上级部门ID等）。
             - **person**: 人员基础信息（姓名、卡号、部门、工种等）。
@@ -330,6 +350,13 @@ class PersonnelMCPService(Base_tool):
             - **何时使用**：按车辆ID、车辆名称、车辆类型、部门、区域、定位卡电量等多维组合，批量查询车辆属性、进出井及出入明细。
             - **关键参数**：`cardids`, `car_names`, `car_types`, `departments`, `area_names`, `electricitys`, `start_time`, `end_time`。适用于车辆大盘分析与场景性筛查。
 
+            #### 10. `generate_personnel_report` (人员 + 车辆报告生成)
+            - **何时使用**：用户明确要"出一份报告"、"汇总汇报"、"生成日报/周报/多日报告"等。
+            - **入参**：只需 `start_date` 和 `end_date`（"YYYY-MM-DD HH:MM:SS" 或 "YYYY-MM-DD"）。
+            - 同一天 → **单日报告**；跨天 → **多日报告**（多日已做跨天聚合，不按天罗列）。
+            - **固定输出**：报告同时包含【人员报告】和【车辆报告】两部分。
+            - 人员：16 项统计，人员列表只保留入井次数 TOP5。
+            - 车辆：15 项统计，车辆列表只保留出入井次数 TOP5。
             ---
 
             ### ⚠️ 异常处理与兜底策略
@@ -535,7 +562,7 @@ class PersonnelMCPService(Base_tool):
                 for name, info in leave_person.items():
                     if len(info["基本信息"]) > 2:
                         banci_status[name] = list(info["基本信息"])
-                print(banci_status)
+            
                         
                 if info_needs:
                     json_res = json.dumps(
@@ -868,13 +895,15 @@ class PersonnelMCPService(Base_tool):
                 numeric_filters (dict, 可选): 数值型筛选，比如区间等。
                 statistics_filter (dict, 可选): 统计类高级筛选参数。
             - numeric_filters: 高级数值/时间过滤字典。格式: {"字段名": {"op": "操作符", "value": 值}}。
-              支持字段名: "入井时间", "出井时间", "入井时长(秒)", "轨迹开始时间", "轨迹结束时间", "距离主站距离/m", "距离分站距离/m", "变化次数", "停留时长/s",电量。
+              支持字段名: "入井时间", "出井时间", "入井时长(秒)", 当前在井下人数,"轨迹开始时间", "轨迹结束时间", "距离主站距离/m", "距离分站距离/m", "变化次数", "停留时长/s",电量,每小时人数统计/人。
               支持操作符: ">", ">=", "<", "<=", "==", "!=", "between", "not_between", "in" 等。
               
               示例: {"距离主站距离/m": {"op": "<=", "value": 150}, "入井时间": {"op": "between", "value": ["2026-07-01 04:00:00", "2026-07-01 08:00:00"]}
             - statistics_filter: 统计聚合项列表。若提供，系统将优先返回聚合统计而非海量明细。如不指定或为["all"]，则返回全部统计字段。
               可选值: "总人数", "人员列表_姓名_卡号_入井次数", "入井时长分布/人次", "入井时间段分布/人次", "出井时间段分布/人次", "入井地点分布/人次", "出井地点分布/人次", "区域分布/条", "主站分布/条", "分站分布/条", "站点停留时长分布/条", "部门分布/人", "职位分布/人", "工种分布/人", "班次分布/人"。
             - 如果筛选时 提示了当前、现在等时间  time_now 为True ，其余情况为False。
+           
+            
             返回值:
        
 
@@ -1067,8 +1096,8 @@ class PersonnelMCPService(Base_tool):
                             stat_json = json.dumps(single_stat_dict, ensure_ascii=False, separators=(",", ":"))
                             stat_len = len(stat_json)
                             key_length_info[(key, stat_key)] = stat_len
-                            if stat_len > 10000:
-                                message_warn = f"'{stat_key}' 统计项在 {key} 的数据体量过大，请进一步缩小查询范围或细化分布参数."
+                            if stat_len > 30000:
+                                message_warn = f"'{stat_key}' 统计项在 {key} 的数据体量过大,长度{stat_len}，请进一步缩小查询范围或细化分布参数."
                                 messages.append(message_warn)
                                 logger.warning(f"Step 16.2: {message_warn}")
                             filtered_stats[stat_key] = value
@@ -1079,6 +1108,10 @@ class PersonnelMCPService(Base_tool):
                     json_full = json.dumps(filtered_record, ensure_ascii=False, separators=(",", ":"))
                     len_json_full = len(json_full)
                     logger.info(f"Step 16.4: statistics_filter抽取后json长度: {len_json_full}")
+                    if json_full:
+                        with open("statistics_filter_history_person_data.txt", "w", encoding="utf-8") as f:
+                            f.write(json.dumps(filtered_record, ensure_ascii=False, indent=2))
+                        print("全部数据已成功写入 statistics_filter_history_person_data.txt")
 
                 else:
                     if len_json_full > 30000:
@@ -1410,6 +1443,323 @@ class PersonnelMCPService(Base_tool):
                     {"error": "查询失败", "message": str(e)}, ensure_ascii=False
                 )
 
+        @self.mcp.tool()
+        def generate_personnel_report(
+                start_date: Union[str, datetime, None] = None,
+                end_date: Union[str, datetime, None] = None,
+        ) -> str:
+            """
+            【报告生成工具】根据起止日期生成结构化的矿井人员 + 车辆综合分析报告,关于人员定位系统的日报、周报、月报都使用这个工具。
+
+            【使用场景】
+            用户说"出一份今天的报告"、"帮我汇总近3天的出入井情况"、"生成7月11日到7月14日的报告"等。
+
+            【参数说明】
+            - start_date: 起始日期 (格式: "YYYY-MM-DD HH:MM:SS" 或 "YYYY-MM-DD")，缺省为当天 00:00:00。
+            - end_date:   截止日期 (格式: "YYYY-MM-DD HH:MM:SS" 或 "YYYY-MM-DD")，缺省为当天 23:59:59。
+
+            【报告内容】
+            一、人员报告
+                1. 总人数
+                2. 人员列表_姓名_卡号_入井次数（仅保留入井次数最多的前 5 人）
+                3. 入井时长分布/人次
+                4. 入井时间段分布/人次
+                5. 出井时间段分布/人次
+                6. 入井地点分布/人次
+                7. 出井地点分布/人次
+                8. 区域分布/条
+                9. 主站分布/条
+                10. 分站分布/条
+                11. 站点停留时长分布/条
+                12. 部门分布/人
+                13. 职位分布/人
+                14. 工种分布/人
+                15. 班次分布/人
+                16. 每小时人数统计/人
+            二、车辆报告
+                1. 总车辆数
+                2. 车辆总览
+                3. 车辆列表_名称_编号_出入井次数（仅保留出入井次数最多的前 5 辆）
+                4. 出入井时长分布/辆次
+                5. 入井时间段分布/辆次
+                6. 出井时间段分布/辆次
+                7. 入井地点分布/辆次
+                8. 出井地点分布/辆次
+                9. 区域分布/条
+                10. 主站分布/条
+                11. 分站分布/条
+                12. 站点停留时长分布/条
+                13. 所属部门分布/辆
+                14. 车辆类型分布/辆
+                15. 每小时车辆数统计/辆
+
+            【返回值】
+            JSON 字符串。
+            - 单日报告: {"报告类型":"单日报告","日期":"...","人员报告":{...},"车辆报告":{...}}
+            - 多日报告: {"报告类型":"多日报告","起始日期":"...","结束日期":"...","统计天数":N,
+                        "人员报告":{...聚合...},"车辆报告":{...聚合...}}
+              多日的分布类统计已跨天累加合并；人员/车辆列表按唯一编号合并后取 TOP5。
+            """
+            logger.info(
+                f"generate_personnel_report called with params: "
+                f"start_date={start_date}, end_date={end_date}"
+            )
+            try:
+                step = 0
+
+                # ========== 时间处理 ==========
+                def _normalize_time(t, is_end: bool):
+                    if t is None:
+                        return None
+                    if isinstance(t, datetime):
+                        return t.strftime("%Y-%m-%d %H:%M:%S")
+                    t = str(t).strip()
+                    if not t:
+                        return None
+                    if len(t) == 10:
+                        return f"{t} 23:59:59" if is_end else f"{t} 00:00:00"
+                    return t
+
+                today = datetime.now().date()
+                start_time = _normalize_time(start_date, is_end=False) or f"{today} 00:00:00"
+                end_time = _normalize_time(end_date, is_end=True) or f"{today} 23:59:59"
+
+                # ========== 人员统计键 ==========
+                person_stats_keys = [
+                    "总人数",
+                    "人员列表_姓名_卡号_入井次数",
+                    "入井时长分布/人次",
+                    "入井时间段分布/人次",
+                    "出井时间段分布/人次",
+                    "入井地点分布/人次",
+                    "出井地点分布/人次",
+                    "区域分布/条",
+                    "主站分布/条",
+                    "分站分布/条",
+                    "站点停留时长分布/条",
+                    "部门分布/人",
+                    "职位分布/人",
+                    "工种分布/人",
+                    "班次分布/人",
+                    "每小时人数统计/人",
+                ]
+                car_stats_keys = [
+                    "总车辆数",
+                    "车辆总览",
+                    "车辆列表_名称_编号_出入井次数",
+                    "出入井时长分布/辆次",
+                    "入井时间段分布/辆次",
+                    "出井时间段分布/辆次",
+                    "入井地点分布/辆次",
+                    "出井地点分布/辆次",
+                    "区域分布/条",
+                    "主站分布/条",
+                    "分站分布/条",
+                    "站点停留时长分布/条",
+                    "所属部门分布/辆",
+                    "车辆类型分布/辆",
+                    "每小时车辆数统计/辆",
+                ]
+
+                # ========== 拉取人员数据 ==========
+                step += 1
+                logger.info(f"step {step}: 拉取人员数据 [{start_time} ~ {end_time}]")
+                person_records = None
+                try:
+                    person_records = self.person_base.get_person_infos_daytype_with_cache(
+                        start_date=start_time,
+                        end_date=end_time,
+                    )
+                except Exception as e:
+                    logger.warning(f"step {step}: 人员数据拉取失败: {e}")
+
+                # ========== 拉取车辆数据 ==========
+                step += 1
+                logger.info(f"step {step}: 拉取车辆数据 [{start_time} ~ {end_time}]")
+                car_records = None
+                try:
+                    car_records = self.car_base.get_cars_infos_daytype_with_cache(
+                        start_date=start_time,
+                        end_date=end_time,
+                    )
+                except Exception as e:
+                    logger.warning(f"step {step}: 车辆数据拉取失败: {e}")
+
+                if not person_records and not car_records:
+                    return json.dumps(
+                        {"message": "人员与车辆均未找到符合条件的数据，无法生成报告，请调整查询时间范围。"},
+                        ensure_ascii=False,
+                    )
+
+                # ========== 人员逐日统计 ==========
+                person_days = []
+                person_per_day = {}
+                if person_records:
+                    person_day_datas = person_records.get("每日数据", {}) or {}
+                    person_days = sorted(list(person_day_datas.keys()))
+                    step += 1
+                    logger.info(f"step {step}: 人员逐日统计, 天数={len(person_days)}")
+                    for day in person_days:
+                        try:
+                            summary = self.person_base.person_filter(
+                                pdata=person_day_datas[day],
+                                statistics_filter=person_stats_keys,
+                            )
+                        except Exception as e:
+                            logger.warning(
+                                f"step {step}: person_filter 完整统计失败({e})，尝试回退"
+                            )
+                            summary = self.person_base.person_filter(
+                                pdata=person_day_datas[day],
+                                statistics_filter=[k for k in person_stats_keys
+                                                   if k != "每小时人数统计/人"],
+                            )
+                        stats = dict(summary.get("statistics", {}))
+
+                        # 每小时人数统计：只保留"XX人"
+                        hours_nums = stats.get("每小时人数统计/人", {}) or {}
+                        new_hours = {}
+                        for key, data in hours_nums.items():
+                            try:
+                                new_hours[key] = str(data['个数']) + '人'
+                            except Exception:
+                                continue
+                        if new_hours:
+                            stats["每小时人数统计/人"] = new_hours
+
+                        person_per_day[day] = stats
+
+                # ========== 车辆逐日统计 ==========
+                car_days = []
+                car_per_day = {}
+                if car_records:
+                    car_day_datas = car_records.get("每日数据", {}) or {}
+                    car_days = sorted(list(car_day_datas.keys()))
+                    step += 1
+                    logger.info(f"step {step}: 车辆逐日统计, 天数={len(car_days)}")
+                    for day in car_days:
+                        try:
+                            summary = self.car_base.car_filter(
+                                pdata=car_day_datas[day],
+                                statistics_filter=car_stats_keys,
+                            )
+                        except Exception as e:
+                            logger.warning(
+                                f"step {step}: car_filter 完整统计失败({e})，尝试回退"
+                            )
+                            summary = self.car_base.car_filter(
+                                pdata=car_day_datas[day],
+                                statistics_filter=[k for k in car_stats_keys
+                                                   if k != "每小时车辆数统计/辆"],
+                            )
+                        stats = dict(summary.get("statistics", {}))
+
+                        # 每小时车辆数统计：只保留"XX辆"
+                        hours_nums = stats.get("每小时车辆数统计/辆", {}) or {}
+                        new_hours = {}
+                        for key, data in hours_nums.items():
+                            try:
+                                new_hours[key] = str(data['个数']) + '辆'
+                            except Exception:
+                                try:
+                                    new_hours[key] = str(data) + '辆'
+                                except Exception:
+                                    continue
+                        if new_hours:
+                            stats["每小时车辆数统计/辆"] = new_hours
+
+                        car_per_day[day] = stats
+
+                # ========== 统一日期轴（人员 & 车辆可能覆盖不同日期） ==========
+                all_days = sorted(set(person_days) | set(car_days))
+
+                # ========== 单日 / 多日 报告结构 ==========
+                if len(all_days) == 1:
+                    day = all_days[0]
+                    step += 1
+                    logger.info(f"step {step}: 生成单日报告, 日期={day}")
+
+                    # ---- 人员 ----
+                    if day in person_per_day:
+                        p_stats = person_per_day[day]
+                        if "人员列表_姓名_卡号_入井次数" in p_stats:
+                            p_stats["人员列表_姓名_卡号_入井次数"] = _truncate_ranking(
+                                p_stats["人员列表_姓名_卡号_入井次数"], top_n=5
+                            )
+                        person_report = p_stats
+                    else:
+                        person_report = "该日期无人员数据"
+
+                    # ---- 车辆 ----
+                    if day in car_per_day:
+                        c_stats = car_per_day[day]
+                        if "车辆列表_名称_编号_出入井次数" in c_stats:
+                            c_stats["车辆列表_名称_编号_出入井次数"] = _truncate_ranking(
+                                c_stats["车辆列表_名称_编号_出入井次数"], top_n=5
+                            )
+                        car_report = c_stats
+                    else:
+                        car_report = "该日期无车辆数据"
+
+                    report = {
+                        "报告类型": "单日报告",
+                        "日期": day,
+                        "人员报告": person_report,
+                        "车辆报告": car_report,
+                    }
+                else:
+                    step += 1
+                    logger.info(f"step {step}: 生成多日聚合报告, 天数={len(all_days)}")
+
+                    # ---- 人员聚合 ----
+                    if person_per_day:
+                        person_report = _aggregate_multi_day_stats(
+                            person_per_day,
+                            person_days,
+                            top_list_key="人员列表_姓名_卡号_入井次数",
+                            top_n=5,
+                            total_key="总人数",
+                        )
+                    else:
+                        person_report = "该时间范围内无人员数据"
+
+                    # ---- 车辆聚合 ----
+                    if car_per_day:
+                        car_report = _aggregate_multi_day_stats(
+                            car_per_day,
+                            car_days,
+                            top_list_key="车辆列表_名称_编号_出入井次数",
+                            top_n=5,
+                            total_key="总车辆数",
+                        )
+                    else:
+                        car_report = "该时间范围内无车辆数据"
+
+                    report = {
+                        "报告类型": "多日报告",
+                        "起始日期": all_days[0],
+                        "结束日期": all_days[-1],
+                        "统计天数": len(all_days),
+                        "人员报告": person_report,
+                        "车辆报告": car_report,
+                    }
+
+                step += 1
+                json_full = json.dumps(report, ensure_ascii=False, separators=(",", ":"))
+                logger.info(f"step {step}: 生成报告完成, 长度: {len(json_full)}")
+                return json_full
+
+            except Exception as e:
+                logger.error(f"generate_personnel_report 异常: {traceback.format_exc()}")
+                return json.dumps(
+                    {
+                        "error": "报告生成失败",
+                        "message": str(e),
+                        "traceback": traceback.format_exc(),
+                    },
+                    ensure_ascii=False,
+                )
+                
         # @self.mcp.tool()
         # def query_car_trajectory(
         #         cardName: Optional[Union[str, int]] = None,
@@ -1634,7 +1984,7 @@ class PersonnelMCPService(Base_tool):
               
               示例: {"距离主站距离/m": {"op": "<=", "value": 150}, "停留时长/s": {"op": "between", "value": [300, 1800]}}
             - statistics_filter: 统计聚合项列表。若提供，系统将优先返回聚合统计而非海量明细。如不指定或为["all"]，则返回全部统计字段。
-              可选值: "总车辆数", "车辆总览", "车辆列表_名称_编号_出入井次数", "出入井时长分布/辆次", "入井时间段分布/辆次", "出井时间段分布/辆次", "入井地点分布/辆次", "出井地点分布/辆次", "区域分布/条", "主站分布/条", "分站分布/条", "站点停留时长分布/条", "所属部门分布/辆", "车辆类型分布/辆"。
+              可选值: "总车辆数", "每小时车辆数统计/辆","车辆总览", "车辆列表_名称_编号_出入井次数", "出入井时长分布/辆次", "入井时间段分布/辆次", "出井时间段分布/辆次", "入井地点分布/辆次", "出井地点分布/辆次", "区域分布/条", "主站分布/条", "分站分布/条", "站点停留时长分布/条", "所属部门分布/辆", "车辆类型分布/辆"。
 
             - 如果筛选时 提示了当前、现在等时间  time_now 为True ，其余情况为False。
 
@@ -2300,9 +2650,9 @@ async def test_all_tools():
         #     "start_time":"2026-08-04 00:00:00",
         #     "end_time": "2026-08-04 24:00:00",
         # }
-        result = await mcp_app.call_tool("get_infos", {"type":"person"})
+        # result = await mcp_app.call_tool("get_infos", {"type":"person"})
         
-        print(result)
+        # print(result)
         
         # numeric_filters = {
         #     # "距离主站距离/m": {"op": "<", "value": 150},
@@ -2321,6 +2671,20 @@ async def test_all_tools():
         # }
         # result = await mcp_app.call_tool("query_cars_list", params)
         # print(result)
+        # result = await mcp_app.call_tool("generate_personnel_report", {
+        #     "start_date": "2026-07-14",
+        #     "end_date":   "2026-07-14",
+        # })
+        # pprint(result)
+        # 多日报告
+        result = await mcp_app.call_tool("generate_personnel_report", {
+            "start_date": "2026-07-11 00:00:00",
+            "end_date":   "2026-07-14 23:59:59",
+        })
+        pprint(result)
+        ## 不传参数 → 默认当天
+        # result = await mcp_app.call_tool("generate_personnel_report", {})
+        # pprint(result)
         
     except Exception as e:
         print(f"\n❌ 测试过程中发生错误: {e}\n{traceback.format_exc()}")
